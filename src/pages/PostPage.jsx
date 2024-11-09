@@ -18,7 +18,7 @@ export default function PostPage(){
         })
     }, [idPost]);
 
-    return (post == []) ?
+    return (post.length == 0) ?
         <Spinner /> : 
         <Post 
             userId={post.userId}

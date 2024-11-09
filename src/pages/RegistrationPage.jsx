@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupText} from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,8 +7,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 export default function RegistrationPage() {
 
     const [user, setUser] = useState({
-        firstName: "",
-        lastName: "",
+        userName: "",
         email: "",
         password: "",
         confirmPassword:""
@@ -20,98 +19,81 @@ export default function RegistrationPage() {
     });
 
 
-
-    const handleChangeFirstName = (e) => {
-        setUser({
-            ...user,
-            firstName: e.target.value
-        })
-    }
-
-    const handleChangeLastName = (e) => {
-        setUser({
-            ...user,
-            lastName: e.target.value
-        })
-    }
-
-    const handleChangeEmail = (e) => {
-        setUser({
-            ...user,
-            email: e.target.value
-        })
-    }
-
-    const handleChangePassword = (e) => {
-        setUser({
-            ...user,
-            password: e.target.value
-        })
-    }
-
-    const handleChangeConfirmPassword = (e) => {
-        setUser({
-            ...user,
-            confirmPassword: e.target.value
-        })
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault();
     }
 
 
     const isFormValid = () => {
-        const { firstName, lastName, email, password, confirmPassword } = user;
+        const { userName, email, password, confirmPassword } = user;
         return (
-            firstName.trim() &&
-            lastName.trim() &&
+            userName.trim() &&
             email.trim() &&
             password.length >= 6 &&
             password === confirmPassword
         );
     };
 
+    useEffect(() => {
+        fetch("https://blog-restfull-hahw.onrender.com/register", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              username: "",
+              email: "",
+              password: ""
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+    })
 
     return(
-        <div className="container py-4 px-5 w-50 shadow mt-5 border-rounded">
+        <div className="container py-4 px-5 shadow my-3 border-rounded">
             <h3 className="my-3">Registration page</h3>
-            <Form action="">
+            <Form action="" >
                 <FormGroup>
-                    <Label for="firstname">Firstname</Label>
-                    <Input  
-                        name="firstame"
-                        type="text" 
-                        value={user.firstName} 
-                        onChange={(e) => handleChangeFirstName(e)}
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="lastname">Lastname</Label>
+                    <Label for="userName">Username</Label>
                     <Input
-                        name="lastname"
-                        type="text"
-                        value={user.lastName} 
-                        onChange={(e) => handleChangeLastName(e)}
+                        id="userName"
+                        name="userName"
+                        type="text" 
+                        value={user.userName} 
+                        onChange={(e) => setUser({
+                            ...user,
+                            userName: e.target.value
+                        })}
                     />
                 </FormGroup>
                 <FormGroup>                    
                     <Label for="email">Email</Label>
                     <Input
+                        id="email"
                         name="email" 
+                        autoComplete="on" 
                         type="email" 
                         value={user.email} 
-                        onChange={(e) => handleChangeEmail(e)}
+                        onChange={(e) => setUser({
+                            ...user,
+                            email: e.target.value
+                        })}
                     />
                 </FormGroup>
                 <FormGroup>
                     <Label for="password">Create password</Label>
                     <InputGroup>
                         <Input
+                            id="password"
                             name="password"
                             type={isShowed.password ? "text": "password"} 
                             value={user.password} 
-                            onChange={(e) => handleChangePassword(e)}
+                            onChange={(e) =>  setUser({
+                                ...user,
+                                password: e.target.value
+                            })}
                         />
                         <InputGroupText>
                             <FontAwesomeIcon 
@@ -126,13 +108,17 @@ export default function RegistrationPage() {
                     </InputGroup>
                 </FormGroup>
                 <FormGroup>
-                    <Label for="password">Confirm password</Label>
+                    <Label for="confirmPassword">Confirm password</Label>
                     <InputGroup>
-                        <Input 
+                        <Input
+                            id="confirmPassword"
                             name="confirmPassword"
                             type={isShowed.confirmPassword ? "text": "password"} 
                             value={user.confirmPassword} 
-                            onChange={(e) => handleChangeConfirmPassword(e)}
+                            onChange={(e) => setUser({
+                                ...user,
+                                confirmPassword: e.target.value
+                            })}
                         />
                         <InputGroupText>
                             <FontAwesomeIcon 
@@ -152,7 +138,7 @@ export default function RegistrationPage() {
                 >Register</Button>
             </Form>
             <p className="text-center">Already have an account? 
-                <NavLink to="/login"> Sign up</NavLink>
+                <NavLink to="/login"> Sign in</NavLink>
             </p>
 
         </div>

@@ -33,19 +33,35 @@ export default function LoginPage() {
    
 
     return(
-        <div className="container py-4 px-5 w-25 shadow mt-5 border-rounded">
+        <div className="container py-4 px-5 shadow mt-5 border-rounded">
             <h3 className="my-3">Login page</h3>
             <Form action="">
                 <FormGroup>                    
                     <Label for="email">Email</Label>
-                    <Input type="email" value={user.email} onChange={(e) => handleChangeEmail(e)}/>
+                    <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="on" 
+                        value={user.email} 
+                        onChange={(e) => handleChangeEmail(e)}
+                    />
                 </FormGroup>
                 <FormGroup>
                     <Label for="password">Password</Label>
                     <InputGroup>
-                        <Input type={isShowed ? "text": "password"} value={user.password} onChange={(e) => handleChangePassword(e)}/>
+                        <Input
+                            id="password"
+                            name="password"
+                            type={isShowed ? "text": "password"} 
+                            value={user.password} 
+                            onChange={(e) => handleChangePassword(e)}
+                        />
                         <InputGroupText>
-                            <FontAwesomeIcon icon={(isShowed) ? faEyeSlash: faEye} onClick={() => setIsShowed(!isShowed)}/>
+                            <FontAwesomeIcon 
+                                icon={(isShowed) ? faEyeSlash: faEye} 
+                                onClick={() => setIsShowed(!isShowed)}
+                            />
                         </InputGroupText>
                     </InputGroup>
                 </FormGroup>
@@ -55,7 +71,7 @@ export default function LoginPage() {
                 >Login</Button>
             </Form>
             <p className="text-center">Don&apos;t have an account? 
-                <NavLink to="/register"> Sign in</NavLink>
+                <NavLink to="/register"> Sign up</NavLink>
             </p>
 
         </div>
