@@ -3,15 +3,13 @@ import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import ErrorPage from "./pages/ErrorPage";
 import BlogPage from "./pages/BlogPage";
+import PostPage from "./pages/PostPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <BlogPage/>,
     errorElement: <ErrorPage />,
-    children: [
-     
-    ]
   },
   {
     path: "/login",
@@ -20,6 +18,11 @@ const router = createBrowserRouter([
   {
     path: "/register",
     element: <RegistrationPage />
+  },
+  {
+    path:"/:idPost",
+    element:<PostPage />
+
   }
   
 ]);

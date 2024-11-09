@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { URL } from "../utils/url";
-import { Spinner, Button, Nav, ButtonGroup } from "reactstrap";
+import { Spinner, Button, Nav, ButtonGroup} from "reactstrap";
 import { Link } from "react-router-dom";
+import Post from "../components/Post";
 
 export default function BlogPage(){
     const [posts, setPosts] = useState([]);
@@ -16,6 +17,7 @@ export default function BlogPage(){
     }, []);
 
 
+
     return(
         <div className="container py-5">
             <Nav className="py-3 d-flex justify-content-between">
@@ -28,13 +30,19 @@ export default function BlogPage(){
             {
                 (posts.length == 0) ? <Spinner/>:   
                 (
-                    <ul>
+                    <>
                     {
                         posts.map(post => (
-                            <li key={post.id}>{post.title} {post.content}</li>
+                            <Link key={post.id} to={`/${post.id}`}>
+                                <Post 
+                                    userId={post.userId}
+                                    title={post.title}
+                                    body={post.body}
+                                />
+                            </Link>
                         ))
                     }
-                    </ul>
+                    </>
                 )
             }
 

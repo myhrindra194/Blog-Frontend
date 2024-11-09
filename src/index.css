@@ -1,4 +1,7 @@
-a {
-    text-decoration: none;
+a, a:hover, a:visited {
+    color: #000000; /* couleur de texte par défaut */
+    text-decoration: none; /* suppression du soulignement */
     cursor: pointer;
 }
+  
+ 
