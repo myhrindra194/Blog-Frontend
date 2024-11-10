@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupText} from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 
@@ -18,10 +18,7 @@ export default function RegistrationPage() {
         confirmPassword: false,
     });
 
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    }
+    const navigate = useNavigate();
 
 
     const isFormValid = () => {
@@ -29,37 +26,48 @@ export default function RegistrationPage() {
         return (
             userName.trim() &&
             email.trim() &&
-            password.length >= 6 &&
             password === confirmPassword
         );
     };
 
-    useEffect(() => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
         fetch("https://blog-restfull-hahw.onrender.com/register", {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-              username: "",
-              email: "",
-              password: ""
-            })
+            body: JSON.stringify({'username': user.userName, 'email': user.email, "password": user.password})
         })
-        .then(response => response.json())
+        .then(res => {
+            if(res.ok){
+                res.json();
+                alert("Registration in success");
+                navigate("/login")
+            }
+            else {
+                alert("Email already taken");
+            }
+        }) 
         .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
-    })
+        .catch(error => console.error(error))
+        
+    }
 
+
+
+    
     return(
         <div className="container py-4 px-5 shadow my-3 border-rounded">
             <h3 className="my-3">Registration page</h3>
-            <Form action="" >
+            <Form action=""  onSubmit={(e) => handleSubmit(e)} >
                 <FormGroup>
                     <Label for="userName">Username</Label>
                     <Input
                         id="userName"
                         name="userName"
+                        autoComplete="on"
                         type="text" 
                         value={user.userName} 
                         onChange={(e) => setUser({
@@ -133,7 +141,6 @@ export default function RegistrationPage() {
                     </InputGroup>
                 </FormGroup>
                 <Button 
-                    onSubmit={(e) => handleSubmit(e)} 
                     disabled={!isFormValid()}
                 >Register</Button>
             </Form>
