@@ -5,6 +5,9 @@ import ErrorPage from "./pages/ErrorPage";
 import PostPage from "./pages/PostPage";
 import Root from "./components/Root";
 import BlogPage from "./pages/BlogPage";
+import ProfilePage from "./pages/ProfilePage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./hooks/useAuth";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +31,13 @@ const router = createBrowserRouter([
         path:"/:idPost",
         element:<PostPage />
     
+      },
+      {
+        path:"/profile",
+        element:
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
       }
     ]
   },
@@ -38,14 +48,9 @@ const router = createBrowserRouter([
 
 const App = () => {
   return(
-    <RouterProvider router={router} future={{ 
-      v7_startTransition: true,
-      v7_fetcherPersist: true,
-      v7_normalizeFormMethod: true,
-      v7_partialHydration: true,
-      v7_relativeSplatPath: true,
-
-    }} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   )
 }
 

@@ -3,6 +3,7 @@ import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupText} from
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { useAuth } from "../hooks/useAuth";
 
 export default function LoginPage() {
 
@@ -13,19 +14,7 @@ export default function LoginPage() {
     const [isShowed, setIsShowed] = useState(false);
     const navigate = useNavigate();
 
-    const handleChangeEmail = (e) => {
-        setUser({
-            ...user,
-            email: e.target.value
-        })
-    }
-
-    const handleChangePassword = (e) => {
-        setUser({
-            ...user,
-            password: e.target.value
-        })
-    }
+    const { login } = useAuth();
 
     const isFormValid = () => {
         const { email, password } = user;
@@ -35,34 +24,34 @@ export default function LoginPage() {
         );
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        fetch("https://blog-restfull-hahw.onrender.com/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({'email': user.email, "password": user.password})
-        })
-        .then(res => {
-            if(res.ok){
-                res.json();
-                alert("Login in success");
-                navigate("/")
+    
+        try {
+            const response = await fetch("https://blog-restfull-hahw.onrender.com/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: user.email, password: user.password })
+            });
+    
+            if (!response.ok) {
+                throw new Error('Incorrect password');
             }
-            else {
-                alert("Incorrect password");
-                setUser({email:"", password:""})
-            }
-        }) 
-        .then(data => console.log(data))
-        .catch(error => console.error(error))
-        
-    }
+    
+            const { token } = await response.json();
+            login(token); 
+    
+            navigate("/profile"); 
 
+        } catch (error) {
+            alert(error.message); 
+            setUser({ email: "", password: "" });
+        }
+    };
+    
 
-   
 
     return(
         <div className="container py-4 px-5 shadow mt-5 border-rounded">
@@ -76,7 +65,10 @@ export default function LoginPage() {
                         type="email"
                         autoComplete="on" 
                         value={user.email} 
-                        onChange={(e) => handleChangeEmail(e)}
+                        onChange={(e) => setUser({
+                            ...user,
+                            email: e.target.value
+                        })}
                     />
                 </FormGroup>
                 <FormGroup>
@@ -87,7 +79,10 @@ export default function LoginPage() {
                             name="password"
                             type={isShowed ? "text": "password"} 
                             value={user.password} 
-                            onChange={(e) => handleChangePassword(e)}
+                            onChange={(e) => setUser({
+                                ...user,
+                                password: e.target.value
+                            })}
                         />
                         <InputGroupText>
                             <FontAwesomeIcon 
