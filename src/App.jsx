@@ -10,8 +10,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./hooks/useAuth";
 
 
-
-
 const App = () => {
   
   const router = createBrowserRouter([
@@ -35,7 +33,6 @@ const App = () => {
         {
           path:"/:idPost",
           element:<PostPage />
-      
         },
         {
           path:"/profile",

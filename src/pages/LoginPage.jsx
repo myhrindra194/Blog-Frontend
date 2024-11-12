@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupText} from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupText, Spinner} from "reactstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
@@ -14,6 +14,7 @@ export default function LoginPage() {
         password: ""
     });
     const [isShowed, setIsShowed] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -31,7 +32,8 @@ export default function LoginPage() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        setIsLoading(true);
+
         try {
             const response = await fetch(`${URL}/login`, {
                 method: 'POST',
@@ -53,6 +55,7 @@ export default function LoginPage() {
         } catch (error) {
             alert(error.message); 
             setUser({ email: "", password: "" });
+            setIsLoading(false);
         }
     };
     
@@ -104,7 +107,7 @@ export default function LoginPage() {
             <p className="text-center">Don&apos;t have an account? 
                 <NavLink to="/register"> Sign up</NavLink>
             </p>
-
+            {isLoading && <div className="d-flex justify-content-center">< Spinner /></div>}
         </div>
     )
 

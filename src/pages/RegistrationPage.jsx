@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupText} from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupText, Spinner} from "reactstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
@@ -19,7 +19,7 @@ export default function RegistrationPage() {
         password: false,
         confirmPassword: false,
     });
-
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
 
@@ -34,6 +34,7 @@ export default function RegistrationPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
         try {
             const response = await fetch(`${URL}/register`, {
@@ -43,21 +44,18 @@ export default function RegistrationPage() {
                 },
                 body: JSON.stringify({'username': user.userName, 'email': user.email, "password": user.password})
             })
+            
+            
             if (!response.ok){
-                throw new Error("Email already taken");
+                throw new Error;
             }
-            else {
-                const data = await response.json();
-                console.log(data);
-                navigate("/login")
-            }
-        } catch (error) {
-            alert(error.message);
+            alert("Registration in success");
+            navigate("/login");
+            
+        } catch (errors) {
+            alert(errors);
         }
-
     }
-
-
 
     
     return(
@@ -149,8 +147,9 @@ export default function RegistrationPage() {
             <p className="text-center">Already have an account? 
                 <NavLink to="/login"> Sign in</NavLink>
             </p>
-
+            
+            {isLoading && <div className="d-flex justify-content-center">< Spinner /></div>}
+            
         </div>
     )
-
 }
