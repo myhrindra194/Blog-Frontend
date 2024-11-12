@@ -52,6 +52,7 @@ export default function RegistrationPage() {
             alert("Registration in success");
             navigate("/login");
             
+            
         } catch (errors) {
             alert(errors);
         }

@@ -16,7 +16,6 @@ export const AuthProvider = ({children}) => {
     const logout = () => {
         setToken(null);
     };
-    
 
     return <AuthContext.Provider value={{token, login, logout}}>{children}</AuthContext.Provider>
 

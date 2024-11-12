@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import ErrorPage from "./pages/ErrorPage";
@@ -7,10 +7,10 @@ import Root from "./components/Root";
 import BlogPage from "./pages/BlogPage";
 import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider } from "./hooks/useAuth";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
 
-
-const App = () => {
+const AppWrapper = () => {
+  const {token} = useAuth();
   
   const router = createBrowserRouter([
     {
@@ -24,11 +24,11 @@ const App = () => {
         },
         {
           path: "/login",
-          element: <LoginPage />
+          element: token ?<Navigate replace to={"/profile"}/>: <LoginPage />
         },
         {
           path: "/register",
-          element: <RegistrationPage />
+          element: token ? <Navigate replace to={"/profile"}/>: <RegistrationPage />
         },
         {
           path:"/:idPost",
@@ -44,9 +44,15 @@ const App = () => {
       ]
     },
   ]);
+
+  return <RouterProvider router={router} />
+}
+
+
+const App = () => {
   return(
     <AuthProvider>
-      <RouterProvider router={router} />
+      <AppWrapper />
     </AuthProvider>
   )
 }
