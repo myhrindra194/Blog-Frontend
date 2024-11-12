@@ -9,44 +9,44 @@ import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./hooks/useAuth";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root/>,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path:"",
-        element: <BlogPage />
-      },
-      {
-        path: "/login",
-        element: <LoginPage />
-      },
-      {
-        path: "/register",
-        element: <RegistrationPage />
-      },
-      {
-        path:"/:idPost",
-        element:<PostPage />
-    
-      },
-      {
-        path:"/profile",
-        element:
-          <ProtectedRoute>
-            <ProfilePage />
-          </ProtectedRoute>
-      }
-    ]
-  },
- 
-  
-]);
+
 
 
 const App = () => {
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root/>,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path:"",
+          element: <BlogPage />
+        },
+        {
+          path: "/login",
+          element: <LoginPage />
+        },
+        {
+          path: "/register",
+          element: <RegistrationPage />
+        },
+        {
+          path:"/:idPost",
+          element:<PostPage />
+      
+        },
+        {
+          path:"/profile",
+          element:
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+        }
+      ]
+    },
+  ]);
   return(
     <AuthProvider>
       <RouterProvider router={router} />

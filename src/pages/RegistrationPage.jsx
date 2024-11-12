@@ -3,6 +3,8 @@ import { Button, Form, FormGroup, Label, Input, InputGroup, InputGroupText} from
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { URL } from "../utils/url";
+
 
 export default function RegistrationPage() {
 
@@ -30,29 +32,29 @@ export default function RegistrationPage() {
         );
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        fetch("https://blog-restfull-hahw.onrender.com/register", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({'username': user.userName, 'email': user.email, "password": user.password})
-        })
-        .then(res => {
-            if(res.ok){
-                res.json();
-                alert("Registration in success");
-                navigate("/login")
+        try {
+            const response = await fetch(`${URL}/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'username': user.userName, 'email': user.email, "password": user.password})
+            })
+            if (!response.ok){
+                throw new Error("Email already taken");
             }
             else {
-                alert("Email already taken");
+                const data = await response.json();
+                console.log(data);
+                navigate("/login")
             }
-        }) 
-        .then(data => console.log(data))
-        .catch(error => console.error(error))
-        
+        } catch (error) {
+            alert(error.message);
+        }
+
     }
 
 

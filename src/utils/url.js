@@ -1,1 +1,1 @@
-export const URL = "https://jsonplaceholder.typicode.com/posts";
+export const URL = "https://blog-restfull-hahw.onrender.com";

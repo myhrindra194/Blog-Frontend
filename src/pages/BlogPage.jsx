@@ -9,7 +9,7 @@ export default function BlogPage(){
     
 
     useEffect(() => {
-        fetch(URL)
+        fetch(`${URL}/blogs`)
         .then(res => res.json())
         .then(data => setPosts(data))
         .catch(error => {
@@ -28,9 +28,8 @@ export default function BlogPage(){
                         posts.map(post => (
                             <Link key={post.id} to={`/${post.id}`}>
                                 <Post
-                                    userId={post.userId}
                                     title={post.title}
-                                    body={post.body}
+                                    content={post.content}
                                 />
                             </Link>
                         ))

@@ -4,6 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { useAuth } from "../hooks/useAuth";
+import { URL } from "../utils/url";
+
 
 export default function LoginPage() {
 
@@ -12,9 +14,11 @@ export default function LoginPage() {
         password: ""
     });
     const [isShowed, setIsShowed] = useState(false);
+    
     const navigate = useNavigate();
-
     const { login } = useAuth();
+
+
 
     const isFormValid = () => {
         const { email, password } = user;
@@ -24,11 +28,12 @@ export default function LoginPage() {
         );
     };
 
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
     
         try {
-            const response = await fetch("https://blog-restfull-hahw.onrender.com/login", {
+            const response = await fetch(`${URL}/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

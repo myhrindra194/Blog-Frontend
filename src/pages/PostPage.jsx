@@ -10,7 +10,7 @@ export default function PostPage(){
     const [post, setPost] = useState([]);
     
     useEffect(() => {
-        fetch(`${URL}/${idPost}`)
+        fetch(`${URL}/blogs/${idPost}`)
         .then(res => res.json())
         .then(data => setPost(data))
         .catch(error => {
@@ -21,8 +21,7 @@ export default function PostPage(){
     return (post.length == 0) ?
         <Spinner /> : 
         <Post 
-            userId={post.userId}
             title={post.title}
-            body={post.body}
+            content={post.content}
         />
 } 
