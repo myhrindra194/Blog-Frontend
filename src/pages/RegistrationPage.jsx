@@ -142,7 +142,7 @@ export default function RegistrationPage() {
                     </InputGroup>
                 </FormGroup>
                 <Button 
-                    disabled={!isFormValid()}
+                    disabled={!isFormValid() || isLoading}
                 >Register</Button>
             </Form>
             <p className="text-center">Already have an account? 

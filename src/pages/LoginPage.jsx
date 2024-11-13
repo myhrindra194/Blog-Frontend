@@ -20,7 +20,6 @@ export default function LoginPage() {
     const { login } = useAuth();
 
 
-
     const isFormValid = () => {
         const { email, password } = user;
         return (
@@ -47,12 +46,16 @@ export default function LoginPage() {
                 throw new Error('Incorrect password');
             }
     
-            const { token } = await response.json();
-            login(token); 
-    
+            const data = await response.json();
+            
+            login( data.user.id, data.token); 
+            
             navigate("/profile"); 
 
+
         } catch (error) {
+            console.log(error);
+            
             alert(error.message); 
             setUser({ email: "", password: "" });
             setIsLoading(false);
@@ -101,7 +104,7 @@ export default function LoginPage() {
                     </InputGroup>
                 </FormGroup>
                 <Button className="mb-4 "
-                        disabled={!isFormValid()}
+                        disabled={!isFormValid() || isLoading}
                 >Login</Button>
             </Form>
             <p className="text-center">Don&apos;t have an account? 

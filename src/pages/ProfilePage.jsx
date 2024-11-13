@@ -1,34 +1,39 @@
-import { Button, Form, FormGroup, Input, Label, Spinner } from "reactstrap";
+import { Button, ButtonGroup, Form, FormGroup, Input, Label, Spinner } from "reactstrap";
 import { useAuth } from "../hooks/useAuth"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { URL } from "../utils/url";
+import Post from "../components/Post";
 
 export default function ProfilePage(){
-    const { token, logout } = useAuth();
+    const { userId, token } = useAuth();
     const [showForm, setShowForm] = useState(false);
     const [post, setPost] = useState({
         title:"",
         content:""
-    })
+    });
+    const [postId, setPostId] = useState(0)
     const [isLoading, setIsLoading] = useState(false);
+    const [userPosts, setUserPosts] = useState([]);
+    const [buttonState, setButtonState] = useState(false);
 
-   
-   const handleLogout = () => {
-        logout();
-   }
-
-   const isFormValid = () => {
+    const isFormValid = () => {
         return(post.title.trim() && post.content.trim());
-   }
+    }
 
-   const handleSubmit = async(e) => {
+    useEffect(() => {
+        fetch(`${URL}/blogs`)
+        .then(response => response.json())
+        .then(data => setUserPosts(data))
+        .catch(error => console.error(error))
+    });
+
+    
+    const handleSubmit = async(e) => {
         e.preventDefault();
         setIsLoading(true);
-        
+
         try {
-            const response = fetch(`${URL}/blogs`, {
+           fetch(`${URL}/blogs`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,9 +41,7 @@ export default function ProfilePage(){
                 },
                 body: JSON.stringify({ title: post.title, content: post.content})
             })
-            
-            const data = (await response).json();
-            console.log(data);
+            setPost({title:"", content:""});
             setShowForm(false);
             
         } catch (error) {
@@ -46,17 +49,66 @@ export default function ProfilePage(){
         }
    }
 
+
+
+    const handleEdit = (title, content) => {
+        setShowForm(true);
+        setButtonState(true);
+        setPost({title:title, content:content});
+    }
+
+
+    const handleDelete = (id) => {
+        try {
+            fetch(`${URL}/blogs/${id}`, {
+                method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+            })
+              
+        } catch (error) {
+            alert(error)
+        }
+        
+    }
+
+    const handleEditPost = (e) => {
+        e.preventDefault()
+        console.log(postId);
+        
+        try {
+            fetch(`${URL}/blogs/${postId}`, {
+                method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ title: post.title, content: post.content})
+            })
+        } catch (error) {
+            alert(error)
+        }
+        console.log("edited");
+        
+    }
+
+   
+
     return (
         <div >
             <div className="d-flex justify-content-between align-items-center">
-                <p>Hello, you are connected</p>
-                <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} size="xl"/>
+                <p>Hello, you are connected User {userId}</p>
             </div>
-            <Button className="my-5" onClick={() => setShowForm(true)}> Add new post</Button>
-            
+            <Button className="my-5" onClick={() => setShowForm(!showForm)}> Add new post</Button>
             {
                 showForm && (
-                    <Form action="" onSubmit={(e) => {handleSubmit(e)}} className="col-8 border p-5">
+                    <Form 
+                        action="" 
+                        onSubmit={buttonState ? (e) => handleEditPost(e) : (e) => handleSubmit(e)}
+                        className="col-8 border p-5"
+                    >
                         <FormGroup>                    
                             <Label for="title">Title</Label>
                             <Input
@@ -87,12 +139,34 @@ export default function ProfilePage(){
                         </FormGroup>
                         <Button className="mb-4 float-end"
                                 disabled={!isFormValid()}
-                        >Add</Button>
+                                color="success"
+                        >{(buttonState) ? "Validate": "Add"}</Button>
+                        {
+                            buttonState && 
+                            <Button onClick={() => {
+                                setPost({title:"", content:""})
+                                setShowForm(false);
+                                setButtonState(false);
+                            }}>Cancel</Button>
+                        }
                         {
                             isLoading && <Spinner />
                         }
+
                     </Form>
                 )
+            }
+            {
+                (userPosts.length == 0) ? 
+                <div className="container"><Spinner /></div> :
+                userPosts.filter(post => post.autorId == userId).map(post => (
+                    <Post key={post.id} title={post.title} content={post.content}>
+                        <ButtonGroup tag={"div"} className="w-25">
+                            <Button color="primary" onClick={() => {setPostId(post.id); handleEdit(post.title, post.content)}}>Edit</Button>
+                            <Button color="danger" onClick={() => handleDelete(post.id)}>Delete</Button>
+                        </ButtonGroup>
+                    </Post>
+                ))
             }
         </div>
     )

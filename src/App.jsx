@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 
 const AppWrapper = () => {
-  const {token} = useAuth();
+  const { token } = useAuth();
   
   const router = createBrowserRouter([
     {
@@ -24,7 +24,7 @@ const AppWrapper = () => {
         },
         {
           path: "/login",
-          element: token ?<Navigate replace to={"/profile"}/>: <LoginPage />
+          element: token ? <Navigate replace to={"/profile"}/>: <LoginPage />
         },
         {
           path: "/register",

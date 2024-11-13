@@ -6,7 +6,6 @@ import Post from "../components/Post";
 
 export default function BlogPage(){
     const [posts, setPosts] = useState([]);
-    
 
     useEffect(() => {
         fetch(`${URL}/blogs`)
@@ -30,6 +29,7 @@ export default function BlogPage(){
                                 <Post
                                     title={post.title}
                                     content={post.content}
+                                    date={new Date(post.createdAt).toDateString() +" at "+ new Date(post.createdAt).toLocaleTimeString()}
                                 />
                             </Link>
                         ))

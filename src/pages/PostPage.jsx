@@ -23,5 +23,6 @@ export default function PostPage(){
         <Post 
             title={post.title}
             content={post.content}
+            date={new Date(post.createdAt).toDateString() +" at "+ new Date(post.createdAt).toLocaleTimeString()}
         />
 } 
