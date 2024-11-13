@@ -9,10 +9,7 @@ import { URL } from "../utils/url";
 
 export default function LoginPage() {
 
-    const [user, setUser] = useState({
-        email: "",
-        password: ""
-    });
+    const [user, setUser] = useState({email: "", password: ""});
     const [isShowed, setIsShowed] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
    
@@ -20,13 +17,7 @@ export default function LoginPage() {
     const { login } = useAuth();
 
 
-    const isFormValid = () => {
-        const { email, password } = user;
-        return (
-            email.trim() &&
-            password.trim()
-        );
-    };
+    const isFormValid = () => (user.email.trim() && user.password.trim());
 
     
     const handleSubmit = async (e) => {
@@ -54,8 +45,6 @@ export default function LoginPage() {
 
 
         } catch (error) {
-            console.log(error);
-            
             alert(error.message); 
             setUser({ email: "", password: "" });
             setIsLoading(false);

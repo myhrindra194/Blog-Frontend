@@ -13,9 +13,7 @@ export default function PostPage(){
         fetch(`${URL}/blogs/${idPost}`)
         .then(res => res.json())
         .then(data => setPost(data))
-        .catch(error => {
-            console.error("Error while fetching data", error)
-        })
+        .catch(error => console.error("Error while fetching data", error))
     }, [idPost]);
 
     return (post.length == 0) ?

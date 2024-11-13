@@ -5,35 +5,32 @@ import { URL } from "../utils/url";
 import Post from "../components/Post";
 
 export default function ProfilePage(){
+
     const { userId, token } = useAuth();
-    const [showForm, setShowForm] = useState(false);
-    const [post, setPost] = useState({
-        title:"",
-        content:""
-    });
-    const [postId, setPostId] = useState(0)
-    const [isLoading, setIsLoading] = useState(false);
+    const [post, setPost] = useState({title:"", content:""});
+    const [postId, setPostId] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
+    const [showForm, setShowForm] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [buttonState, setButtonState] = useState(false);
 
-    const isFormValid = () => {
-        return(post.title.trim() && post.content.trim());
-    }
+    const isFormValid = () => (post.title.trim() && post.content.trim());
+
 
     useEffect(() => {
         fetch(`${URL}/blogs`)
         .then(response => response.json())
         .then(data => setUserPosts(data))
         .catch(error => console.error(error))
+        
     });
 
     
     const handleSubmit = async(e) => {
         e.preventDefault();
         setIsLoading(true);
-
         try {
-           fetch(`${URL}/blogs`, {
+            const response = await fetch(`${URL}/blogs`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,9 +38,12 @@ export default function ProfilePage(){
                 },
                 body: JSON.stringify({ title: post.title, content: post.content})
             })
+            const data = await response.json();
+            console.log(data);
+            
             setPost({title:"", content:""});
             setShowForm(false);
-            
+
         } catch (error) {
             alert(error)
         }
@@ -74,9 +74,9 @@ export default function ProfilePage(){
         
     }
 
+
     const handleEditPost = (e) => {
         e.preventDefault()
-        console.log(postId);
         
         try {
             fetch(`${URL}/blogs/${postId}`, {
@@ -90,8 +90,6 @@ export default function ProfilePage(){
         } catch (error) {
             alert(error)
         }
-        console.log("edited");
-        
     }
 
    
@@ -162,7 +160,10 @@ export default function ProfilePage(){
                 userPosts.filter(post => post.autorId == userId).map(post => (
                     <Post key={post.id} title={post.title} content={post.content}>
                         <ButtonGroup tag={"div"} className="w-25">
-                            <Button color="primary" onClick={() => {setPostId(post.id); handleEdit(post.title, post.content)}}>Edit</Button>
+                            <Button color="primary" onClick={() => {
+                                setPostId(post.id); 
+                                handleEdit(post.title, post.content);
+                            }}>Edit</Button>
                             <Button color="danger" onClick={() => handleDelete(post.id)}>Delete</Button>
                         </ButtonGroup>
                     </Post>

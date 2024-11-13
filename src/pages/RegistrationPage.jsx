@@ -47,11 +47,11 @@ export default function RegistrationPage() {
             
             
             if (!response.ok){
-                throw new Error;
+                throw new Error("Email already taken");
             }
+
             alert("Registration in success");
             navigate("/login");
-            
             
         } catch (errors) {
             alert(errors);
