@@ -3,9 +3,12 @@ import { URL } from "../utils/url";
 import { Spinner} from "reactstrap";
 import { Link } from "react-router-dom";
 import Post from "../components/Post";
+import SearchBar from "../components/SearchBar";
+import { filterPost } from "../utils/function";
 
 export default function BlogPage(){
     const [posts, setPosts] = useState([]);
+    const [searchWord, setSearchWord] = useState("");
 
     useEffect(() => {
         fetch(`${URL}/blogs`)
@@ -18,14 +21,14 @@ export default function BlogPage(){
 
 
     return(
-        <div className="container py-5">
+        <div className="container py-4">
+           <SearchBar value={searchWord} onChange={(e) => setSearchWord(e.target.value)}/>
             {
                 (posts.length == 0) ? <Spinner/>:   
                 (
                     <>
                     {
-                        posts.sort((a, b) => a.createdAt < b.createdAt ? 1: -1)
-                            .map(post => (
+                        filterPost(posts, searchWord).map(post => (
                             <Link key={post.id} to={`/${post.id}`}>
                                 <Post
                                     title={post.title}
