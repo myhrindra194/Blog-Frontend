@@ -43,12 +43,11 @@ export default function LoginPage() {
             
             navigate("/profile"); 
 
-
         } catch (error) {
             alert(error.message); 
-            setUser({ email: "", password: "" });
-            setIsLoading(false);
         }
+        setUser({ email: "", password: "" });
+        setIsLoading(false);
     };
     
 

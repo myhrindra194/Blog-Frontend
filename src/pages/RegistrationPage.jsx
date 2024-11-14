@@ -56,6 +56,8 @@ export default function RegistrationPage() {
         } catch (errors) {
             alert(errors);
         }
+        setUser({userName:"", email:"", password:"", confirmPassword:""});
+        setIsLoading(false);
     }
 
     

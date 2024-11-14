@@ -12,7 +12,7 @@ export default function ProfilePage(){
     const [userPosts, setUserPosts] = useState([]);
     const [showForm, setShowForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [buttonState, setButtonState] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const isFormValid = () => (post.title.trim() && post.content.trim());
 
@@ -22,8 +22,8 @@ export default function ProfilePage(){
         .then(response => response.json())
         .then(data => setUserPosts(data))
         .catch(error => console.error(error))
-        
     });
+
 
     
     const handleSubmit = async(e) => {
@@ -47,49 +47,64 @@ export default function ProfilePage(){
         } catch (error) {
             alert(error)
         }
+        setIsLoading(false);
    }
 
 
 
     const handleEdit = (title, content) => {
         setShowForm(true);
-        setButtonState(true);
+        setIsEditing(true);
         setPost({title:title, content:content});
     }
 
 
-    const handleDelete = (id) => {
-        try {
-            fetch(`${URL}/blogs/${id}`, {
-                method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-            })
-              
-        } catch (error) {
-            alert(error)
+    const handleDelete = async(id) => {
+        if(window.confirm("Are you sure you want to delete")){
+            setIsLoading(true);
+            try {
+                const response = await fetch(`${URL}/blogs/${id}`, {
+                    method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                })
+                const data = await response.json();
+                alert(data.message);
+                
+                
+            } catch (error) {
+                alert(error)
+            }
+            setIsLoading(false);
+            setIsEditing(false);
         }
-        
     }
 
 
-    const handleEditPost = (e) => {
-        e.preventDefault()
-        try {
-            fetch(`${URL}/blogs/${postId}`, {
-                method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ title: post.title, content: post.content})
-            })
-        } catch (error) {
-            alert(error)
+    const handleEditPost = async(e) => {
+        if(window.confirm("Are you sure you want to modify this post?")){
+            e.preventDefault();
+            setIsLoading(true);
+            try {
+                const response = await fetch(`${URL}/blogs/${postId}`, {
+                    method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ title: post.title, content: post.content})
+                })
+                const data = await response.json();
+                alert(data.message);
+            } catch (error) {
+                alert(error)
+            }
+            setPost({title:"", content:""});
+            setShowForm(false);
+            setIsLoading(false);
         }
-        setShowForm(false);
     }
 
    
@@ -104,7 +119,7 @@ export default function ProfilePage(){
                 showForm && (
                     <Form 
                         action="" 
-                        onSubmit={buttonState ? (e) => handleEditPost(e) : (e) => handleSubmit(e)}
+                        onSubmit={isEditing ? (e) => handleEditPost(e) : (e) => handleSubmit(e)}
                         className="col-8 border p-5"
                     >
                         <FormGroup>                    
@@ -136,15 +151,16 @@ export default function ProfilePage(){
 
                         </FormGroup>
                         <Button className="mb-4 float-end"
-                                disabled={!isFormValid()}
+                                disabled={!isFormValid() || isLoading}
                                 color="success"
-                        >{(buttonState) ? "Validate": "Add"}</Button>
+                        >{(isEditing) ? "Validate": "Add"}</Button>
                         {
-                            buttonState && 
-                            <Button onClick={() => {
-                                setPost({title:"", content:""})
-                                setShowForm(false);
-                                setButtonState(false);
+                            isEditing && 
+                            <Button disabled={isLoading}
+                                onClick={() => {
+                                    setPost({title:"", content:""})
+                                    setShowForm(false);
+                                    setIsEditing(false);
                             }}>Cancel</Button>
                         }
                         {
@@ -162,11 +178,15 @@ export default function ProfilePage(){
                         .map(post => (
                     <Post key={post.id} title={post.title} content={post.content}>
                         <ButtonGroup tag={"div"} className="w-25">
-                            <Button color="primary" onClick={() => {
-                                setPostId(post.id); 
-                                handleEdit(post.title, post.content);
+                            <Button color="primary" 
+                                    onClick={() => {
+                                        setPostId(post.id); 
+                                        handleEdit(post.title, post.content);
                             }}>Edit</Button>
-                            <Button color="danger" onClick={() => handleDelete(post.id)}>Delete</Button>
+                            <Button 
+                                color="danger" 
+                                onClick={() => handleDelete(post.id)} 
+                            >Delete</Button>
                         </ButtonGroup>
                     </Post>
                 ))
