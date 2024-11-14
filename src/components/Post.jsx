@@ -6,7 +6,7 @@ export default function Post({ title, content, date, children}) {
         <Card className="p-5 my-3">
             <CardTitle tag={"h4"}>{title}</CardTitle>
             <CardText>{content}</CardText>
-            <CardText>{date}</CardText>
+            <CardText className="text-muted">{date}</CardText>
             {children}
         </Card>
     )

@@ -77,7 +77,6 @@ export default function ProfilePage(){
 
     const handleEditPost = (e) => {
         e.preventDefault()
-        
         try {
             fetch(`${URL}/blogs/${postId}`, {
                 method: 'PATCH',
@@ -90,6 +89,7 @@ export default function ProfilePage(){
         } catch (error) {
             alert(error)
         }
+        setShowForm(false);
     }
 
    
@@ -157,7 +157,9 @@ export default function ProfilePage(){
             {
                 (userPosts.length == 0) ? 
                 <div className="container"><Spinner /></div> :
-                userPosts.filter(post => post.autorId == userId).map(post => (
+                userPosts.filter(post => post.autorId == userId)
+                        .sort((a, b) => a.createdDate < b.createdDate ? 1: -1)
+                        .map(post => (
                     <Post key={post.id} title={post.title} content={post.content}>
                         <ButtonGroup tag={"div"} className="w-25">
                             <Button color="primary" onClick={() => {

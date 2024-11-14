@@ -11,7 +11,7 @@ export default function Root(){
 
     return (
         <div className="container">
-            <Nav className="py-3 d-flex justify-content-between">
+            <Nav className="py-3 d-flex justify-content-between ">
                 <h3><Link to="/">My Blog</Link></h3>
                 {
                     (!token) ?

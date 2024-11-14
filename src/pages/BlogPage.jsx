@@ -24,7 +24,8 @@ export default function BlogPage(){
                 (
                     <>
                     {
-                        posts.map(post => (
+                        posts.sort((a, b) => a.createdAt < b.createdAt ? 1: -1)
+                            .map(post => (
                             <Link key={post.id} to={`/${post.id}`}>
                                 <Post
                                     title={post.title}
