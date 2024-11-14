@@ -3,6 +3,8 @@ import { useAuth } from "../hooks/useAuth"
 import { useEffect, useState } from "react";
 import { URL } from "../utils/url";
 import Post from "../components/Post";
+import { filterPost } from "../utils/function";
+import SearchBar from "../components/SearchBar";
 
 export default function ProfilePage(){
 
@@ -10,6 +12,7 @@ export default function ProfilePage(){
     const [post, setPost] = useState({title:"", content:""});
     const [postId, setPostId] = useState(0);
     const [userPosts, setUserPosts] = useState([]);
+    const [searchWord, setSearchWord] = useState("");
     const [showForm, setShowForm] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -115,6 +118,7 @@ export default function ProfilePage(){
                 <p>Hello, you are connected User {userId}</p>
             </div>
             <Button className="my-5" onClick={() => setShowForm(!showForm)}> Add new post</Button>
+            <SearchBar value={searchWord} onChange={(e) => setSearchWord(e.target.value)}/>
             {
                 showForm && (
                     <Form 
@@ -173,8 +177,8 @@ export default function ProfilePage(){
             {
                 (userPosts.length == 0) ? 
                 <div className="container"><Spinner /></div> :
-                userPosts.filter(post => post.autorId == userId)
-                        .sort((a, b) => a.createdDate < b.createdDate ? 1: -1)
+                filterPost(userPosts, searchWord)
+                        .filter(post => post.autorId == userId)
                         .map(post => (
                     <Post key={post.id} title={post.title} content={post.content}>
                         <ButtonGroup tag={"div"} className="w-25">
