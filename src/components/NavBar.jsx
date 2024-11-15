@@ -1,31 +1,53 @@
-import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import { Button, ButtonGroup, Nav } from "reactstrap";
+import { Nav, NavbarBrand } from "reactstrap";
 import { useAuth } from "../hooks/useAuth";
+import CustomLink from "./CustomLink";
+import vite from "/vite.svg";
 
 export default function NavBar() {
-    const { token, logout } = useAuth();
+  const { token, logout } = useAuth();
 
-    const handleLogout = () => logout();
+  const handleLogout = () => logout();
 
-    return(
-
-       <div className="sticky-top border-bottom bg-light">
-            <Nav className="py-3 d-flex justify-content-between container">
-                <h3><Link to="/">My Blog</Link></h3>
-                {
-                    (!token) ?
-                    <ButtonGroup>
-                        <Button><Link to="/login">Login</Link></Button>
-                        <Button outline><Link to="/register">Register</Link></Button>
-                    </ButtonGroup>:
-                    <div>
-                        <Button className="me-3"><Link to="/profile">DashBoard</Link></Button>
-                        <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} size="xl"/>
-                    </div>
-                }
-            </Nav>
-       </div>
-    )
+  return (
+    <div className="sticky-top navBarBlured">
+      <Nav className="container py-2 d-flex justify-content-between align-items-center">
+        <NavbarBrand
+          href="/"
+          style={{ color: "#101010", textDecoration: "none", fontFamily:"monospace"}}
+        >
+          <img
+            src={vite}
+            alt="Logo react"
+          />
+          <span> HemiBlog</span>
+        </NavbarBrand>
+        {!token ? (
+          <div className="justify-content-between">
+            <button className="buttonLogin">
+              <CustomLink to="/login">
+                <FontAwesomeIcon icon={faUser} /> Login
+              </CustomLink>
+            </button>
+            <button>
+              <CustomLink to="/register">Register</CustomLink>
+            </button>
+          </div>
+        ) : (
+          <div>
+            <button className="me-3">
+              <CustomLink to="/profile">DashBoard</CustomLink>
+            </button>
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              onClick={handleLogout}
+              size="xl"
+              a
+            />
+          </div>
+        )}
+      </Nav>
+    </div>
+  );
 }

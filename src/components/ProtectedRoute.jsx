@@ -6,6 +6,4 @@ export default function ProtectedRoute({children}){
     const { token } = useAuth();  
 
     return (!token) ? <Navigate to="/login"/>: children;
-
-
 }

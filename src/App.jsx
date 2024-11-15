@@ -22,14 +22,7 @@ const AppWrapper = () => {
           path:"",
           element: <BlogPage />
         },
-        {
-          path: "/login",
-          element: token ? <Navigate replace to={"/profile"}/>: <LoginPage />
-        },
-        {
-          path: "/register",
-          element: token ? <Navigate replace to={"/profile"}/>: <RegistrationPage />
-        },
+       
         {
           path:"/:idPost",
           element:<PostPage />
@@ -42,6 +35,14 @@ const AppWrapper = () => {
             </ProtectedRoute>
         }
       ]
+    },
+    {
+      path: "/login",
+      element: token ? <Navigate replace to={"/profile"}/>: <LoginPage />
+    },
+    {
+      path: "/register",
+      element: token ? <Navigate replace to={"/profile"}/>: <RegistrationPage />
     },
   ]);
 

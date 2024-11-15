@@ -5,22 +5,25 @@ import { useLocalStorage } from "./useLocalStorage";
 
 const AuthContext = createContext();
 
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useLocalStorage("token", null);
+  const [userId, setUserId] = useLocalStorage("userId", 0);
 
-export const AuthProvider = ({children}) => {
-    const [token, setToken] = useLocalStorage("token", null);
-    const [userId, setUserId] = useLocalStorage("userId", 0);
+  const login = (id, token) => {
+    setToken(token);
+    setUserId(id);
+  };
 
-    const login = (id, token) => {
-        setToken(token);
-        setUserId(id);
-    };
+  const logout = () => {
+    setToken(null);
+    setUserId(0);
+  };
 
-    const logout = () => {
-        setToken(null);
-        setUserId(0);
-    };
-
-    return <AuthContext.Provider value={{userId, token, login, logout}}>{children}</AuthContext.Provider>
-}
+  return (
+    <AuthContext.Provider value={{ userId, token, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 export const useAuth = () => useContext(AuthContext);
