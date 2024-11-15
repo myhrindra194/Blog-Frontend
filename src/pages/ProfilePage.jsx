@@ -28,13 +28,16 @@ export default function ProfilePage(){
     });
 
 
-    
     const handleSubmit = async(e) => {
         e.preventDefault();
         setIsLoading(true);
+        
+        const method = isEditing ? 'PATCH' : 'POST';
+        const endpoint = isEditing ? `${URL}/blogs/${postId}` : `${URL}/blogs`;
+
         try {
-            const response = await fetch(`${URL}/blogs`, {
-                method: 'POST',
+            const response = await fetch(endpoint, {
+                method: method,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -55,9 +58,10 @@ export default function ProfilePage(){
 
 
 
-    const handleEdit = (title, content) => {
+    const handleEdit = (id, title, content) => {
         setShowForm(true);
         setIsEditing(true);
+        setPostId(id); 
         setPost({title:title, content:content});
     }
 
@@ -86,44 +90,24 @@ export default function ProfilePage(){
     }
 
 
-    const handleEditPost = async(e) => {
-        if(window.confirm("Are you sure you want to modify this post?")){
-            e.preventDefault();
-            setIsLoading(true);
-            try {
-                const response = await fetch(`${URL}/blogs/${postId}`, {
-                    method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({ title: post.title, content: post.content})
-                })
-                const data = await response.json();
-                alert(data.message);
-            } catch (error) {
-                alert(error)
-            }
-            setPost({title:"", content:""});
-            setShowForm(false);
-            setIsLoading(false);
-        }
-    }
+   
 
    
 
     return (
-        <div >
+        <div className="container mt-3">
             <div className="d-flex justify-content-between align-items-center">
                 <p>Hello, you are connected User {userId}</p>
             </div>
-            <Button className="my-5" onClick={() => setShowForm(!showForm)}> Add new post</Button>
-            <SearchBar value={searchWord} onChange={(e) => setSearchWord(e.target.value)}/>
+            <div className="d-flex justify-content-between align-items-center py-4">
+                <Button onClick={() => setShowForm(!showForm)}> Add new post</Button>
+                <SearchBar value={searchWord} onChange={(e) => setSearchWord(e.target.value)}/>
+            </div>
             {
                 showForm && (
                     <Form 
                         action="" 
-                        onSubmit={isEditing ? (e) => handleEditPost(e) : (e) => handleSubmit(e)}
+                        onSubmit={(e) => handleSubmit(e)}
                         className="col-8 border p-5"
                     >
                         <FormGroup>                    
@@ -182,11 +166,10 @@ export default function ProfilePage(){
                         .map(post => (
                     <Post key={post.id} title={post.title} content={post.content}>
                         <ButtonGroup tag={"div"} className="w-25">
-                            <Button color="primary" 
-                                    onClick={() => {
-                                        setPostId(post.id); 
-                                        handleEdit(post.title, post.content);
-                            }}>Edit</Button>
+                            <Button 
+                                color="primary" 
+                                onClick={() => handleEdit(post.id, post.title, post.content)}
+                            >Edit</Button>
                             <Button 
                                 color="danger" 
                                 onClick={() => handleDelete(post.id)} 
