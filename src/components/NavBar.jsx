@@ -15,26 +15,16 @@ export default function NavBar() {
       <Nav className="container py-2 d-flex justify-content-between align-items-center">
         <NavbarBrand
           href="/"
-          style={{ color: "#101010", textDecoration: "none", fontFamily:"monospace"}}
+          style={{
+            color: "#101010",
+            textDecoration: "none",
+            fontFamily: "monospace",
+          }}
         >
-          <img
-            src={vite}
-            alt="Logo react"
-          />
+          <img src={vite} alt="Logo react" />
           <span> HemiBlog</span>
         </NavbarBrand>
-        {!token ? (
-          <div className="justify-content-between">
-            <button className="buttonLogin">
-              <CustomLink to="/login">
-                <FontAwesomeIcon icon={faUser} /> Login
-              </CustomLink>
-            </button>
-            <button>
-              <CustomLink to="/register">Register</CustomLink>
-            </button>
-          </div>
-        ) : (
+        {token != null ? (
           <div>
             <button className="me-3">
               <CustomLink to="/profile">DashBoard</CustomLink>
@@ -45,6 +35,17 @@ export default function NavBar() {
               size="xl"
               a
             />
+          </div>
+        ) : (
+          <div className="justify-content-between">
+            <button className="buttonLogin">
+              <CustomLink to="/login">
+                <FontAwesomeIcon icon={faUser} /> Login
+              </CustomLink>
+            </button>
+            <button>
+              <CustomLink to="/register">Register</CustomLink>
+            </button>
           </div>
         )}
       </Nav>

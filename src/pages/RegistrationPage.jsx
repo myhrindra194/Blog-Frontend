@@ -1,9 +1,7 @@
 import { useState } from "react";
 import {
-  Button,
   Form,
   FormGroup,
-  Label,
   Input,
   InputGroup,
   InputGroupText,
@@ -65,12 +63,13 @@ export default function RegistrationPage() {
   };
 
   return (
-    <div className="container py-4 px-5 shadow my-3 border-rounded col-lg-4 col-md-8 col-sm-12">
+    <div className="registerPage container py-4 px-5 my-5 col-lg-3 col-md-8 col-sm-12">
       <h3 className="my-3">Registration page</h3>
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
         <FormGroup>
-          <Label for="userName">Username</Label>
           <Input
+            className="mt-4"
+            placeholder="Username"
             id="userName"
             name="userName"
             autoComplete="on"
@@ -85,8 +84,9 @@ export default function RegistrationPage() {
           />
         </FormGroup>
         <FormGroup>
-          <Label for="email">Email</Label>
           <Input
+            className="mt-4"
+            placeholder="Email"
             id="email"
             name="email"
             autoComplete="on"
@@ -101,9 +101,9 @@ export default function RegistrationPage() {
           />
         </FormGroup>
         <FormGroup>
-          <Label for="password">Create password</Label>
-          <InputGroup>
+          <InputGroup className="mt-4">
             <Input
+              placeholder="Create password"
               id="password"
               name="password"
               type={isShowed.password ? "text" : "password"}
@@ -115,7 +115,7 @@ export default function RegistrationPage() {
                 })
               }
             />
-            <InputGroupText>
+            <InputGroupText >
               <FontAwesomeIcon
                 icon={isShowed.password ? faEyeSlash : faEye}
                 onClick={() =>
@@ -129,9 +129,9 @@ export default function RegistrationPage() {
           </InputGroup>
         </FormGroup>
         <FormGroup>
-          <Label for="confirmPassword">Confirm password</Label>
-          <InputGroup>
+          <InputGroup className="mt-4">
             <Input
+              placeholder="Confirm password"
               id="confirmPassword"
               name="confirmPassword"
               type={isShowed.confirmPassword ? "text" : "password"}
@@ -156,11 +156,11 @@ export default function RegistrationPage() {
             </InputGroupText>
           </InputGroup>
         </FormGroup>
-        <Button disabled={!isFormValid() || isLoading}>Register</Button>
+        <button className="buttonRegister w-100 py-2 fw-bold mt-2" disabled={!isFormValid() || isLoading}>Register</button>
       </Form>
-      <p className="text-center">
+      <p className="text-center my-3">
         Already have an account?
-        <NavLink to="/login"> Sign in</NavLink>
+        <NavLink to="/login" style={{textDecoration:"none"}}> Sign in</NavLink>
       </p>
 
       {isLoading && (

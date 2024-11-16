@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  Button,
   Form,
   FormGroup,
   Input,
@@ -54,8 +53,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container py-4 px-5 shadow mt-5 col-lg-4 col-md-8 col-sm-12">
-      <h3 className="my-3 text-center">Login page</h3>
+    <div className="container py-4 px-5 mt-5 col-xl-3 col-lg-4 col-md-8 col-sm-10 loginPage">
+      <h3 className="my-3" style={{fontFamily:"monospace"}}>Login page</h3>
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
         <FormGroup>
           <Input
@@ -75,7 +74,7 @@ export default function LoginPage() {
           />
         </FormGroup>
         <FormGroup>
-          <InputGroup className="mt-4">
+          <InputGroup className="mt-4 inputGroup">
             <Input
               id="password"
               name="password"
@@ -89,7 +88,7 @@ export default function LoginPage() {
                 })
               }
             />
-            <InputGroupText>
+            <InputGroupText className="icon">
               <FontAwesomeIcon
                 icon={isShowed ? faEyeSlash : faEye}
                 onClick={() => setIsShowed(!isShowed)}
@@ -97,16 +96,16 @@ export default function LoginPage() {
             </InputGroupText>
           </InputGroup>
         </FormGroup>
-        <Button
-          className="my-3 w-100 rounded"
+        <button
+          className="my-3 py-2 w-100 fw-bold buttonLogin"
           disabled={!isFormValid() || isLoading}
         >
-          Login
-        </Button>
+          Sign in
+        </button>
       </Form>
       <p className="text-center mt-2">
         Don&apos;t have an account?
-        <NavLink to="/register"> Sign up</NavLink>
+        <NavLink to="/register" style={{textDecoration:"none"}}> Sign up</NavLink>
       </p>
       {isLoading && (
         <div className="d-flex justify-content-center">
