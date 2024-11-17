@@ -9,6 +9,7 @@ export default function NavBar() {
   const { token, logout } = useAuth();
 
   const handleLogout = () => logout();
+  
 
   return (
     <div className="sticky-top navBarBlured">
