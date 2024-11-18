@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 export default function DashBoard() {
   const { id, token } = useAuth().user;
   // const [post, setPost] = useState({ title: "", content: "", image: "" });
-  const [postId, setPostId] = useState(0);
+  // const [postId, setPostId] = useState(0);
   const [userPosts, setUserPosts] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -34,29 +34,17 @@ export default function DashBoard() {
     e.preventDefault();
     setIsLoading(true);
 
-    const method = isEditing ? "PUT" : "POST";
-    const endpoint = isEditing ? `${URL}/blogs/${postId}` : `${URL}/blogs`;
-
-    const data = new FormData(e.target);
-
-    const title = data.get("title");
-    const content = data.get("content");
-    const image = data.get("image");
-
-    const body = isEditing ? JSON.stringify({title, content, image,}): data;
-
     try {
-      const response = await fetch(endpoint, {
-        method: method,
+      const response = await fetch(`${URL}/blogs`, {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: body,
+        body: new FormData(e.target),
       });
       const data = await response.json();
       console.log(data);
 
-      // setPost({ title: "", content: "" });
       setShowForm(false);
     } catch (error) {
       alert(error);
@@ -64,12 +52,14 @@ export default function DashBoard() {
     setIsLoading(false);
   };
 
-  const handleEdit = (id) => {
-    setShowForm(true);
-    setIsEditing(true);
-    setPostId(id);
-    // setPost({ title: title, content: content });
-  };
+
+
+  // const handleEdit = (id) => {
+  //   setShowForm(true);
+  //   setIsEditing(true);
+  //   setPostId(id);
+  //   setPost({ title: title, content: content });
+  // };
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete")) {
@@ -130,7 +120,6 @@ export default function DashBoard() {
                     name="title"
                     type="title"
                     autoComplete="on"
-                    
                   />
                 </FormGroup>
                 <FormGroup>
@@ -140,21 +129,17 @@ export default function DashBoard() {
                     name="content"
                     type="textarea"
                     style={{ height: "16vh" }}
-                    
                   />
                 </FormGroup>
-                <FormGroup>
-                  <Label for="content">Image</Label>
-                  <Input
-                    id="image"
-                    name="image"
-                    type="file"
-                    
-                  />
-                </FormGroup>
+                {!isEditing && (
+                  <FormGroup>
+                    <Label for="content">Image</Label>
+                    <Input id="image" name="image" type="file" />
+                  </FormGroup>
+                )}
                 <Button
                   className="mb-4 float-end"
-                  disabled={ isLoading}
+                  disabled={isLoading}
                   color="success"
                 >
                   {isEditing ? "Validate" : "Add"}
@@ -191,7 +176,7 @@ export default function DashBoard() {
                           icon={faEdit}
                           color="primary"
                           onClick={() =>
-                            handleEdit(post.id, post.title, post.content)
+                            ""
                           }
                         />
                         <span>{"  "}</span>
