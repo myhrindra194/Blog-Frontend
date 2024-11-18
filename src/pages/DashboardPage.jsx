@@ -13,15 +13,15 @@ import { Link } from "react-router-dom";
 
 export default function DashBoard() {
   const { id, token } = useAuth().user;
-  // const [post, setPost] = useState({ title: "", content: "", image: "" });
-  // const [postId, setPostId] = useState(0);
+  const [post, setPost] = useState({ title: "", content: "", image: "" });
+  const [postId, setPostId] = useState(0);
   const [userPosts, setUserPosts] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  // const isFormValid = () => post.title.trim() && post.content.trim();
+  const isFormValid = () => post.title.trim() && post.content.trim();
 
   useEffect(() => {
     fetch(`${URL}/blogs`)
@@ -52,14 +52,37 @@ export default function DashBoard() {
     setIsLoading(false);
   };
 
+  const handleEdit = (id, title, content) => {
+    setShowForm(true);
+    setIsEditing(true);
+    setPostId(id);
+    setPost({ ...post, title: title, content: content });
+  };
 
+  const handleEditSubmit= async(e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-  // const handleEdit = (id) => {
-  //   setShowForm(true);
-  //   setIsEditing(true);
-  //   setPostId(id);
-  //   setPost({ title: title, content: content });
-  // };
+    try {
+      const response = await fetch(`${URL}/blogs/${postId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({...post, title: post.title, content: post.content}),
+      });
+      const data = await response.json();
+      console.log(data);
+
+      setShowForm(false);
+    } catch (error) {
+      alert(error);
+    }
+    setIsLoading(false);
+    setIsEditing(false);
+    setPost({title:"", content:"", image:""})
+  }
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete")) {
@@ -81,9 +104,18 @@ export default function DashBoard() {
       setIsEditing(false);
     }
   };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    setIsEditing(false);
+    setShowForm(false);
+    setPostId(0);
+  }
+
   const filteredPost = filterPost(userPosts, searchWord).filter(
     (post) => post.autorId == id
   );
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -110,7 +142,7 @@ export default function DashBoard() {
             {showForm && (
               <Form
                 action=""
-                onSubmit={(e) => handleSubmit(e)}
+                onSubmit={isEditing ?(e) => handleEditSubmit(e): (e) => handleSubmit(e)}
                 className="col-8 border p-5 my-5"
               >
                 <FormGroup>
@@ -120,6 +152,8 @@ export default function DashBoard() {
                     name="title"
                     type="title"
                     autoComplete="on"
+                    value={post.title}
+                    onChange={(e) => setPost({...post, title: e.target.value})}
                   />
                 </FormGroup>
                 <FormGroup>
@@ -129,6 +163,8 @@ export default function DashBoard() {
                     name="content"
                     type="textarea"
                     style={{ height: "16vh" }}
+                    value={post.content}
+                    onChange={(e) => setPost({...post, content: e.target.value})}
                   />
                 </FormGroup>
                 {!isEditing && (
@@ -139,7 +175,7 @@ export default function DashBoard() {
                 )}
                 <Button
                   className="mb-4 float-end"
-                  disabled={isLoading}
+                  disabled={isLoading || !isFormValid()}
                   color="success"
                 >
                   {isEditing ? "Validate" : "Add"}
@@ -147,10 +183,7 @@ export default function DashBoard() {
                 {isEditing && (
                   <Button
                     disabled={isLoading}
-                    onClick={() => {
-                      setShowForm(false);
-                      setIsEditing(false);
-                    }}
+                    onClick={(e) => handleCancel(e)}
                   >
                     Cancel
                   </Button>
@@ -175,9 +208,11 @@ export default function DashBoard() {
                         <FontAwesomeIcon
                           icon={faEdit}
                           color="primary"
-                          onClick={() =>
-                            ""
-                          }
+                          onClick={() => {
+                            setIsEditing(true);
+                            setShowForm(true);
+                            handleEdit(post.id, post.title, post.content)
+                          }}
                         />
                         <span>{"  "}</span>
                         <FontAwesomeIcon
