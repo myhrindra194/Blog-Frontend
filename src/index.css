@@ -1,65 +1,76 @@
 .navBarBlured {
-    background-color: #e3b5FF;
-    border-bottom: solid 1.5px #101010;
-  }
-  
-  .blogTitle {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-  
-  button {
-    padding: 4px 20px;
-    margin: 0px 10px;
-    box-shadow: 1.5px 1px 1px #101010;
-  }
-  
-  button:hover {
-    transform: scale(1.04);
-    transition: 0.3s;
-  }
-  
-  .postItem {
-    border-radius: 15px;
-    border: solid #101010 1px;
-  }
-  
-  .postItem:hover {
-    transform: scale(1.02);
-    transition: 0.3s;
-  }
-  
-  .buttonLogin, .buttonRegister {
-    background-color: #d0Eb97;
-    color: #101010;
-    margin: 0px 0px;
-  }
-  
-  .buttonLogin:hover {
-    background-color: #c4ee6a;
-  }
-  
-  .inputSearch, button, .loginPage, .registerPage {
-    border-radius: 20px;
-    border: solid #101010 1px;
-  }
-  
-  .loginPage, .registerPage {
-    box-shadow: 4px 4px 2px #101010;
-    color: #101010;
-    background-color: #e3b5FF;
-  }
-  
-  #email, #userName, .inputGroup {
-    border: solid #101010 2px;
-    border-radius: 15px;
-  }
-  
-  #password, #confirmPassword {
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
-  
-  .icon {
-    background-color: white;
-    border-radius: 15px;
-  }
+  background-color: #e3b5FF;
+  border-bottom: solid 1.5px #101010;
+}
+
+.blogTitle {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#email:focus, 
+#userName:focus, 
+#password:focus, 
+#confirmPassword:focus {
+  box-shadow: none;
+}
+
+button {
+  padding: 4px 20px;
+  margin: 0px 10px;
+  box-shadow: 1.5px 1px 1px #101010;
+}
+
+
+button:hover {
+  transform: scale(1.04);
+  transition: 0.3s;
+}
+
+.buttonLogin, .buttonRegister {
+  background-color: #d0Eb97;
+  color: #101010;
+  margin: 0px 0px;
+}
+
+.buttonLogin:hover {
+  background-color: #c4ee6a;
+}
+
+button, .loginPage, .registerPage {
+  border-radius: 20px;
+  border: solid #101010 1px;
+}
+
+.loginPage, .registerPage {
+  box-shadow: 4px 4px 2px #101010;
+  color: #101010;
+  background-color: #e3b5FF;
+}
+
+#email, #userName, .inputGroup {
+  border: solid #101010 2px;
+  border-radius: 15px;
+}
+
+#password, #confirmPassword {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.icon {
+  background-color: white;
+  border-radius: 15px;
+}
+
+.sidebar {
+  background-color: #e3b5FF;
+}
+
+.dashboardLink {
+  padding: 10px;
+}
+.dashboardLink:hover {
+  background: #d0Eb97;
+  border-radius: 15px;
+
+}

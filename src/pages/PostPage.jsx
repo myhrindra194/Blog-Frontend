@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { URL } from "../utils/url";
-import Post from "../components/Post";
-import { Spinner } from "reactstrap";
+import PostCard from "../components/PostCard";
+import CustomSpinner from "../components/CustomSpinner";
 
 export default function PostPage() {
   const { idPost } = useParams();
@@ -16,11 +16,11 @@ export default function PostPage() {
   }, [idPost]);
 
   return (
-    <div className="container">
+    <div className="container row">
       {post.length == 0 ? (
-        <Spinner />
+        <CustomSpinner />
       ) : (
-        <Post
+        <PostCard
           title={post.title}
           content={post.content}
           date={new Date(post.createdAt).toDateString()}

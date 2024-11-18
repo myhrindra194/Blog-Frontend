@@ -1,4 +1,4 @@
-import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Nav, NavbarBrand } from "reactstrap";
 import { useAuth } from "../hooks/useAuth";
@@ -6,10 +6,7 @@ import CustomLink from "./CustomLink";
 import vite from "/vite.svg";
 
 export default function NavBar() {
-  const { token, logout } = useAuth();
-
-  const handleLogout = () => logout();
-  
+  const { token } = useAuth().user;
 
   return (
     <div className="sticky-top navBarBlured">
@@ -30,12 +27,6 @@ export default function NavBar() {
             <button className="me-3">
               <CustomLink to="/profile">DashBoard</CustomLink>
             </button>
-            <FontAwesomeIcon
-              icon={faRightFromBracket}
-              onClick={handleLogout}
-              size="xl"
-              a
-            />
           </div>
         ) : (
           <div className="justify-content-between">

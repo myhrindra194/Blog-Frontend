@@ -7,12 +7,11 @@ import {
   InputGroupText,
   Spinner,
 } from "reactstrap";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { useAuth } from "../hooks/useAuth";
 import { URL } from "../utils/url";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function LoginPage() {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -43,7 +42,7 @@ export default function LoginPage() {
 
       const data = await response.json();
 
-      login(data.user.id, data.token);
+      login(data.user.id, data.user.username, data.token);
 
       navigate("/profile");
     } catch (error) {
@@ -56,9 +55,6 @@ export default function LoginPage() {
   return (
     <div className="container py-4 px-5 mt-5 col-xl-3 col-lg-4 col-md-8 col-sm-10 loginPage">
       <h4 className="my-3" style={{ fontFamily: "monospace" }}>
-        <Link style={{ textDecoration: "none", color: "#101010" }} to="/">
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </Link>{" "}
         Login page
       </h4>
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
@@ -106,7 +102,13 @@ export default function LoginPage() {
           className="my-3 py-2 w-100 fw-bold buttonLogin"
           disabled={!isFormValid() || isLoading}
         >
-          Sign in
+          {isLoading ? (
+            <div className="d-flex justify-content-center">
+              <Spinner />
+            </div>
+          ) : (
+            "Sign in"
+          )}
         </button>
       </Form>
       <p className="text-center mt-2">
@@ -115,12 +117,6 @@ export default function LoginPage() {
           <br /> Sign up
         </NavLink>
       </p>
-      {isLoading && (
-        <div className="d-flex justify-content-center">
-          <Spinner />
-        </div>
-      )}
-
     </div>
   );
 }

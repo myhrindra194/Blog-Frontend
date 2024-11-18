@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { URL } from "../utils/url";
-import { Spinner } from "reactstrap";
-import Post from "../components/Post";
+import PostCard from "../components/PostCard";
 import SearchBar from "../components/SearchBar";
 import { filterPost } from "../utils/function";
-import CustomLink from "../components/CustomLink";
+import CustomSpinner from "../components/CustomSpinner";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState([]);
   const [searchWord, setSearchWord] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${URL}/blogs`)
@@ -21,33 +22,30 @@ export default function BlogPage() {
 
   return (
     <div className="container">
-      <div className="row">
-      <div className="col-4 mt-4">
+      <div className="mt-4">
         <SearchBar
           value={searchWord}
           onChange={(e) => setSearchWord(e.target.value)}
         />
       </div>
-      <div className="col-8">
-      
       {posts.length == 0 ? (
-        <Spinner className="my-5" />
+        <CustomSpinner />
+      ) : filteredPost.length == 0 ? (
+        <p>No item</p>
       ) : (
-        <div >
+        <div className="row gap-4">
           {filteredPost.map((post) => (
-            <CustomLink key={post.id} to={`/${post.id}`}>
-              <Post
-                title={post.title}
-                content={post.content}
-                date={new Date(post.createdAt).toDateString()}
-                hour={new Date(post.createdAt).toLocaleTimeString()}
-              />
-            </CustomLink>
+            <PostCard
+              key={post.id}
+              title={post.title}
+              content={post.content}
+              date={new Date(post.createdAt).toDateString()}
+              hour={new Date(post.createdAt).toLocaleTimeString()}
+              onClick={() => navigate(`/${post.id}`)}
+            />
           ))}
         </div>
       )}
-      </div>
-      </div>
     </div>
   );
 }

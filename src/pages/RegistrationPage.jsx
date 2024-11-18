@@ -7,11 +7,10 @@ import {
   InputGroupText,
   Spinner,
 } from "reactstrap";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { URL } from "../utils/url";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function RegistrationPage() {
   const [user, setUser] = useState({
@@ -66,9 +65,6 @@ export default function RegistrationPage() {
   return (
     <div className="registerPage container py-4 px-5 my-5 col-xl-3 col-lg-4 col-md-8 col-sm-12">
       <h4 className="my-3" style={{ fontFamily: "monospace" }}>
-        <Link style={{ textDecoration: "none", color: "#101010" }} to="/">
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </Link>{" "}
         Registration
       </h4>{" "}
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
@@ -166,7 +162,13 @@ export default function RegistrationPage() {
           className="buttonRegister w-100 py-2 fw-bold mt-2"
           disabled={!isFormValid() || isLoading}
         >
-          Register
+          {isLoading ? (
+            <div className="d-flex justify-content-center">
+              <Spinner />
+            </div>
+          ) : (
+            "Register"
+          )}
         </button>
       </Form>
       <p className="text-center my-3">
@@ -176,11 +178,6 @@ export default function RegistrationPage() {
           Sign in
         </NavLink>
       </p>
-      {isLoading && (
-        <div className="d-flex justify-content-center">
-          <Spinner />
-        </div>
-      )}
     </div>
   );
 }

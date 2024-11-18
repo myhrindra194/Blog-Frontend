@@ -1,61 +1,69 @@
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import ErrorPage from "./pages/ErrorPage";
 import PostPage from "./pages/PostPage";
 import Root from "./components/Root";
 import BlogPage from "./pages/BlogPage";
-import ProfilePage from "./pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
+import DashBoard from "./pages/DashboardPage";
 
 const AppWrapper = () => {
-  const { token } = useAuth();
-  
+  const { user } = useAuth();
+  const { token } = user; 
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Root/>,
+      element: <Root />,
       errorElement: <ErrorPage />,
       children: [
         {
-          path:"",
-          element: <BlogPage />
-        },
-       
-        {
-          path:"/:idPost",
-          element:<PostPage />
+          path: "",
+          element: <BlogPage />,
         },
         {
-          path:"/profile",
-          element:
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-        }
-      ]
+          path: "/login",
+          element: token ? <Navigate replace to={"/profile"} /> : <LoginPage />,
+        },
+        {
+          path: "/register",
+          element: token ? (
+            <Navigate replace to={"/profile"} />
+          ) : (
+            <RegistrationPage />
+          ),
+        },
+        {
+          path: "/:idPost",
+          element: <PostPage />,
+        },
+      ],
     },
     {
-      path: "/login",
-      element: token ? <Navigate replace to={"/profile"}/>: <LoginPage />
-    },
-    {
-      path: "/register",
-      element: token ? <Navigate replace to={"/profile"}/>: <RegistrationPage />
+      path: "/profile",
+      element: (
+        <ProtectedRoute>
+          <DashBoard />
+        </ProtectedRoute>
+      ),
     },
   ]);
 
-  return <RouterProvider router={router} />
-}
-
+  return <RouterProvider router={router} />;
+};
 
 const App = () => {
-  return(
+  return (
     <AuthProvider>
       <AppWrapper />
     </AuthProvider>
-  )
-}
+  );
+};
 
 export default App;
