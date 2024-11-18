@@ -25,6 +25,7 @@ export default function PostPage() {
           content={post.content}
           date={new Date(post.createdAt).toDateString()}
           hour={new Date(post.createdAt).toLocaleTimeString()}
+          image={post.image}
         />
       )}
     </div>

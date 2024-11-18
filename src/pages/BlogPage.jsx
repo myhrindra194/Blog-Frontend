@@ -41,6 +41,7 @@ export default function BlogPage() {
               content={post.content}
               date={new Date(post.createdAt).toDateString()}
               hour={new Date(post.createdAt).toLocaleTimeString()}
+              image={post.image}
               onClick={() => navigate(`/${post.id}`)}
             />
           ))}

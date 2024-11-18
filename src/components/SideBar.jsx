@@ -1,4 +1,4 @@
-import { faAdd, faEdit, faHomeLgAlt, faSignOut, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faHomeLgAlt, faSignOut, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { faDashboard } from "@fortawesome/free-solid-svg-icons/faDashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -42,14 +42,6 @@ export default function SideBar() {
             >
               <FontAwesomeIcon icon={faDashboard} /> Dashboard
             </Link>
-            <Link
-              className="dashboardLink"
-              style={{ textDecoration: "none", color: "#101010" }}
-            //   onClick={() => setShowForm(!showForm)}
-            >
-              <FontAwesomeIcon icon={faAdd} /> Add new post
-            </Link>
-
             <Link
               to="/login"
               className="dashboardLink"

@@ -5,10 +5,12 @@ export default function PostCard({
   content,
   date,
   hour,
+  image,
   onClick,
   children,
 }) {
   let splitContent = content.substring(0, 130);
+  
 
   return (
     <div
@@ -19,9 +21,11 @@ export default function PostCard({
         <h5>{title}</h5>
         <p className="text-muted">{date}</p>
         {children}
-        </div>
+      </div>
       <p className="text-muted">{hour}</p>
       <p>{content.length > 100 ? splitContent + "..." : content}</p>
+      {(image != undefined) && <img src={image} alt="image" style={{width:"150px"}}/>}
+
     </div>
   );
 }
