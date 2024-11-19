@@ -14,11 +14,11 @@ export const AuthProvider = ({ children }) => {
   });
 
   const login = (id, username, token, profilePicture) => {
-    setUser({ id, username, token, profilePicture });
+    setUser({ id, username, token,profilePicture });
   };
 
   const logout = () => {
-    setUser({ id: 0, username: "", token: null });
+    setUser({ id: 0, username: "", token: null, profilePicture:null });
   };
 
   return (

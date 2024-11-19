@@ -45,6 +45,7 @@ export default function EditProfilePage() {
             autoComplete="on"
             placeholder="New username"
             className="mt-5"
+            required
           />
         </FormGroup>
         <FormGroup>

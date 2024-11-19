@@ -1,5 +1,10 @@
 import { Button, Form, FormGroup, Input, Label, Spinner } from "reactstrap";
-import { faAdd, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faBars,
+  faEdit,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { URL } from "../utils/url";
@@ -110,7 +115,7 @@ export default function DashBoard() {
     e.preventDefault();
     setIsEditing(false);
     setShowForm(false);
-    setPost({title:"", content:"", image:""});
+    setPost({ title: "", content: "", image: "" });
     setPostId(0);
   };
 
@@ -121,7 +126,7 @@ export default function DashBoard() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <SideBar/>
+        <SideBar />
         <div className="col-8 p-4 offset-lg-2 offset-md-3">
           <div className="container">
             <SearchBar
@@ -205,27 +210,40 @@ export default function DashBoard() {
             ) : (
               <div className="mt-5">
                 {filteredPost.map((post) => (
-                  <PostCard
-                    key={post.id}
-                    post={post}
-                  >
+                  <PostCard key={post.id} post={post}>
                     {
-                      <div>
+                      <div className="dropdown col-7 d-flex justify-content-end">
                         <FontAwesomeIcon
-                          icon={faEdit}
-                          color="primary"
-                          onClick={() => {
-                            setIsEditing(true);
-                            setShowForm(true);
-                            handleEdit(post.id, post.title, post.content);
-                          }}
+                          icon={faBars}
+                          className="dropdown-toggle"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          size="xl"
                         />
-                        <span>{"  "}</span>
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          color="danger"
-                          onClick={() => handleDelete(post.id)}
-                        />
+                        <ul className="dropdown-menu">
+                          <li>
+                            <p
+                              className="dropdown-item"
+                              type="button"
+                              onClick={() => {
+                                setIsEditing(true);
+                                setShowForm(true);
+                                handleEdit(post.id, post.title, post.content);
+                              }}
+                            >
+                              <FontAwesomeIcon icon={faEdit} /> Edit post
+                            </p>
+                          </li>
+                          <li>
+                            <p
+                              className="dropdown-item"
+                              type="button"
+                              onClick={() => handleDelete(post.id)}
+                            >
+                              <FontAwesomeIcon icon={faTrash} /> Delete
+                            </p>
+                          </li>
+                        </ul>
                       </div>
                     }
                   </PostCard>

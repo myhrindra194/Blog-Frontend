@@ -33,7 +33,7 @@ export default function BlogPage() {
       ) : filteredPost.length == 0 ? (
         <p>No item</p>
       ) : (
-        <div className="col-md-7 col-sm-10">
+        <div className="col-md-7 col-10">
           {filteredPost.map((post) => (
             <PostCard
               key={post.id}
