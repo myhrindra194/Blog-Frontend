@@ -121,8 +121,8 @@ export default function DashBoard() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <SideBar />
-        <div className="col-5 p-4 offset-lg-2 offset-md-3">
+        <SideBar/>
+        <div className="col-8 p-4 offset-lg-2 offset-md-3">
           <div className="container">
             <SearchBar
               value={searchWord}

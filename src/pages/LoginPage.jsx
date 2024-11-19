@@ -41,8 +41,9 @@ export default function LoginPage() {
       }
 
       const data = await response.json();
+      console.log(data.user);
 
-      login(data.user.id, data.user.username, data.token);
+      login(data.user.id, data.user.username, data.token, data.user.profilePicture);
 
       navigate("/profile");
     } catch (error) {

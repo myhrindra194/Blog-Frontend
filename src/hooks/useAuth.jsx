@@ -10,10 +10,11 @@ export const AuthProvider = ({ children }) => {
     id: 0,
     username: "",
     token: null,
+    profilePicture:""
   });
 
-  const login = (id, username, token) => {
-    setUser({ id, username, token });
+  const login = (id, username, token, profilePicture) => {
+    setUser({ id, username, token, profilePicture });
   };
 
   const logout = () => {

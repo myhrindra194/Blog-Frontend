@@ -12,10 +12,11 @@ import BlogPage from "./pages/BlogPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import DashBoard from "./pages/DashboardPage";
+import EditProfilePage from "./pages/EditProfilPage";
 
 const AppWrapper = () => {
   const { user } = useAuth();
-  const { token } = user; 
+  const { token } = user;
 
   const router = createBrowserRouter([
     {
@@ -50,6 +51,14 @@ const AppWrapper = () => {
       element: (
         <ProtectedRoute>
           <DashBoard />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/editProfile",
+      element: (
+        <ProtectedRoute>
+          <EditProfilePage />
         </ProtectedRoute>
       ),
     },
