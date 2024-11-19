@@ -49,8 +49,8 @@ export default function EditProfilePage() {
         </FormGroup>
         <FormGroup>
             <Input
-              id="profilePicture"
-              name="profilePicture"
+              id="image"
+              name="image"
               type="file"
             />
         </FormGroup>
