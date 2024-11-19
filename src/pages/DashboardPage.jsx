@@ -122,7 +122,7 @@ export default function DashBoard() {
     <div className="container-fluid">
       <div className="row">
         <SideBar />
-        <div className="col-9 p-4 offset-lg-2 offset-md-3">
+        <div className="col-5 p-4 offset-lg-2 offset-md-3">
           <div className="container">
             <SearchBar
               value={searchWord}
@@ -149,7 +149,7 @@ export default function DashBoard() {
                     ? (e) => handleEditSubmit(e)
                     : (e) => handleSubmit(e)
                 }
-                className="col-8 border p-5 my-5"
+                className="border p-5 my-5"
               >
                 <FormGroup>
                   <Label for="title">Title</Label>
@@ -203,7 +203,7 @@ export default function DashBoard() {
             ) : filteredPost.length == 0 ? (
               <p className="mt-5">No item </p>
             ) : (
-              <div className="row gap-5 mt-5">
+              <div className="mt-5">
                 {filteredPost.map((post) => (
                   <PostCard
                     key={post.id}

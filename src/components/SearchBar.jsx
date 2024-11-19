@@ -3,7 +3,7 @@ import { Input } from "reactstrap";
 /* eslint-disable react/prop-types */
 export default function SearchBar({ value, onChange }) {
   return (
-    <div className="col-6 mt-3 mb-5">
+    <div className="col-md-4 col-sm-10 mb-5">
       <Input
         className="py-2"
         name="search"

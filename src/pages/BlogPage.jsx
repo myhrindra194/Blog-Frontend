@@ -22,7 +22,7 @@ export default function BlogPage() {
 
   return (
     <div className="container">
-      <div className="mt-4">
+      <div className="my-4">
         <SearchBar
           value={searchWord}
           onChange={(e) => setSearchWord(e.target.value)}
@@ -33,13 +33,11 @@ export default function BlogPage() {
       ) : filteredPost.length == 0 ? (
         <p>No item</p>
       ) : (
-        <div className="row gap-4">
+        <div className="col-md-7 col-sm-10">
           {filteredPost.map((post) => (
             <PostCard
               key={post.id}
               post={post}
-              date={new Date(post.createdAt).toDateString()}
-              hour={new Date(post.createdAt).toLocaleTimeString()}
               onClick={() => navigate(`/${post.id}`)}
             />
           ))}

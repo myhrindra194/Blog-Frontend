@@ -37,7 +37,7 @@ export default function RegistrationPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${URL}/register`, {
+      const response = await fetch(`${URL}/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -16,15 +16,13 @@ export default function PostPage() {
   }, [idPost]);
 
   return (
-    <div className="container row">
+    <div className="container mt-5">
       {post.length == 0 ? (
         <CustomSpinner />
       ) : (
         <PostCard
           post={post}
           isExpanded={true}
-          date={new Date(post.createdAt).toDateString()}
-          hour={new Date(post.createdAt).toLocaleTimeString()}
         />
       )}
     </div>
