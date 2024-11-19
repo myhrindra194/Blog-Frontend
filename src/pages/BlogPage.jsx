@@ -37,11 +37,9 @@ export default function BlogPage() {
           {filteredPost.map((post) => (
             <PostCard
               key={post.id}
-              title={post.title}
-              content={post.content}
+              post={post}
               date={new Date(post.createdAt).toDateString()}
               hour={new Date(post.createdAt).toLocaleTimeString()}
-              image={post.image}
               onClick={() => navigate(`/${post.id}`)}
             />
           ))}

@@ -35,16 +35,13 @@ export default function DashBoard() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${URL}/blogs`, {
+      await fetch(`${URL}/blogs`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
         body: new FormData(e.target),
       });
-      const data = await response.json();
-      console.log(data);
-
       setShowForm(false);
     } catch (error) {
       alert(error);
@@ -59,7 +56,7 @@ export default function DashBoard() {
     setPost({ ...post, title: title, content: content });
   };
 
-  const handleEditSubmit= async(e) => {
+  const handleEditSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -70,7 +67,11 @@ export default function DashBoard() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({...post, title: post.title, content: post.content}),
+        body: JSON.stringify({
+          ...post,
+          title: post.title,
+          content: post.content,
+        }),
       });
       const data = await response.json();
       console.log(data);
@@ -81,8 +82,8 @@ export default function DashBoard() {
     }
     setIsLoading(false);
     setIsEditing(false);
-    setPost({title:"", content:"", image:""})
-  }
+    setPost({ title: "", content: "", image: "" });
+  };
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete")) {
@@ -109,8 +110,9 @@ export default function DashBoard() {
     e.preventDefault();
     setIsEditing(false);
     setShowForm(false);
+    setPost({title:"", content:"", image:""});
     setPostId(0);
-  }
+  };
 
   const filteredPost = filterPost(userPosts, searchWord).filter(
     (post) => post.autorId == id
@@ -142,7 +144,11 @@ export default function DashBoard() {
             {showForm && (
               <Form
                 action=""
-                onSubmit={isEditing ?(e) => handleEditSubmit(e): (e) => handleSubmit(e)}
+                onSubmit={
+                  isEditing
+                    ? (e) => handleEditSubmit(e)
+                    : (e) => handleSubmit(e)
+                }
                 className="col-8 border p-5 my-5"
               >
                 <FormGroup>
@@ -153,7 +159,9 @@ export default function DashBoard() {
                     type="title"
                     autoComplete="on"
                     value={post.title}
-                    onChange={(e) => setPost({...post, title: e.target.value})}
+                    onChange={(e) =>
+                      setPost({ ...post, title: e.target.value })
+                    }
                   />
                 </FormGroup>
                 <FormGroup>
@@ -164,7 +172,9 @@ export default function DashBoard() {
                     type="textarea"
                     style={{ height: "16vh" }}
                     value={post.content}
-                    onChange={(e) => setPost({...post, content: e.target.value})}
+                    onChange={(e) =>
+                      setPost({ ...post, content: e.target.value })
+                    }
                   />
                 </FormGroup>
                 {!isEditing && (
@@ -181,10 +191,7 @@ export default function DashBoard() {
                   {isEditing ? "Validate" : "Add"}
                 </Button>
                 {isEditing && (
-                  <Button
-                    disabled={isLoading}
-                    onClick={(e) => handleCancel(e)}
-                  >
+                  <Button disabled={isLoading} onClick={(e) => handleCancel(e)}>
                     Cancel
                   </Button>
                 )}
@@ -194,14 +201,13 @@ export default function DashBoard() {
             {userPosts.length == 0 ? (
               <CustomSpinner />
             ) : filteredPost.length == 0 ? (
-              <p>No item </p>
+              <p className="mt-5">No item </p>
             ) : (
               <div className="row gap-5 mt-5">
                 {filteredPost.map((post) => (
                   <PostCard
                     key={post.id}
-                    title={post.title}
-                    content={post.content}
+                    post={post}
                   >
                     {
                       <div>
@@ -211,7 +217,7 @@ export default function DashBoard() {
                           onClick={() => {
                             setIsEditing(true);
                             setShowForm(true);
-                            handleEdit(post.id, post.title, post.content)
+                            handleEdit(post.id, post.title, post.content);
                           }}
                         />
                         <span>{"  "}</span>

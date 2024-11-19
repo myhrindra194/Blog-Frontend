@@ -21,11 +21,10 @@ export default function PostPage() {
         <CustomSpinner />
       ) : (
         <PostCard
-          title={post.title}
-          content={post.content}
+          post={post}
+          isExpanded={true}
           date={new Date(post.createdAt).toDateString()}
           hour={new Date(post.createdAt).toLocaleTimeString()}
-          image={post.image}
         />
       )}
     </div>
