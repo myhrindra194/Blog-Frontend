@@ -4,9 +4,13 @@ import { URL_API } from "../utils/url";
 import profilePicture from "../assets/profilePic.jpeg";
 import PostCard from "../components/PostCard";
 import { filterPost } from "../utils/function";
+import { useAuth } from "../hooks/useAuth";
+import CustomLink from "../components/CustomLink";
+import { Button } from "reactstrap";
 
 export default function UserPage() {
   const { idUser } = useParams();
+  const { id } = useAuth().user;
   const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
 
@@ -29,13 +33,18 @@ export default function UserPage() {
   return (
     <div className="container">
       <div className=" mt-5 border p-5">
-          <img
-            src={user.profilPicture ? user.profilPicture : profilePicture}
-            alt="profile"
-            className="img-thumbnail-fluid rounded-circle border"
-            style={{ width: "180px", height: "180px" }}
-          />
-          <h4 className="ms-5 mt-3">{user.username}</h4>
+        <img
+          src={user.profilPicture ? user.profilPicture : profilePicture}
+          alt="profile"
+          className="img-thumbnail-fluid rounded-circle border"
+          style={{ width: "180px", height: "180px" }}
+        />
+        <h4 className="ms-5 mt-3">{user.username}</h4>
+        {idUser == id && (
+          <Button color="primary">
+            <CustomLink to={`/editProfile`}>Edit profile</CustomLink>
+          </Button>
+        )}
       </div>
       <div className="my-5">
         <h4 className="mb-3">All posts</h4>

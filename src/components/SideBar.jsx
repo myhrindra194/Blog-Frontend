@@ -1,8 +1,8 @@
 import {
   faAdd,
-  faEdit,
   faHomeLgAlt,
   faSignOut,
+  faUser,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { faDashboard } from "@fortawesome/free-solid-svg-icons/faDashboard";
@@ -48,11 +48,14 @@ export default function SideBar() {
           Welcome <strong>{user.username}</strong>
         </p>
         <Link
-          to="/editProfile"
-          style={{ textDecoration: "none", color: "#101010" }}
+          to={`/users/${id}`}
+          style={{
+            textDecoration: "none",
+            color: "#101010",
+          }}
           className="dashboardLink"
         >
-          <FontAwesomeIcon icon={faEdit} /> Edit profile
+          <FontAwesomeIcon icon={faUser} /> My profile
         </Link>
         <Link
           to={"/addPost"}
