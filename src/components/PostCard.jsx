@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { URL } from "../utils/url";
 import profilePic from "../assets/profilePic.jpeg";
+import CustomLink  from "./CustomLink";
 
 export default function PostCard({ post, isExpanded, children }) {
   const [user, setUser] = useState([]);
@@ -12,7 +13,7 @@ export default function PostCard({ post, isExpanded, children }) {
   useEffect(() => {
     fetch(`${URL}/users/${post.autorId}`)
       .then((response) => response.json())
-      .then((data) => setUser(data[0]))
+      .then((data) => setUser(data))
       .catch((error) => console.error(error));
   }, [post.autorId]);
 
@@ -25,10 +26,10 @@ export default function PostCard({ post, isExpanded, children }) {
               src={user.profilPicture == null ? profilePic : user.profilPicture}
               alt="Profile picture"
               className="img-thumbnail-fluid rounded-circle border-dark me-2"
-              style={{ width: "50px", height: "50px", objectFit: "cover" }}
+              style={{ width: "50px", height: "50px" }}
             />
             <div>
-              <small>{user.username}</small>
+              <small><CustomLink to={`/users/${user.id}`}>{user.username}</CustomLink></small>
               <small className="text-muted">
                 <br />
                 Posted on {new Date(post.createdAt).toLocaleDateString()}

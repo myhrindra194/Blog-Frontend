@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import DashBoard from "./pages/DashboardPage";
 import EditProfilePage from "./pages/EditProfilPage";
+import UserPage from "./pages/UserPage";
 
 const AppWrapper = () => {
   const { user } = useAuth();
@@ -43,6 +44,10 @@ const AppWrapper = () => {
         {
           path: "/:idPost",
           element: <PostPage />,
+        },
+        {
+          path: "/users/:idUser",
+          element: <UserPage />,
         },
       ],
     },

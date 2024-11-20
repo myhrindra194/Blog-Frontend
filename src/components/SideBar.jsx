@@ -27,7 +27,7 @@ export default function SideBar() {
               src={profilePicture}
               alt="profile"
               className="img-thumbnail-fluid rounded-circle border"
-              style={{ width: "75px", height: "75px" , objectFit:"cover"}}
+              style={{ width: "75px", height: "75px"}}
             />
           )}
         </div>

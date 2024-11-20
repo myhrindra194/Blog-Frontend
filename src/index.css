@@ -72,6 +72,5 @@ button, .loginPage, .registerPage {
 
 }
 img{
-  object-fit: contain;
-  max-height: 250px;
+  object-fit: cover;
 }
