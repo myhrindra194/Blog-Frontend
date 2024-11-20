@@ -1,10 +1,4 @@
-import { Button, Form, FormGroup, Input, Label, Spinner } from "reactstrap";
-import {
-  faAdd,
-  faBars,
-  faEdit,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { URL_API } from "../utils/url";
@@ -18,15 +12,8 @@ import { Link } from "react-router-dom";
 
 export default function DashBoard() {
   const { id, token } = useAuth().user;
-  const [post, setPost] = useState({ title: "", content: "", image: "" });
-  const [postId, setPostId] = useState(0);
   const [userPosts, setUserPosts] = useState([]);
   const [searchWord, setSearchWord] = useState("");
-  const [showForm, setShowForm] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-
-  const isFormValid = () => post.title.trim() && post.content.trim();
 
   useEffect(() => {
     fetch(`${URL_API}/blogs`)
@@ -35,64 +22,8 @@ export default function DashBoard() {
       .catch((error) => console.error(error));
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      await fetch(`${URL_API}/blogs`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: new FormData(e.target),
-      });
-      setShowForm(false);
-    } catch (error) {
-      alert(error);
-    }
-    setIsLoading(false);
-  };
-
-  const handleEdit = (id, title, content) => {
-    setShowForm(true);
-    setIsEditing(true);
-    setPostId(id);
-    setPost({ ...post, title: title, content: content });
-  };
-
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(`${URL_API}/blogs/${postId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          ...post,
-          title: post.title,
-          content: post.content,
-        }),
-      });
-      const data = await response.json();
-      console.log(data);
-
-      setShowForm(false);
-    } catch (error) {
-      alert(error);
-    }
-    setIsLoading(false);
-    setIsEditing(false);
-    setPost({ title: "", content: "", image: "" });
-  };
-
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete")) {
-      setIsLoading(true);
       try {
         const response = await fetch(`${URL_API}/blogs/${id}`, {
           method: "DELETE",
@@ -106,17 +37,7 @@ export default function DashBoard() {
       } catch (error) {
         alert(error);
       }
-      setIsLoading(false);
-      setIsEditing(false);
     }
-  };
-
-  const handleCancel = (e) => {
-    e.preventDefault();
-    setIsEditing(false);
-    setShowForm(false);
-    setPost({ title: "", content: "", image: "" });
-    setPostId(0);
   };
 
   const filteredPost = filterPost(userPosts, searchWord).filter(
@@ -134,75 +55,6 @@ export default function DashBoard() {
               onChange={(e) => setSearchWord(e.target.value)}
             />
             <h3 className="my-4">My Blog</h3>
-            <Link
-              style={{
-                textDecoration: "none",
-                backgroundColor: "#d0Eb97",
-                color: "#101010",
-                borderRadius: "15px",
-                padding: "10px 15px",
-              }}
-              onClick={() => setShowForm(!showForm)}
-            >
-              <FontAwesomeIcon icon={faAdd} /> Add new post
-            </Link>
-            {showForm && (
-              <Form
-                action=""
-                onSubmit={
-                  isEditing
-                    ? (e) => handleEditSubmit(e)
-                    : (e) => handleSubmit(e)
-                }
-                className="border p-5 my-5"
-              >
-                <FormGroup>
-                  <Label for="title">Title</Label>
-                  <Input
-                    id="title"
-                    name="title"
-                    type="title"
-                    autoComplete="on"
-                    value={post.title}
-                    onChange={(e) =>
-                      setPost({ ...post, title: e.target.value })
-                    }
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="content">Content</Label>
-                  <Input
-                    id="content"
-                    name="content"
-                    type="textarea"
-                    style={{ height: "16vh" }}
-                    value={post.content}
-                    onChange={(e) =>
-                      setPost({ ...post, content: e.target.value })
-                    }
-                  />
-                </FormGroup>
-                {!isEditing && (
-                  <FormGroup>
-                    <Label for="content">Image</Label>
-                    <Input id="image" name="image" type="file" />
-                  </FormGroup>
-                )}
-                <Button
-                  className="mb-4 float-end"
-                  disabled={isLoading || !isFormValid()}
-                  color="success"
-                >
-                  {isEditing ? "Validate" : "Add"}
-                </Button>
-                {isEditing && (
-                  <Button disabled={isLoading} onClick={(e) => handleCancel(e)}>
-                    Cancel
-                  </Button>
-                )}
-                {isLoading && <Spinner />}
-              </Form>
-            )}
             {userPosts.length == 0 ? (
               <CustomSpinner />
             ) : filteredPost.length == 0 ? (
@@ -222,16 +74,16 @@ export default function DashBoard() {
                         />
                         <ul className="dropdown-menu">
                           <li>
-                            <p
-                              className="dropdown-item"
-                              type="button"
-                              onClick={() => {
-                                setIsEditing(true);
-                                setShowForm(true);
-                                handleEdit(post.id, post.title, post.content);
-                              }}
-                            >
-                              <FontAwesomeIcon icon={faEdit} /> Edit post
+                            <p className="dropdown-item" type="button">
+                              <Link
+                                to={`/editPost/${post.id}`}
+                                style={{
+                                  textDecoration: "none",
+                                  color: "#101010",
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faEdit} /> Edit post
+                              </Link>
                             </p>
                           </li>
                           <li>

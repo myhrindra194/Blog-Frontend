@@ -1,4 +1,5 @@
 import {
+  faAdd,
   faEdit,
   faHomeLgAlt,
   faSignOut,
@@ -17,12 +18,11 @@ export default function SideBar() {
 
   const [user, setUser] = useState([]);
 
-
   useEffect(() => {
     fetch(`${URL_API}/users/${id}`)
-    .then(response => response.json())
-    .then(data => setUser(data))
-    .catch(error => console.error(error))
+      .then((response) => response.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error(error));
   }, [id]);
 
   return (
@@ -39,7 +39,7 @@ export default function SideBar() {
               src={user.profilPicture}
               alt="profile"
               className="img-thumbnail-fluid rounded-circle border"
-              style={{ width: "75px", height: "75px"}}
+              style={{ width: "75px", height: "75px" }}
             />
           )}
         </div>
@@ -55,6 +55,16 @@ export default function SideBar() {
           <FontAwesomeIcon icon={faEdit} /> Edit profile
         </Link>
         <Link
+          to={"/addPost"}
+          style={{
+            textDecoration: "none",
+            color: "#101010",
+          }}
+          className="dashboardLink"
+        >
+          <FontAwesomeIcon icon={faAdd} /> Add new post
+        </Link>
+        <Link
           to="/"
           style={{ textDecoration: "none", color: "#101010" }}
           className="dashboardLink"
@@ -62,7 +72,7 @@ export default function SideBar() {
           <FontAwesomeIcon icon={faHomeLgAlt} /> Home
         </Link>
         <Link
-          to="/profile"
+          to="/dashboard"
           style={{ textDecoration: "none", color: "#101010" }}
           className="dashboardLink"
         >

@@ -25,7 +25,7 @@ export default function NavBar() {
         {token != null ? (
           <div>
             <button className="me-3">
-              <CustomLink to="/profile">DashBoard</CustomLink>
+              <CustomLink to="/dashboard">DashBoard</CustomLink>
             </button>
           </div>
         ) : (

@@ -14,6 +14,8 @@ import { AuthProvider, useAuth } from "./hooks/useAuth";
 import DashBoard from "./pages/DashboardPage";
 import EditProfilePage from "./pages/EditProfilPage";
 import UserPage from "./pages/UserPage";
+import AddPostPage from "./pages/AddPostPage";
+import EditPostPage from "./pages/EditPostPage";
 
 const AppWrapper = () => {
   const { user } = useAuth();
@@ -31,12 +33,12 @@ const AppWrapper = () => {
         },
         {
           path: "/login",
-          element: token ? <Navigate replace to={"/profile"} /> : <LoginPage />,
+          element: token ? <Navigate replace to={"/dashboard"} /> : <LoginPage />,
         },
         {
           path: "/register",
           element: token ? (
-            <Navigate replace to={"/profile"} />
+            <Navigate replace to={"/dashboar"} />
           ) : (
             <RegistrationPage />
           ),
@@ -52,7 +54,7 @@ const AppWrapper = () => {
       ],
     },
     {
-      path: "/profile",
+      path: "/dashboard",
       element: (
         <ProtectedRoute>
           <DashBoard />
@@ -64,6 +66,30 @@ const AppWrapper = () => {
       element: (
         <ProtectedRoute>
           <EditProfilePage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <ProtectedRoute>
+          <DashBoard />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/addPost",
+      element: (
+        <ProtectedRoute>
+          <AddPostPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/editPost/:idPost",
+      element: (
+        <ProtectedRoute>
+          <EditPostPage />
         </ProtectedRoute>
       ),
     },
