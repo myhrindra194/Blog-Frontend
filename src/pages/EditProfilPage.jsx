@@ -1,13 +1,14 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import SideBar from "../components/SideBar";
 import { useAuth } from "../hooks/useAuth";
 import { FormGroup, Input, Spinner } from "reactstrap";
 import { useState } from "react";
-import { URL } from "../utils/url";
+import { URL_API } from "../utils/url";
 
 export default function EditProfilePage() {
   const { id, token } = useAuth().user;
   const [isLoading , setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -16,7 +17,7 @@ export default function EditProfilePage() {
     try {
         const data = new FormData(e.target);
         
-        const response = await fetch(`${URL}/users/${id}`, {
+        const response = await fetch(`${URL_API}/users/${id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -29,6 +30,7 @@ export default function EditProfilePage() {
         alert(error);
     }
     setIsLoading(false);
+    navigate(`/users/${id}`);
     
   }
 

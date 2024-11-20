@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { URL } from "../utils/url";
+import { URL_API } from "../utils/url";
 import profilePicture from "../assets/profilePic.jpeg";
 import PostCard from "../components/PostCard";
 import { filterPost } from "../utils/function";
@@ -11,14 +11,14 @@ export default function UserPage() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch(`${URL}/users/${idUser}`)
+    fetch(`${URL_API}/users/${idUser}`)
       .then((res) => res.json())
       .then((data) => setUser(data))
       .catch((error) => console.error("Error while fetching data", error));
   }, [idUser]);
 
   useEffect(() => {
-    fetch(`${URL}/blogs`)
+    fetch(`${URL_API}/blogs`)
       .then((res) => res.json())
       .then((data) => setPosts(data))
       .catch((error) => console.error("Error while fetching data", error));

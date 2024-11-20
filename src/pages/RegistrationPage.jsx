@@ -10,7 +10,7 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
-import { URL } from "../utils/url";
+import { URL_API } from "../utils/url";
 
 export default function RegistrationPage() {
   const [user, setUser] = useState({
@@ -37,7 +37,7 @@ export default function RegistrationPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${URL}/users/register`, {
+      const response = await fetch(`${URL_API}/users/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

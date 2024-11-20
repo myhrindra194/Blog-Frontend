@@ -8,17 +8,15 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", {
     id: 0,
-    username: "",
     token: null,
-    profilePicture:""
   });
 
-  const login = (id, username, token, profilePicture) => {
-    setUser({ id, username, token,profilePicture });
+  const login = (id, token) => {
+    setUser({ id, token });
   };
 
   const logout = () => {
-    setUser({ id: 0, username: "", token: null, profilePicture:null });
+    setUser({ id: 0, token: null });
   };
 
   return (

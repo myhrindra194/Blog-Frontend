@@ -11,7 +11,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { useAuth } from "../hooks/useAuth";
-import { URL } from "../utils/url";
+import { URL_API } from "../utils/url";
 
 export default function LoginPage() {
   const [user, setUser] = useState({ email: "", password: "" });
@@ -28,7 +28,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${URL}/login`, {
+      const response = await fetch(`${URL_API}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export default function LoginPage() {
       console.log(data.user);
       
 
-      login(data.user.id, data.user.username, data.token, data.user.profilePicture);
+      login(data.user.id, data.token);
 
       navigate("/profile");
     } catch (error) {

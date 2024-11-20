@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { URL } from "../utils/url";
+import { URL_API } from "../utils/url";
 import PostCard from "../components/PostCard";
 import SearchBar from "../components/SearchBar";
 import { filterPost } from "../utils/function";
@@ -12,7 +12,7 @@ export default function BlogPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${URL}/blogs`)
+    fetch(`${URL_API}/blogs`)
       .then((res) => res.json())
       .then((data) => setPosts(data))
       .catch((error) => console.error("Error while fetching data", error));

@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
-import { URL } from "../utils/url";
+import { URL_API } from "../utils/url";
 import PostCard from "../components/PostCard";
 import { filterPost } from "../utils/function";
 import SearchBar from "../components/SearchBar";
@@ -29,7 +29,7 @@ export default function DashBoard() {
   const isFormValid = () => post.title.trim() && post.content.trim();
 
   useEffect(() => {
-    fetch(`${URL}/blogs`)
+    fetch(`${URL_API}/blogs`)
       .then((response) => response.json())
       .then((data) => setUserPosts(data))
       .catch((error) => console.error(error));
@@ -40,7 +40,7 @@ export default function DashBoard() {
     setIsLoading(true);
 
     try {
-      await fetch(`${URL}/blogs`, {
+      await fetch(`${URL_API}/blogs`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -66,7 +66,7 @@ export default function DashBoard() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`${URL}/blogs/${postId}`, {
+      const response = await fetch(`${URL_API}/blogs/${postId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export default function DashBoard() {
     if (window.confirm("Are you sure you want to delete")) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${URL}/blogs/${id}`, {
+        const response = await fetch(`${URL_API}/blogs/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

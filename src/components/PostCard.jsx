@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { URL } from "../utils/url";
+import { URL_API } from "../utils/url";
 import profilePic from "../assets/profilePic.jpeg";
 import CustomLink  from "./CustomLink";
 
@@ -11,7 +11,7 @@ export default function PostCard({ post, isExpanded, children }) {
   let splitContent = post.content.substring(0, 125);
 
   useEffect(() => {
-    fetch(`${URL}/users/${post.autorId}`)
+    fetch(`${URL_API}/users/${post.autorId}`)
       .then((response) => response.json())
       .then((data) => setUser(data))
       .catch((error) => console.error(error));

@@ -1,1 +1,1 @@
-export const URL = "https://blog-restfull-hahw.onrender.com";
+export const URL_API = "https://blog-restfull-hahw.onrender.com";

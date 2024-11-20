@@ -8,10 +8,22 @@ import { faDashboard } from "@fortawesome/free-solid-svg-icons/faDashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useEffect, useState } from "react";
+import { URL_API } from "../utils/url";
 
 export default function SideBar() {
-  const { username, profilePicture } = useAuth().user;
+  const { id } = useAuth().user;
   const { logout } = useAuth();
+
+  const [user, setUser] = useState([]);
+
+
+  useEffect(() => {
+    fetch(`${URL_API}/users/${id}`)
+    .then(response => response.json())
+    .then(data => setUser(data))
+    .catch(error => console.error(error))
+  }, [id]);
 
   return (
     <div
@@ -20,11 +32,11 @@ export default function SideBar() {
     >
       <nav className="nav flex-column sticky ">
         <div className="d-flex justify-content-center">
-          {profilePicture == null ? (
+          {user.profilPicture == null ? (
             <FontAwesomeIcon icon={faUserCircle} size="xl" />
           ) : (
             <img
-              src={profilePicture}
+              src={user.profilPicture}
               alt="profile"
               className="img-thumbnail-fluid rounded-circle border"
               style={{ width: "75px", height: "75px"}}
@@ -33,7 +45,7 @@ export default function SideBar() {
         </div>
         <p className="text-center my-3">
           {" "}
-          Welcome <strong>{username}</strong>
+          Welcome <strong>{user.username}</strong>
         </p>
         <Link
           to="/editProfile"
