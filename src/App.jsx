@@ -38,7 +38,7 @@ const AppWrapper = () => {
         {
           path: "/register",
           element: token ? (
-            <Navigate replace to={"/dashboar"} />
+            <Navigate replace to={"/dashboard"} />
           ) : (
             <RegistrationPage />
           ),
@@ -60,6 +60,9 @@ const AppWrapper = () => {
           <DashBoard />
         </ProtectedRoute>
       ),
+      children: [
+        
+      ]
     },
     {
       path: "/editProfile",

@@ -25,6 +25,7 @@ export default function AddPostPage() {
       alert(error);
     }
     setIsLoading(false);
+    navigate("/dashboard");
   };
   return (
     <div className="container-fluid">

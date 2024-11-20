@@ -47,7 +47,7 @@ export default function UserPage() {
         )}
       </div>
       <div className="my-5">
-        <h4 className="mb-3">All posts</h4>
+        <h4 className="mb-3">All posts ({userPosts.length})</h4>
         {userPosts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}

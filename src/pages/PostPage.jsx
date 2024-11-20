@@ -20,10 +20,7 @@ export default function PostPage() {
       {post.length == 0 ? (
         <CustomSpinner />
       ) : (
-        <PostCard
-          post={post}
-          isExpanded={true}
-        />
+        <PostCard post={post} isExpanded={true} />
       )}
     </div>
   );

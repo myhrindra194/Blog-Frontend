@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { URL_API } from "../utils/url";
 import profilePic from "../assets/profilePic.jpeg";
-import CustomLink  from "./CustomLink";
+import CustomLink from "./CustomLink";
+import { dateDiff } from "../utils/function";
 
 export default function PostCard({ post, isExpanded, children }) {
   const [user, setUser] = useState([]);
@@ -17,6 +18,9 @@ export default function PostCard({ post, isExpanded, children }) {
       .catch((error) => console.error(error));
   }, [post.autorId]);
 
+  const dateStr = new Date(post.createdAt).toISOString();
+  
+  
   return (
     <div className="card mb-3">
       <div className="row g-0">
@@ -29,12 +33,16 @@ export default function PostCard({ post, isExpanded, children }) {
               style={{ width: "50px", height: "50px" }}
             />
             <div>
-              <small><CustomLink to={`/users/${user.id}`}>{user.username}</CustomLink></small>
+              <small>
+                <CustomLink to={`/users/${user.id}`}>
+                  {user.username}
+                </CustomLink>
+              </small>
               <small className="text-muted">
                 <br />
                 Posted on {new Date(post.createdAt).toLocaleDateString()}
                 {" - "}
-                {new Date(post.createdAt).toLocaleTimeString()}
+                {dateDiff(dateStr)}
               </small>
             </div>
 
@@ -53,7 +61,9 @@ export default function PostCard({ post, isExpanded, children }) {
           )}
 
           {post.image != undefined && (
-            <img src={post.image} alt="image" className="img-fluid rounded" />
+            <Link to={`/${post.id}`}>
+              <img src={post.image} alt="image" className="img-fluid rounded" />
+            </Link>
           )}
         </div>
       </div>
