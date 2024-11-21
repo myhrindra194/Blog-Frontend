@@ -1,16 +1,17 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Nav, NavbarBrand } from "reactstrap";
+import { Button, ButtonGroup, Navbar, NavbarBrand } from "reactstrap";
 import { useAuth } from "../hooks/useAuth";
 import CustomLink from "./CustomLink";
 import vite from "/vite.svg";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const { token } = useAuth().user;
 
   return (
     <div className="sticky-top navBarBlured">
-      <Nav className="container py-2 d-flex justify-content-between align-items-center">
+      <Navbar className="container py-2 navbar-expand-md">
         <NavbarBrand
           href="/"
           style={{
@@ -20,27 +21,47 @@ export default function NavBar() {
           }}
         >
           <img src={vite} alt="Logo react" />
-          <span> HemiBlog</span>
+          HemiBlog
         </NavbarBrand>
-        {token != null ? (
-          <div>
-            <button className="me-3">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          {token != null ? (
+            <Button color="primary">
               <CustomLink to="/dashboard">DashBoard</CustomLink>
-            </button>
-          </div>
-        ) : (
-          <div className="justify-content-between">
-            <button className="buttonLogin">
-              <CustomLink to="/login">
-                <FontAwesomeIcon icon={faUser} /> Login
-              </CustomLink>
-            </button>
-            <button>
-              <CustomLink to="/register">Register</CustomLink>
-            </button>
-          </div>
-        )}
-      </Nav>
+            </Button>
+          ) : (
+            <ButtonGroup>
+              <Button outline color="primary">
+                <Link
+                  to="/login"
+                  className="primary loginBtn"
+                  style={{ textDecoration: "none" }}
+                >
+                  Login
+                </Link>
+              </Button>
+              <Button color="primary">
+                <Link
+                  to="/register"
+                  style={{ color: "white", textDecoration: "none" }}
+                >
+                  Register
+                </Link>
+              </Button>
+            </ButtonGroup>
+          )}
+        </div>
+      </Navbar>
     </div>
   );
 }

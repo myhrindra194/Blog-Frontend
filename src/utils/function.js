@@ -6,6 +6,7 @@ export function filterPost(posts, searchWord=""){
 
 
 export function dateDiff(dateStr) {
+  
     const now = new Date();
     const diff = now - new Date(dateStr);
   
@@ -15,13 +16,15 @@ export function dateDiff(dateStr) {
     const secondes = Math.floor((diff % (1000 * 60)) / 1000);  
   
     if (jours > 0) {
-      return `Il y a ${jours} jour${jours > 1 ? 's' : ''}`;
+      if(jours > 31)
+        return new Date(dateStr).toLocaleDateString();
+      return `${jours} day${jours > 1 ? 's' : ''}`;
     } else if (heures > 0) {
-      return `Il y a ${heures} heure${heures > 1 ? 's' : ''}`;
+      return `${heures} hour${heures > 1 ? 's' : ''}`;
     } else if(minutes > 0){
-      return `Il y a ${minutes} minute${minutes > 1 ? 's' : ''}`;
+      return `${minutes} minute${minutes > 1 ? 's' : ''}`;
     }
-    else {
-        return `Il y a ${secondes} seconds`;
+    else{
+        return `${secondes} seconds`;
     }
   }

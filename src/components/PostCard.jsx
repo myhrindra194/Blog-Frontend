@@ -19,8 +19,7 @@ export default function PostCard({ post, isExpanded, children }) {
   }, [post.autorId]);
 
   const dateStr = new Date(post.createdAt).toISOString();
-  
-  
+
   return (
     <div className="card mb-3">
       <div className="row g-0">
@@ -40,9 +39,7 @@ export default function PostCard({ post, isExpanded, children }) {
               </small>
               <small className="text-muted">
                 <br />
-                Posted on {new Date(post.createdAt).toLocaleDateString()}
-                {" - "}
-                {dateDiff(dateStr)}
+              Posted since {dateDiff(dateStr)}
               </small>
             </div>
 
