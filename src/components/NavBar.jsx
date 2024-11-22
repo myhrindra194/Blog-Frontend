@@ -59,7 +59,7 @@ export default function NavBar() {
                 <Button color="light">
                   <CustomLink to="/addPost">Create Post</CustomLink>
                 </Button>
-                <div className="dropdown d-flex align-items-center ms-3">
+                <div className="dropdown d-flex align-items-center">
                   <img
                     className="img-fluid dropdown-toggle rounded-circle border"
                     data-bs-toggle="dropdown"
@@ -68,7 +68,7 @@ export default function NavBar() {
                     alt="profile"
                     style={{ width: "40px", height: "40px" }}
                   />
-                  <ul className="dropdown-menu">
+                  <ul className="dropdown-menu  dropdown-menu-start">
                     <li>
                       <p className="dropdown-item" type="button">
                         <CustomLink to={`/users/${id}`}>{username}</CustomLink>
