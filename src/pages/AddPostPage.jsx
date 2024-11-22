@@ -2,7 +2,6 @@ import { Button, ButtonGroup, Form, FormGroup, Input, Label, Spinner } from "rea
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
 import { URL_API } from "../utils/url";
-import SideBar from "../components/SideBar";
 import { useNavigate } from "react-router-dom";
 
 export default function AddPostPage() {
@@ -30,7 +29,6 @@ export default function AddPostPage() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <SideBar />
         <div className="col-8 p-4 offset-lg-2 offset-md-3">
           <div className="container">
             <Form

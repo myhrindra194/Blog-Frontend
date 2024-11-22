@@ -2,11 +2,8 @@
   background-color: white;
   border-bottom: solid 1.5px #d7d7d7;
 }
-.loginBtn:hover {
-  color: white;
-}
-.login {
-  color:  #3498db;
+button {
+  color: #101010;
 }
 
 #email:focus, 
@@ -50,10 +47,6 @@ button, .loginPage, .registerPage {
 .icon {
   background-color: white;
   border-radius: 15px;
-}
-
-.sidebar {
-  background-color: #e3b5FF;
 }
 
 .dashboardLink {

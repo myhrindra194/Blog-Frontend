@@ -1,4 +1,4 @@
-import { faBars, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks/useAuth";
 import { useEffect, useState } from "react";
 import { URL_API } from "../utils/url";
@@ -7,7 +7,6 @@ import { filterPost } from "../utils/function";
 import SearchBar from "../components/SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CustomSpinner from "../components/CustomSpinner";
-import SideBar from "../components/SideBar";
 import { Link } from "react-router-dom";
 
 export default function DashBoard() {
@@ -20,7 +19,7 @@ export default function DashBoard() {
       .then((response) => response.json())
       .then((data) => setUserPosts(data))
       .catch((error) => console.error(error));
-  });
+  }, []);
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete")) {
@@ -47,7 +46,6 @@ export default function DashBoard() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <SideBar />
         <div className="col-8 p-4 offset-lg-2 offset-md-3">
           <div className="container">
             <SearchBar
@@ -64,9 +62,9 @@ export default function DashBoard() {
                 {filteredPost.map((post) => (
                   <PostCard key={post.id} post={post}>
                     {
-                      <div className="dropdown col-7 d-flex justify-content-end">
+                      <div className="dropdown col-8 d-flex justify-content-end">
                         <FontAwesomeIcon
-                          icon={faBars}
+                          icon={faEllipsis}
                           className="dropdown-toggle"
                           data-bs-toggle="dropdown"
                           aria-expanded="false"

@@ -51,51 +51,49 @@ const AppWrapper = () => {
           path: "/users/:idUser",
           element: <UserPage />,
         },
+        {
+          path: "/dashboard",
+          element: (
+            <ProtectedRoute>
+              <DashBoard />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/editProfile",
+          element: (
+            <ProtectedRoute>
+              <EditProfilePage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/dashboard",
+          element: (
+            <ProtectedRoute>
+              <DashBoard />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/addPost",
+          element: (
+            <ProtectedRoute>
+              <AddPostPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/editPost/:idPost",
+          element: (
+            <ProtectedRoute>
+              <EditPostPage />
+            </ProtectedRoute>
+          ),
+        },
       ],
     },
-    {
-      path: "/dashboard",
-      element: (
-        <ProtectedRoute>
-          <DashBoard />
-        </ProtectedRoute>
-      ),
-      children: [
-        
-      ]
-    },
-    {
-      path: "/editProfile",
-      element: (
-        <ProtectedRoute>
-          <EditProfilePage />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: "/dashboard",
-      element: (
-        <ProtectedRoute>
-          <DashBoard />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: "/addPost",
-      element: (
-        <ProtectedRoute>
-          <AddPostPage />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: "/editPost/:idPost",
-      element: (
-        <ProtectedRoute>
-          <EditPostPage />
-        </ProtectedRoute>
-      ),
-    },
+    
   ]);
 
   return <RouterProvider router={router} />;

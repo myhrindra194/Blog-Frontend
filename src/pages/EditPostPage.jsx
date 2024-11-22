@@ -11,7 +11,6 @@ import {
   Spinner,
 } from "reactstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import SideBar from "../components/SideBar";
 
 export default function EditPostPage() {
   const { idPost } = useParams();
@@ -61,7 +60,6 @@ export default function EditPostPage() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <SideBar />
         <div className="col-8 p-4 offset-lg-2 offset-md-3">
           <div className="container">
             <Form

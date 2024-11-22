@@ -1,5 +1,4 @@
 import { Form, useNavigate } from "react-router-dom";
-import SideBar from "../components/SideBar";
 import { useAuth } from "../hooks/useAuth";
 import { FormGroup, Input, Spinner } from "reactstrap";
 import { useState } from "react";
@@ -36,7 +35,6 @@ export default function EditProfilePage() {
 
   return (
     <div className="row">
-      <SideBar />
       <div className="col-8 p-4 offset-lg-2 offset-md-3">
       <Form action="" onSubmit={(e) => handleSubmit(e)} className="col-8">
         <FormGroup>
