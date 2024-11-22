@@ -1,12 +1,15 @@
 import { Form, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { Button, FormGroup, Input, Spinner } from "reactstrap";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { URL_API } from "../utils/url";
 
 export default function EditProfilePage() {
   const { user, editProfile } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState(user.profilePicture);
+  const myRef = useRef(null);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -34,38 +37,56 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="row">
-      <div className="col-8 p-4 offset-lg-2 offset-md-3">
-        <Form action="" onSubmit={(e) => handleSubmit(e)} className="col-8">
-          <FormGroup>
-            <Input
-              id="username"
-              name="username"
-              type="username"
-              autoComplete="on"
-              placeholder="New username"
-              className="mt-5"
-              required
-            />
-          </FormGroup>
-          <FormGroup>
-            <Input id="image" name="image" type="file" />
-          </FormGroup>
-          <Button
-            color="primary"
-            className="my-3 py-2 w-100 fw-bold buttonLogin"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <div className="d-flex justify-content-center">
-                <Spinner />
-              </div>
-            ) : (
-              "Save changes"
-            )}
-          </Button>
-        </Form>
-      </div>
+    <div className="container py-5">
+      <Form
+        action=""
+        onSubmit={(e) => handleSubmit(e)}
+        className="border shadow p-5"
+      >
+        <FormGroup>
+          <Input
+            id="username"
+            name="username"
+            type="username"
+            autoComplete="on"
+            placeholder="New username"
+            className="mt-5"
+            defaultValue={user.username}
+            required
+          />
+        </FormGroup>
+        <FormGroup className="d-flex">
+          <img
+            src={image}
+            alt="profile"
+            style={{ width: "38px", height: "38px" }}
+            className="rounded-circle"
+          />
+          <input
+            id="image"
+            name="image"
+            type="file"
+            className="ms-3"
+            ref={myRef}
+            onChange={() =>
+              setImage(URL.createObjectURL(myRef.current.files[0]))
+            }
+          />
+        </FormGroup>
+        <Button
+          color="primary"
+          className="my-3 w-100 fw-bold buttonLogin"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <div className="d-flex justify-content-center">
+              <Spinner />
+            </div>
+          ) : (
+            "Save changes"
+          )}
+        </Button>
+      </Form>
     </div>
   );
 }
