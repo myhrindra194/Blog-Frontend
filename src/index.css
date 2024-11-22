@@ -1,8 +1,10 @@
+#root {
+  min-height: 100vh;
+}
 .navBarBlured {
   background-color: white;
   border-bottom: solid 1.5px #d7d7d7;
 }
-
 
 img{
   object-fit: cover;

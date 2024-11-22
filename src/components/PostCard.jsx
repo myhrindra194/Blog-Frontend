@@ -51,14 +51,14 @@ export default function PostCard({ post, isExpanded, children }) {
           {post.content.length > 100 && !isExpanded ? (
             <p className="card-text">
               {splitContent}...
-              <Link to={`/${post.id}`}>read more</Link>
+              <Link to={`/blogs/${post.id}`}>read more</Link>
             </p>
           ) : (
             <p>{post.content}</p>
           )}
 
           {post.image != undefined && (
-            <Link to={`/${post.id}`}>
+            <Link to={`/blogs/${post.id}`}>
               <img src={post.image} alt="image" className="img-fluid rounded imgPost" />
             </Link>
           )}

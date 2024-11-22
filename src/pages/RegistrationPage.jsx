@@ -64,7 +64,10 @@ export default function RegistrationPage() {
   };
 
   return (
-    <div className="registerPage container py-4 px-5 my-5 col-xl-3 col-lg-4 col-md-8 col-sm-12 border shadow rounded">
+    <div
+      className="registerPage container py-4 px-5 my-5 col-xl-3 col-lg-4 col-md-8 col-sm-12 border shadow rounded"
+      style={{ backgroundColor: "white" }}
+    >
       <h4 className="my-3 text-center">Registration</h4>{" "}
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
         <FormGroup>

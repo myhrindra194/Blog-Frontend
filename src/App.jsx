@@ -44,7 +44,7 @@ const AppWrapper = () => {
           ),
         },
         {
-          path: "/:idPost",
+          path: "/blogs/:idPost",
           element: <PostPage />,
         },
         {

@@ -57,7 +57,7 @@ export default function BlogPage() {
           )}
         </div>
         <div className="col-3">
-          <h5>Top users</h5>
+          <h4 className="mb-4">Top users</h4>
           <div>
             {users
               .filter((user) => user.profilPicture != null)

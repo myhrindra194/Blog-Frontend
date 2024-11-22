@@ -1,6 +1,6 @@
 import { Form, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { FormGroup, Input, Spinner } from "reactstrap";
+import { Button, FormGroup, Input, Spinner } from "reactstrap";
 import { useState } from "react";
 import { URL_API } from "../utils/url";
 
@@ -51,7 +51,8 @@ export default function EditProfilePage() {
           <FormGroup>
             <Input id="image" name="image" type="file" />
           </FormGroup>
-          <button
+          <Button
+            color="primary"
             className="my-3 py-2 w-100 fw-bold buttonLogin"
             disabled={isLoading}
           >
@@ -62,7 +63,7 @@ export default function EditProfilePage() {
             ) : (
               "Save changes"
             )}
-          </button>
+          </Button>
         </Form>
       </div>
     </div>

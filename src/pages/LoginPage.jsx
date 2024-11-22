@@ -60,10 +60,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container py-4 px-5 mt-5 col-xl-3 col-lg-4 col-md-8 col-sm-10 border shadow rounded">
-      <h4 className="my-3 text-center">
-        Login page
-      </h4>
+    <div
+      className="container py-4 px-5 mt-5 col-xl-3 col-lg-4 col-md-8 col-sm-10 border shadow rounded"
+      style={{ backgroundColor: "white" }}
+    >
+      <h4 className="my-3 text-center">Login page</h4>
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
         <FormGroup>
           <Input
