@@ -55,12 +55,12 @@ export default function EditProfilePage() {
             required
           />
         </FormGroup>
-        <FormGroup className="d-flex">
+        <FormGroup className="d-flex align-items-center">
           <img
             src={image}
             alt="profile"
-            style={{ width: "38px", height: "38px" }}
-            className="rounded-circle"
+            style={{ width: "70px", height: "70px" }}
+            className="rounded-circle img-fluid"
           />
           <input
             id="image"
