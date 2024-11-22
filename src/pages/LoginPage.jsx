@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Button,
   Form,
   FormGroup,
   Input,
@@ -59,8 +60,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container py-4 px-5 mt-5 col-xl-3 col-lg-4 col-md-8 col-sm-10 loginPage">
-      <h4 className="my-3" style={{ fontFamily: "monospace" }}>
+    <div className="container py-4 px-5 mt-5 col-xl-3 col-lg-4 col-md-8 col-sm-10 border shadow rounded">
+      <h4 className="my-3 text-center">
         Login page
       </h4>
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
@@ -104,7 +105,8 @@ export default function LoginPage() {
             </InputGroupText>
           </InputGroup>
         </FormGroup>
-        <button
+        <Button
+          color="primary"
           className="my-3 py-2 w-100 fw-bold buttonLogin"
           disabled={!isFormValid() || isLoading}
         >
@@ -115,7 +117,7 @@ export default function LoginPage() {
           ) : (
             "Sign in"
           )}
-        </button>
+        </Button>
       </Form>
       <p className="text-center mt-2">
         Don&apos;t have an account?

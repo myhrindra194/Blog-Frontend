@@ -2,61 +2,8 @@
   background-color: white;
   border-bottom: solid 1.5px #d7d7d7;
 }
-button {
-  color: #101010;
-}
 
-#email:focus, 
-#userName:focus, 
-#password:focus, 
-#confirmPassword:focus {
-  box-shadow: none;
-}
 
-.buttonLogin, .buttonRegister {
-  background-color: #d0Eb97;
-  color: #101010;
-  margin: 0px 0px;
-}
-
-.buttonLogin:hover {
-  background-color: #c4ee6a;
-}
-
-button, .loginPage, .registerPage {
-  border-radius: 20px;
-  border: solid #101010 1px;
-}
-
-.loginPage, .registerPage {
-  box-shadow: 4px 4px 2px #101010;
-  color: #101010;
-  background-color: #e3b5FF;
-}
-
-#email, #userName, .inputGroup {
-  border: solid #101010 2px;
-  border-radius: 15px;
-}
-
-#password, #confirmPassword {
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-}
-
-.icon {
-  background-color: white;
-  border-radius: 15px;
-}
-
-.dashboardLink {
-  padding: 10px;
-}
-.dashboardLink:hover {
-  background: #d0Eb97;
-  border-radius: 15px;
-
-}
 img{
   object-fit: cover;
 }

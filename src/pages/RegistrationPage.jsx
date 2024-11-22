@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Button,
   Form,
   FormGroup,
   Input,
@@ -63,10 +64,8 @@ export default function RegistrationPage() {
   };
 
   return (
-    <div className="registerPage container py-4 px-5 my-5 col-xl-3 col-lg-4 col-md-8 col-sm-12">
-      <h4 className="my-3" style={{ fontFamily: "monospace" }}>
-        Registration
-      </h4>{" "}
+    <div className="registerPage container py-4 px-5 my-5 col-xl-3 col-lg-4 col-md-8 col-sm-12 border shadow rounded">
+      <h4 className="my-3 text-center">Registration</h4>{" "}
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
         <FormGroup>
           <Input
@@ -158,7 +157,8 @@ export default function RegistrationPage() {
             </InputGroupText>
           </InputGroup>
         </FormGroup>
-        <button
+        <Button
+          color="primary"
           className="buttonRegister w-100 py-2 fw-bold mt-2"
           disabled={!isFormValid() || isLoading}
         >
@@ -169,7 +169,7 @@ export default function RegistrationPage() {
           ) : (
             "Register"
           )}
-        </button>
+        </Button>
       </Form>
       <p className="text-center my-3">
         Already have an account?
