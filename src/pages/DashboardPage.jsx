@@ -71,7 +71,7 @@ export default function DashBoard() {
                           size="xl"
                         />
                         <ul className="dropdown-menu">
-                          <li>
+                          <li className="my-2">
                             <p className="dropdown-item" type="button">
                               <Link
                                 to={`/editPost/${post.id}`}
@@ -84,7 +84,7 @@ export default function DashBoard() {
                               </Link>
                             </p>
                           </li>
-                          <li>
+                          <li className="my-2">
                             <p
                               className="dropdown-item"
                               type="button"

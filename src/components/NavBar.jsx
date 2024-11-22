@@ -2,7 +2,6 @@ import {
   faArrowRightFromBracket,
   faBars,
   faHome,
-  faUser,
   faUserEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,25 +11,12 @@ import CustomLink from "./CustomLink";
 import vite from "/vite.svg";
 import { Link } from "react-router-dom";
 import { faIdCard } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useState } from "react";
-import { URL_API } from "../utils/url";
 
 export default function NavBar() {
-  const { id, token } = useAuth().user;
+  const { id, username, profilePicture, token } = useAuth().user;
   const { logout } = useAuth();
-  const [user, setUser] = useState([]);
 
   const handleLogout = () => logout();
-
-  useEffect(() => {
-    fetch(`${URL_API}/users/${id}`)
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .catch((error) => console.error(error));
-  });
-
-  console.log(user);
-  
 
   return (
     <div className="sticky-top navBarBlured">
@@ -65,7 +51,7 @@ export default function NavBar() {
           >
             {token != null ? (
               <div className="d-flex">
-                <Button color="primary">
+                <Button color="light">
                   <CustomLink to="/addPost">Create Post</CustomLink>
                 </Button>
                 <div className="dropdown d-flex align-items-center ms-3">
@@ -73,61 +59,35 @@ export default function NavBar() {
                     className="img-fluid dropdown-toggle rounded-circle border"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    src={user.profilPicture}
+                    src={profilePicture}
                     alt="profile"
                     style={{ width: "40px", height: "40px" }}
                   />
                   <ul className="dropdown-menu">
                     <li>
                       <p className="dropdown-item" type="button">
-                        <Link
-                          to={`/users/${id}`}
-                          style={{
-                            textDecoration: "none",
-                            color: "#101010",
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faUser} /> My profile
-                        </Link>
+                        <CustomLink to={`/users/${id}`}>{username}</CustomLink>
                       </p>
                     </li>
                     <li>
                       <p className="dropdown-item" type="button">
-                        <Link
-                          to={`/editProfile`}
-                          style={{
-                            textDecoration: "none",
-                            color: "#101010",
-                          }}
-                        >
+                        <CustomLink to={`/editProfile`}>
                           <FontAwesomeIcon icon={faUserEdit} /> Edit profile
-                        </Link>
+                        </CustomLink>
                       </p>
                     </li>
                     <li>
                       <p className="dropdown-item" type="button">
-                        <Link
-                          to="/dashboard"
-                          style={{
-                            textDecoration: "none",
-                            color: "#101010",
-                          }}
-                        >
+                        <CustomLink to="/dashboard">
                           <FontAwesomeIcon icon={faHome} /> Dashboard
-                        </Link>
+                        </CustomLink>
                       </p>
                     </li>
                     <li>
                       <p className="dropdown-item" type="button">
-                        <Link
-                          to="/addPost"
-                          style={{
-                            textDecoration: "none",
-                            color: "#101010",
-                          }}
-                        >
+                        <CustomLink to="/addPost">
                           <FontAwesomeIcon icon={faIdCard} /> Create post
-                        </Link>
+                        </CustomLink>
                       </p>
                     </li>
                     <li>

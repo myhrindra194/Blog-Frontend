@@ -42,9 +42,13 @@ export default function LoginPage() {
 
       const data = await response.json();
       console.log(data.user);
-      
 
-      login(data.user.id, data.token);
+      login(
+        data.user.id,
+        data.user.username,
+        data.user.profilePicture,
+        data.token
+      );
 
       navigate("/dashboard");
     } catch (error) {

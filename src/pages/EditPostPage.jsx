@@ -91,11 +91,17 @@ export default function EditPostPage() {
                   }
                 />
               </FormGroup>
-              <ButtonGroup className="mb-4 float-end" >
-                <Button color="danger" onClick={() => navigate("/dashboard")} disabled={isLoading}>
+              <ButtonGroup className="mb-4 float-end">
+                <Button
+                  color="danger"
+                  onClick={() => navigate("/dashboard")}
+                  disabled={isLoading}
+                >
                   Cancel
                 </Button>
-                <Button color="success" disabled={isLoading}>Validate</Button>
+                <Button color="success" disabled={isLoading}>
+                  Validate
+                </Button>
               </ButtonGroup>
               {isLoading && <Spinner />}
             </Form>
