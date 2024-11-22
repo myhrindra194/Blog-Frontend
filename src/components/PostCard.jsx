@@ -59,7 +59,7 @@ export default function PostCard({ post, isExpanded, children }) {
 
           {post.image != undefined && (
             <Link to={`/${post.id}`}>
-              <img src={post.image} alt="image" className="img-fluid rounded" />
+              <img src={post.image} alt="image" className="img-fluid rounded imgPost" />
             </Link>
           )}
         </div>

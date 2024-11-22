@@ -60,3 +60,8 @@ button, .loginPage, .registerPage {
 img{
   object-fit: cover;
 }
+
+.imgPost {
+  width: 100%;
+  height: 350px;
+}

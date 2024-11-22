@@ -9,14 +9,19 @@ import { Button, Navbar, NavbarBrand } from "reactstrap";
 import { useAuth } from "../hooks/useAuth";
 import CustomLink from "./CustomLink";
 import vite from "/vite.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { faIdCard } from "@fortawesome/free-regular-svg-icons";
+import profilePic from "../assets/profilePic.jpeg";
 
 export default function NavBar() {
   const { id, username, profilePicture, token } = useAuth().user;
   const { logout } = useAuth();
+  const navigate = useNavigate();
 
-  const handleLogout = () => logout();
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <div className="sticky-top navBarBlured">
@@ -59,7 +64,7 @@ export default function NavBar() {
                     className="img-fluid dropdown-toggle rounded-circle border"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    src={profilePicture}
+                    src={profilePicture ? profilePicture : profilePic}
                     alt="profile"
                     style={{ width: "40px", height: "40px" }}
                   />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { URL_API } from "../utils/url";
-import profilePicture from "../assets/profilePic.jpeg";
+import profilePic from "../assets/profilePic.jpeg";
 import PostCard from "../components/PostCard";
 import { filterPost } from "../utils/function";
 import { useAuth } from "../hooks/useAuth";
@@ -10,8 +10,9 @@ import { Button } from "reactstrap";
 
 export default function UserPage() {
   const { idUser } = useParams();
-  const { id, username, profilPicture } = useAuth().user;
+  const { id } = useAuth().user;
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetch(`${URL_API}/blogs`)
@@ -20,20 +21,27 @@ export default function UserPage() {
       .catch((error) => console.error("Error while fetching data", error));
   }, []);
 
+  useEffect(() => {
+    fetch(`${URL_API}/users/${idUser}`)
+      .then((res) => res.json())
+      .then((data) => setUser(data))
+      .catch((error) => console.error("Error while fetching data", error));
+  }, [idUser]);
+
   const userPosts = filterPost(posts).filter((post) => post.autorId == idUser);
 
   return (
     <div className="container">
       <div className=" mt-5 border p-5">
         <img
-          src={profilPicture ? profilPicture : profilePicture}
+          src={user?.profilPicture ? user?.profilPicture : profilePic}
           alt="profile"
           className="img-thumbnail-fluid rounded-circle border"
           style={{ width: "180px", height: "180px" }}
         />
-        <h4 className="ms-5 mt-3">{username}</h4>
+        <h4 className="ms-5 mt-3">{user?.username}</h4>
         {idUser == id && (
-          <Button color="primary">
+          <Button color="primary" className="ms-auto d-block">
             <CustomLink to={`/editProfile`}>Edit profile</CustomLink>
           </Button>
         )}

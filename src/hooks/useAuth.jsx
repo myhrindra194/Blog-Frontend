@@ -17,12 +17,16 @@ export const AuthProvider = ({ children }) => {
     setUser({ id, username, profilePicture, token });
   };
 
+  const editProfile = (username, profilePicture) => {
+    setUser({ ...user, username: username, profilePicture: profilePicture });
+  };
+
   const logout = () => {
     setUser({ id: 0, username: "", profilPicture: "", token: null });
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, editProfile }}>
       {children}
     </AuthContext.Provider>
   );
