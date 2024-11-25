@@ -9,12 +9,14 @@ import { dateDiff } from "../utils/function";
 import { URL_API } from "../utils/url";
 import CommentCard from "./CommentCard";
 import CustomLink from "./CustomLink";
+import CustomSpinner from "./CustomSpinner";
 
 export default function DetailedPost({ post, children }) {
   const { token } = useAuth().user;
   const [user, setUser] = useState([]);
+  const [content, setContent] = useState(""); 
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const [content, setContent] = useState("");
 
   useEffect(() => {
     fetch(`${URL_API}/users/${post.authorId}`)
@@ -27,6 +29,7 @@ export default function DetailedPost({ post, children }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     token
       ? await fetch(`${URL_API}/blogs/${post.id}/comments`, {
           method: "POST",
@@ -40,6 +43,8 @@ export default function DetailedPost({ post, children }) {
           .then((data) => {
             console.log(data);
             setContent("");
+            setIsLoading(false);
+            window.location.reload();
           })
           .catch((error) => console.log(error))
       : navigate("/login");
@@ -87,7 +92,7 @@ export default function DetailedPost({ post, children }) {
         )}
 
         {post.comment.length == 0 ? (
-          <p>No comments</p>
+          <p className="mt-3">No comments</p>
         ) : (
           <div>
             {post.comment.map((item) => (
@@ -112,9 +117,9 @@ export default function DetailedPost({ post, children }) {
           <Button
             type="submit"
             className="ms-auto d-block mt-3"
-            disabled={content.trim() == ""}
+            disabled={content.trim() === "" && !isLoading}
           >
-            Comment
+            {isLoading ? <CustomSpinner /> : "Comment"}
           </Button>
         </form>
       </div>

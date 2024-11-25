@@ -59,7 +59,7 @@ export default function DashBoard() {
       <div className="row justify-content-between">
         <Card className="col-4 p-4">
           <CardTitle>Total Post</CardTitle>
-          {filteredPost.length == 0 ? (
+          {userPosts.length == 0 ? (
             <CustomSpinner />
           ) : (
             <CardText tag={"h4"}>{filteredPost.length}</CardText>
@@ -67,7 +67,7 @@ export default function DashBoard() {
         </Card>
         <Card className="col-4 p-4">
           <CardTitle>Total Reactions</CardTitle>
-          {filteredPost.length == 0 ? (
+          {userPosts.length == 0 ? (
             <CustomSpinner />
           ) : (
             <CardText tag={"h4"}>{filteredPost.length}</CardText>
@@ -75,7 +75,7 @@ export default function DashBoard() {
         </Card>
         <Card className="col-3 p-4">
           <CardTitle>Total Comments</CardTitle>
-          {filteredPost.length == 0 ? (
+          {userPosts.length == 0 ? (
             <CustomSpinner />
           ) : (
             <CardText tag={"h4"}>{filteredPost.length}</CardText>
@@ -94,7 +94,7 @@ export default function DashBoard() {
           {userPosts.length == 0 ? (
             <CustomSpinner />
           ) : filteredPost.length == 0 ? (
-            <p className="mt-5">No item </p>
+            <p className="">No post </p>
           ) : (
             <div className="mt-5">
               {filteredPost.map((post) => (
