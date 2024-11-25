@@ -37,11 +37,11 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="container py-5">
+    <div className="container py-5 ">
       <Form
         action=""
         onSubmit={(e) => handleSubmit(e)}
-        className="border shadow p-5"
+        className="border shadow py-5 px-3 px-md-5"
       >
         <FormGroup>
           <Input
@@ -55,7 +55,7 @@ export default function EditProfilePage() {
             required
           />
         </FormGroup>
-        <FormGroup className="d-flex align-items-center">
+        <FormGroup className="d-md-flex align-items-center">
           <img
             src={image}
             alt="profile"
@@ -66,7 +66,7 @@ export default function EditProfilePage() {
             id="image"
             name="image"
             type="file"
-            className="ms-3"
+            className="ms-0 ms-md-3 mt-3 mt-md-0"
             ref={myRef}
             onChange={() =>
               setImage(URL.createObjectURL(myRef.current.files[0]))
@@ -75,7 +75,7 @@ export default function EditProfilePage() {
         </FormGroup>
         <Button
           color="primary"
-          className="my-3 w-100 fw-bold buttonLogin"
+          className="my-3 w-100 fw-bold"
           disabled={isLoading}
         >
           {isLoading ? (

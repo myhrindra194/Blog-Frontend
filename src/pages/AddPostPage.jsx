@@ -35,7 +35,7 @@ export default function AddPostPage() {
     navigate("/dashboard");
   };
   return (
-    <div className="container col-6">
+    <div className="container col-12 col-md-6">
       <Form
         action=""
         onSubmit={(e) => handleSubmit(e)}

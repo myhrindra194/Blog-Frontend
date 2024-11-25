@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth";
-import { URL_API } from "../utils/url";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   ButtonGroup,
@@ -10,7 +9,8 @@ import {
   Label,
   Spinner,
 } from "reactstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import { URL_API } from "../utils/url";
 
 export default function EditPostPage() {
   const { idPost } = useParams();
@@ -58,7 +58,7 @@ export default function EditPostPage() {
   };
 
   return (
-    <div className="container col-6">
+    <div className="container col-md-6 col-12">
       <Form
         action=""
         onSubmit={(e) => handleSubmit(e)}
