@@ -55,7 +55,7 @@ export default function NavBar() {
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
             >
-              <div className="ms-auto d-block">
+              <div className="ms-auto d-blocka">
                 <Button color="light">
                   <Link to="/login" style={{ textDecoration: "none" }}>
                     Login

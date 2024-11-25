@@ -59,10 +59,10 @@ export default function DashBoard() {
 
   return (
     <div className="container">
-      <h3 className="my-4">Dashboard</h3>
+      <h3 className="mt-4 mb-md-4 mb-0">Dashboard</h3>
 
       <div className="row justify-content-between">
-        <Card className="col-4 p-4">
+        <Card className="col-3 d-none d-md-block p-3">
           <CardTitle>Total Post</CardTitle>
           {userPosts.length == 0 ? (
             <CustomSpinner />
@@ -70,7 +70,7 @@ export default function DashBoard() {
             <CardText tag={"h4"}>{filteredPost.length}</CardText>
           )}
         </Card>
-        <Card className="col-4 p-4">
+        <Card className="col-3 d-none d-md-block p-3">
           <CardTitle>Total Reactions</CardTitle>
           {userPosts.length == 0 ? (
             <CustomSpinner />
@@ -78,7 +78,7 @@ export default function DashBoard() {
             <CardText tag={"h4"}>{filteredPost.length}</CardText>
           )}
         </Card>
-        <Card className="col-3 p-4">
+        <Card className="col-3 d-none d-md-block p-3">
           <CardTitle>Total Comments</CardTitle>
           {userPosts.length == 0 ? (
             <CustomSpinner />
@@ -88,18 +88,18 @@ export default function DashBoard() {
         </Card>
       </div>
       <div className="row justify-content-between py-5">
-        <div className="col-9">
-          <div className="d-flex justify-content-between pe-5">
+        <div className="col-12 col-md-9">
+          <div className="d-md-flex justify-content-between me-md-5 me-0">
             <SearchBar
               value={searchWord}
               onChange={(e) => setSearchWord(e.target.value)}
             />
-            <Button color="primary">
+            <Button color="primary" className="mt-4 mt-md-0">
               <Link
                 to="/addPost"
                 style={{ color: "white", textDecoration: "none" }}
               >
-                <FontAwesomeIcon icon={faAdd} /> Add new post
+                <FontAwesomeIcon icon={faAdd} /> Add post
               </Link>
             </Button>
           </div>
@@ -113,7 +113,7 @@ export default function DashBoard() {
               {filteredPost.map((post) => (
                 <PostCard key={post.id} post={post}>
                   {
-                    <div className="dropdown col-8 d-flex justify-content-end">
+                    <div className="dropdown ms-auto d-block d-flex justify-content-end">
                       <FontAwesomeIcon
                         icon={faEllipsis}
                         className="dropdown-toggle"
@@ -152,7 +152,7 @@ export default function DashBoard() {
             </div>
           )}
         </div>
-        <div className="col-3">
+        <div className="col-3 col-md-0 d-none d-md-block">
           <h3 className="mb-4">Friends</h3>
           <div>
             {users

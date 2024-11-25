@@ -20,69 +20,64 @@ export default function PostCard({ post, children }) {
       .then((data) => setUser(data))
       .catch((error) => console.error(error));
   }, [post.authorId]);
-  
 
   const dateStr = new Date(post.createdAt).toISOString();
 
   return (
     <div className="card mb-3">
-      <div className="row g-0">
-        <div className="card-body">
-          <div className="d-flex align-items-center">
+      <div className="card-body">
+        <div className="d-flex align-items-center justify-content-center">
+          <img
+            src={user.profilPicture == null ? profilePic : user.profilPicture}
+            alt="Profile picture"
+            className="img-thumbnail-fluid rounded-circle border-dark me-2"
+            style={{ width: "50px", height: "50px" }}
+          />
+          <div>
+            <small>
+              <CustomLink to={`/users/${user.id}`}>{user.username}</CustomLink>
+            </small>
+            <small className="text-muted">
+              <br />
+              {dateDiff(dateStr)}
+            </small>
+          </div>
+
+          {children}
+        </div>
+        <h5 className="card-title d-flex justify-content-between mt-4">
+          {post.title}
+        </h5>
+        {post.content.length > 100 ? (
+          <p className="card-text">
+            {splitContent}...
+            <Link to={`/blogs/${post.id}`}>read more</Link>
+          </p>
+        ) : (
+          <p>{post.content}</p>
+        )}
+
+        {post.image != undefined && (
+          <Link to={`/blogs/${post.id}`}>
             <img
-              src={user.profilPicture == null ? profilePic : user.profilPicture}
-              alt="Profile picture"
-              className="img-thumbnail-fluid rounded-circle border-dark me-2"
-              style={{ width: "50px", height: "50px" }}
+              src={post.image}
+              alt="image"
+              className="img-fluid rounded imgPost"
+              style={{
+                height: "350px",
+                width: "100%",
+              }}
             />
-            <div>
-              <small>
-                <CustomLink to={`/users/${user.id}`}>
-                  {user.username}
-                </CustomLink>
-              </small>
-              <small className="text-muted">
-                <br />
-                Posted since {dateDiff(dateStr)}
-              </small>
-            </div>
-
-            {children}
-          </div>
-          <h5 className="card-title d-flex justify-content-between mt-4">
-            {post.title}
-          </h5>
-          {post.content.length > 100 ? (
-            <p className="card-text">
-              {splitContent}...
-              <Link to={`/blogs/${post.id}`}>read more</Link>
-            </p>
-          ) : (
-            <p>{post.content}</p>
-          )}
-
-          {post.image != undefined && (
-            <Link to={`/blogs/${post.id}`}>
-              <img
-                src={post.image}
-                alt="image"
-                className="img-fluid rounded imgPost"
-                style={{
-                  height: "350px",
-                  width: "100%",
-                }}
-              />
-            </Link>
-          )}
-          <div className="text-end">
-            <hr />
-            <Button color="light" outline>
-              <CustomLink to={`/blogs/${post.id}`}>
-                <FontAwesomeIcon icon={faComment} /> Comment
-              </CustomLink>
-            </Button>
-            <hr />
-          </div>
+          </Link>
+        )}
+        <div className="text-end">
+          <hr />
+          <Button color="light" outline>
+            <CustomLink to={`/blogs/${post.id}`}>
+              <FontAwesomeIcon icon={faComment} /> Comment
+            </CustomLink>
+          </Button>
+          <hr />
         </div>
       </div>
     </div>
