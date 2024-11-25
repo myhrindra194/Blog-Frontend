@@ -33,13 +33,13 @@ export default function BlogPage() {
   return (
     <div className="container">
       <div className="row my-4">
-        <div className="col-md-3">
+        <div className="col-md-3 col-sm-10 col-xs-12">
           <SearchBar
             value={searchWord}
             onChange={(e) => setSearchWord(e.target.value)}
           />
         </div>
-        <div className="col-md-6 col-10">
+        <div className="col-md-6 col-sm-12 mt-3 mt-md-0">
           {posts.length == 0 ? (
             <CustomSpinner />
           ) : filteredPost.length == 0 ? (
@@ -57,7 +57,7 @@ export default function BlogPage() {
             </>
           )}
         </div>
-        <div className="col-3">
+        <div className="col-3 d-none d-md-block">
           <h4 className="mb-4">Top users</h4>
           <div>
             {users
