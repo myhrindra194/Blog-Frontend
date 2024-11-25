@@ -55,58 +55,52 @@ export default function NavBar() {
             id="navbarSupportedContent"
           >
             {token != null ? (
-              <div className="d-flex">
-                <Button color="light">
-                  <CustomLink to="/addPost">Create Post</CustomLink>
-                </Button>
-                <div className="dropdown d-flex align-items-center">
-                  <img
-                    className="img-fluid dropdown-toggle rounded-circle border"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    src={profilPicture ? profilPicture : profilePic}
-                    alt="profile"
-                    style={{ width: "40px", height: "40px" }}
-                  />
-                  <ul className="dropdown-menu  dropdown-menu-start">
-                    <li>
-                      <p className="dropdown-item" type="button">
-                        <CustomLink to={`/users/${id}`}>{username}</CustomLink>
-                      </p>
-                    </li>
-                    <li>
-                      <p className="dropdown-item" type="button">
-                        <CustomLink to={`/editProfile`}>
-                          <FontAwesomeIcon icon={faUserEdit} /> Edit profile
-                        </CustomLink>
-                      </p>
-                    </li>
-                    <li>
-                      <p className="dropdown-item" type="button">
-                        <CustomLink to="/dashboard">
-                          <FontAwesomeIcon icon={faHome} /> Dashboard
-                        </CustomLink>
-                      </p>
-                    </li>
-                    <li>
-                      <p className="dropdown-item" type="button">
-                        <CustomLink to="/addPost">
-                          <FontAwesomeIcon icon={faIdCard} /> Create post
-                        </CustomLink>
-                      </p>
-                    </li>
-                    <li>
-                      <p
-                        className="dropdown-item"
-                        type="button"
-                        onClick={handleLogout}
-                      >
-                        <FontAwesomeIcon icon={faArrowRightFromBracket} /> Log
-                        out
-                      </p>
-                    </li>
-                  </ul>
-                </div>
+              <div className="dropdown d-flex align-items-center">
+                <img
+                  className="img-fluid dropdown-toggle rounded-circle border"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  src={profilPicture ? profilPicture : profilePic}
+                  alt="profile"
+                  style={{ width: "40px", height: "40px" }}
+                />
+                <ul className="dropdown-menu  dropdown-menu-start">
+                  <li>
+                    <p className="dropdown-item" type="button">
+                      <CustomLink to={`/users/${id}`}>{username}</CustomLink>
+                    </p>
+                  </li>
+                  <li>
+                    <p className="dropdown-item" type="button">
+                      <CustomLink to={`/editProfile`}>
+                        <FontAwesomeIcon icon={faUserEdit} /> Edit profile
+                      </CustomLink>
+                    </p>
+                  </li>
+                  <li>
+                    <p className="dropdown-item" type="button">
+                      <CustomLink to="/dashboard">
+                        <FontAwesomeIcon icon={faHome} /> Dashboard
+                      </CustomLink>
+                    </p>
+                  </li>
+                  <li>
+                    <p className="dropdown-item" type="button">
+                      <CustomLink to="/addPost">
+                        <FontAwesomeIcon icon={faIdCard} /> Create post
+                      </CustomLink>
+                    </p>
+                  </li>
+                  <li>
+                    <p
+                      className="dropdown-item"
+                      type="button"
+                      onClick={handleLogout}
+                    >
+                      <FontAwesomeIcon icon={faArrowRightFromBracket} /> Log out
+                    </p>
+                  </li>
+                </ul>
               </div>
             ) : (
               <div>

@@ -1,8 +1,8 @@
-import { faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faAdd, faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody, CardText, CardTitle } from "reactstrap";
+import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap";
 import CustomLink from "../components/CustomLink";
 import CustomSpinner from "../components/CustomSpinner";
 import PostCard from "../components/PostCard";
@@ -83,18 +83,19 @@ export default function DashBoard() {
         </Card>
       </div>
       <div className="row justify-content-between py-5">
-        <div className="row col-8">
-          <div className="col-8">
+        <div className="col-9">
+          <div className="d-flex justify-content-between pe-5">
             <SearchBar
               value={searchWord}
               onChange={(e) => setSearchWord(e.target.value)}
             />
+            <Button color="primary"> <FontAwesomeIcon icon={faAdd}/> Add new post</Button>
           </div>
 
           {userPosts.length == 0 ? (
             <CustomSpinner />
           ) : filteredPost.length == 0 ? (
-            <p className="">No post </p>
+            <p className="mt-5">No post </p>
           ) : (
             <div className="mt-5">
               {filteredPost.map((post) => (
