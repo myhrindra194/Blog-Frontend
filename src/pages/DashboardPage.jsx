@@ -1,4 +1,9 @@
-import { faAdd, faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAdd,
+  faEdit,
+  faEllipsis,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -89,7 +94,14 @@ export default function DashBoard() {
               value={searchWord}
               onChange={(e) => setSearchWord(e.target.value)}
             />
-            <Button color="primary"> <FontAwesomeIcon icon={faAdd}/> Add new post</Button>
+            <Button color="primary">
+              <Link
+                to="/addPost"
+                style={{ color: "white", textDecoration: "none" }}
+              >
+                <FontAwesomeIcon icon={faAdd} /> Add new post
+              </Link>
+            </Button>
           </div>
 
           {userPosts.length == 0 ? (
