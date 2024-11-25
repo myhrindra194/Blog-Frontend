@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { Card, CardText } from "reactstrap";
+import profilePic from "../assets/profilePic.jpeg";
 import { dateDiff } from "../utils/function";
 import { URL_API } from "../utils/url";
 
@@ -19,7 +20,7 @@ export default function CommentCard({ comment }) {
       <Card className="py-2 px-4 mt-3 col-10 rounded-pill bg-light">
         <div className="d-flex align-items-center">
           <img
-            src={author.profilPicture}
+            src={author.profilPicture ? author.profilPicture : profilePic}
             alt="author"
             style={{ width: "30px", height: "30px" }}
             className="img-fluid rounded-circle border"

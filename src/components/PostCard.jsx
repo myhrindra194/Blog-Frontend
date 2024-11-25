@@ -20,6 +20,7 @@ export default function PostCard({ post, children }) {
       .then((data) => setUser(data))
       .catch((error) => console.error(error));
   }, [post.authorId]);
+  
 
   const dateStr = new Date(post.createdAt).toISOString();
 

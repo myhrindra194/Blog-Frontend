@@ -25,7 +25,7 @@ export default function NavBar() {
 
   return (
     <div className="sticky-top navBarBlured">
-      <Navbar className="container py-2 navbar-expand-sm">
+      <Navbar className="container py-2 navbar-expand-md">
         <div className="d-flex align-items-center col-8">
           <NavbarBrand
             href="/"
