@@ -22,7 +22,7 @@ export default function CommentCard({ comment }) {
           <img
             src={author.profilPicture ? author.profilPicture : profilePic}
             alt="author"
-            style={{ width: "30px", height: "30px" }}
+            style={{ width: "40px", height: "40px" }}
             className="img-fluid rounded-circle border"
           />
           <CardText className="ms-2 fw-semibold lh-1">
@@ -33,8 +33,8 @@ export default function CommentCard({ comment }) {
             </small>
           </CardText>
         </div>
-        <CardText className="fw-regular ps-3 mt-2">
-          <small>{comment.content}</small>
+        <CardText className="fw-regular ps-3 mt-2 ms-4">
+          {comment.content}
         </CardText>
       </Card>
     </div>

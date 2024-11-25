@@ -14,7 +14,7 @@ import CustomSpinner from "./CustomSpinner";
 export default function DetailedPost({ post, children }) {
   const { token } = useAuth().user;
   const [user, setUser] = useState([]);
-  const [content, setContent] = useState(""); 
+  const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -95,6 +95,9 @@ export default function DetailedPost({ post, children }) {
           <p className="mt-3">No comments</p>
         ) : (
           <div>
+            <p>
+              {post.comment.length} comment {post.comment.length > 1 && "s"}
+            </p>
             {post.comment.map((item) => (
               <CommentCard key={item.id} comment={item} />
             ))}
