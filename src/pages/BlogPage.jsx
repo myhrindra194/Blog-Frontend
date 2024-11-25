@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { URL_API } from "../utils/url";
-import PostCard from "../components/PostCard";
-import SearchBar from "../components/SearchBar";
-import { filterPost } from "../utils/function";
-import CustomSpinner from "../components/CustomSpinner";
 import { useNavigate } from "react-router-dom";
 import { Card, CardBody, CardText } from "reactstrap";
 import CustomLink from "../components/CustomLink";
+import CustomSpinner from "../components/CustomSpinner";
+import PostCard from "../components/PostCard";
+import SearchBar from "../components/SearchBar";
+import { filterPost } from "../utils/function";
+import { URL_API } from "../utils/url";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState([]);
@@ -50,6 +50,7 @@ export default function BlogPage() {
                 <PostCard
                   key={post.id}
                   post={post}
+                  isExpanded={false}
                   onClick={() => navigate(`/${post.id}`)}
                 />
               ))}

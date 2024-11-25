@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   ButtonGroup,
@@ -8,9 +10,7 @@ import {
   Spinner,
 } from "reactstrap";
 import { useAuth } from "../hooks/useAuth";
-import { useState } from "react";
 import { URL_API } from "../utils/url";
-import { useNavigate } from "react-router-dom";
 
 export default function AddPostPage() {
   const { token } = useAuth().user;

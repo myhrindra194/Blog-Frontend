@@ -1,13 +1,13 @@
-import { Form, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import { Button, FormGroup, Input, Spinner } from "reactstrap";
 import { useRef, useState } from "react";
+import { Form, useNavigate } from "react-router-dom";
+import { Button, FormGroup, Input, Spinner } from "reactstrap";
+import { useAuth } from "../hooks/useAuth";
 import { URL_API } from "../utils/url";
 
 export default function EditProfilePage() {
   const { user, editProfile } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
-  const [image, setImage] = useState(user.profilePicture);
+  const [image, setImage] = useState(user.profilPicture);
   const myRef = useRef(null);
 
   const navigate = useNavigate();

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { URL_API } from "../utils/url";
-import profilePic from "../assets/profilePic.jpeg";
-import PostCard from "../components/PostCard";
-import { filterPost } from "../utils/function";
-import { useAuth } from "../hooks/useAuth";
-import CustomLink from "../components/CustomLink";
 import { Button, Card, CardBody, CardText } from "reactstrap";
+import profilePic from "../assets/profilePic.jpeg";
+import CustomLink from "../components/CustomLink";
+import PostCard from "../components/PostCard";
+import { useAuth } from "../hooks/useAuth";
+import { filterPost } from "../utils/function";
+import { URL_API } from "../utils/url";
 
 export default function UserPage() {
   const { idUser } = useParams();
@@ -28,7 +28,7 @@ export default function UserPage() {
       .catch((error) => console.error("Error while fetching data", error));
   }, [idUser]);
 
-  const userPosts = filterPost(posts).filter((post) => post.autorId == idUser);
+  const userPosts = filterPost(posts).filter((post) => post.authorId == idUser);
 
   return (
     <div className="container">

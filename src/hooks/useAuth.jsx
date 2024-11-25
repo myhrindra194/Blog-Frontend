@@ -13,12 +13,12 @@ export const AuthProvider = ({ children }) => {
     token: null,
   });
 
-  const login = (id, username, profilePicture, token) => {
-    setUser({ id, username, profilePicture, token });
+  const login = (id, username, profilPicture, token) => {
+    setUser({ id, username, profilPicture, token });
   };
 
-  const editProfile = (username, profilePicture) => {
-    setUser({ ...user, username: username, profilePicture: profilePicture });
+  const editProfile = (username, profilPicture) => {
+    setUser({ ...user, username: username, profilPicture: profilPicture });
   };
 
   const logout = () => {

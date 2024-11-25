@@ -1,4 +1,7 @@
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Button,
   Form,
@@ -8,9 +11,6 @@ import {
   InputGroupText,
   Spinner,
 } from "reactstrap";
-import { NavLink, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { useAuth } from "../hooks/useAuth";
 import { URL_API } from "../utils/url";
 
@@ -47,7 +47,7 @@ export default function LoginPage() {
       login(
         data.user.id,
         data.user.username,
-        data.user.profilePicture,
+        data.user.profilPicture,
         data.token
       );
 

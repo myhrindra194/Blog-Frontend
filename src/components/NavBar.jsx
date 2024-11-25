@@ -1,3 +1,4 @@
+import { faIdCard } from "@fortawesome/free-regular-svg-icons";
 import {
   faArrowRightFromBracket,
   faBars,
@@ -5,16 +6,15 @@ import {
   faUserEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Navbar, NavbarBrand } from "reactstrap";
+import profilePic from "../assets/profilePic.jpeg";
 import { useAuth } from "../hooks/useAuth";
 import CustomLink from "./CustomLink";
 import vite from "/vite.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { faIdCard } from "@fortawesome/free-regular-svg-icons";
-import profilePic from "../assets/profilePic.jpeg";
 
 export default function NavBar() {
-  const { id, username, profilePicture, token } = useAuth().user;
+  const { id, username, profilPicture, token } = useAuth().user;
   const { logout } = useAuth();
   const navigate = useNavigate();
 
@@ -64,7 +64,7 @@ export default function NavBar() {
                     className="img-fluid dropdown-toggle rounded-circle border"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    src={profilePicture ? profilePicture : profilePic}
+                    src={profilPicture ? profilPicture : profilePic}
                     alt="profile"
                     style={{ width: "40px", height: "40px" }}
                   />

@@ -1,15 +1,15 @@
 import { faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "../hooks/useAuth";
-import { useEffect, useState } from "react";
-import { URL_API } from "../utils/url";
-import PostCard from "../components/PostCard";
-import { filterPost } from "../utils/function";
-import SearchBar from "../components/SearchBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CustomSpinner from "../components/CustomSpinner";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, CardText, CardTitle } from "reactstrap";
 import CustomLink from "../components/CustomLink";
+import CustomSpinner from "../components/CustomSpinner";
+import PostCard from "../components/PostCard";
+import SearchBar from "../components/SearchBar";
+import { useAuth } from "../hooks/useAuth";
+import { filterPost } from "../utils/function";
+import { URL_API } from "../utils/url";
 
 export default function DashBoard() {
   const { id, token } = useAuth().user;
@@ -49,7 +49,7 @@ export default function DashBoard() {
   };
 
   const filteredPost = filterPost(userPosts, searchWord).filter(
-    (post) => post.autorId == id
+    (post) => post.authorId == id
   );
 
   return (

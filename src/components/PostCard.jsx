@@ -1,22 +1,25 @@
 /* eslint-disable react/prop-types */
 
+import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { URL_API } from "../utils/url";
+import { Button } from "reactstrap";
 import profilePic from "../assets/profilePic.jpeg";
-import CustomLink from "./CustomLink";
 import { dateDiff } from "../utils/function";
+import { URL_API } from "../utils/url";
+import CustomLink from "./CustomLink";
 
-export default function PostCard({ post, isExpanded, children }) {
+export default function PostCard({ post, children }) {
   const [user, setUser] = useState([]);
   let splitContent = post.content.substring(0, 125);
 
   useEffect(() => {
-    fetch(`${URL_API}/users/${post.autorId}`)
+    fetch(`${URL_API}/users/${post.authorId}`)
       .then((response) => response.json())
       .then((data) => setUser(data))
       .catch((error) => console.error(error));
-  }, [post.autorId]);
+  }, [post.authorId]);
 
   const dateStr = new Date(post.createdAt).toISOString();
 
@@ -39,7 +42,7 @@ export default function PostCard({ post, isExpanded, children }) {
               </small>
               <small className="text-muted">
                 <br />
-              Posted since {dateDiff(dateStr)}
+                Posted since {dateDiff(dateStr)}
               </small>
             </div>
 
@@ -48,7 +51,7 @@ export default function PostCard({ post, isExpanded, children }) {
           <h5 className="card-title d-flex justify-content-between mt-4">
             {post.title}
           </h5>
-          {post.content.length > 100 && !isExpanded ? (
+          {post.content.length > 100 ? (
             <p className="card-text">
               {splitContent}...
               <Link to={`/blogs/${post.id}`}>read more</Link>
@@ -59,9 +62,26 @@ export default function PostCard({ post, isExpanded, children }) {
 
           {post.image != undefined && (
             <Link to={`/blogs/${post.id}`}>
-              <img src={post.image} alt="image" className="img-fluid rounded imgPost" />
+              <img
+                src={post.image}
+                alt="image"
+                className="img-fluid rounded imgPost"
+                style={{
+                  height: "350px",
+                  width: "100%",
+                }}
+              />
             </Link>
           )}
+          <div className="text-end">
+            <hr />
+            <Button color="light" outline>
+              <CustomLink to={`/blogs/${post.id}`}>
+                <FontAwesomeIcon icon={faComment} /> Comment
+              </CustomLink>
+            </Button>
+            <hr />
+          </div>
         </div>
       </div>
     </div>

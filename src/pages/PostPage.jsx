@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { URL_API } from "../utils/url";
-import PostCard from "../components/PostCard";
 import CustomSpinner from "../components/CustomSpinner";
+import DetailedPost from "../components/DetailedPost";
+import { URL_API } from "../utils/url";
 
 export default function PostPage() {
   const { idPost } = useParams();
@@ -16,11 +16,11 @@ export default function PostPage() {
   }, [idPost]);
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 col-8">
       {post.length == 0 ? (
         <CustomSpinner />
       ) : (
-        <PostCard post={post} isExpanded={true} />
+        <DetailedPost post={post}/ >
       )}
     </div>
   );
