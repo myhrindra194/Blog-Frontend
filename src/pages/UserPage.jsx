@@ -45,6 +45,8 @@ export default function UserPage() {
           <div className="ms-md-4 mt-md-5 pt-4">
             <h4 className="mt-3">{user?.username}</h4>
             <small className="text-muted">{user?.email}</small>
+            <p>{user?.gender}</p>
+            <p>{user?.bio}</p>
           </div>
         </div>
 
