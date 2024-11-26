@@ -26,7 +26,7 @@ export default function PostCard({ post, children }) {
   return (
     <div className="card mb-3">
       <div className="card-body">
-        <div className="d-flex align-items-center justify-content-center">
+        <div className="d-flex align-items-center">
           <img
             src={user.profilPicture == null ? profilePic : user.profilPicture}
             alt="Profile picture"

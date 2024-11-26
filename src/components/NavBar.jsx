@@ -70,7 +70,7 @@ export default function NavBar() {
             </div>
           </>
         ) : (
-          <div className="dropdown dropstart d-flex align-items-center">
+          <div className="dropdown d-flex align-items-center">
             <img
               className="img-fluid dropdown-toggle rounded-circle border"
               data-bs-toggle="dropdown"
@@ -79,7 +79,7 @@ export default function NavBar() {
               alt="profile"
               style={{ width: "40px", height: "40px" }}
             />
-            <ul className="dropdown-menu">
+            <ul className="dropdown-menu dropdown-menu-end">
               <li>
                 <p className="dropdown-item" type="button">
                   <CustomLink to={`/users/${id}`}>{username}</CustomLink>
