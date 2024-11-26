@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, ButtonGroup, Card, CardText, Input } from "reactstrap";
 import profilePic from "../assets/profilePic.jpeg";
 import { useAuth } from "../hooks/useAuth";
@@ -15,6 +15,7 @@ export default function CommentCard({ comment }) {
   const [content, setContent] = useState(comment.content);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${URL_API}/users/${comment.authorId}`)
@@ -38,7 +39,7 @@ export default function CommentCard({ comment }) {
         );
         const data = await response.json();
         console.log(data.message);
-        window.location.reload();
+        navigate(0);
       } catch (error) {
         alert(error.message);
       }
@@ -61,7 +62,7 @@ export default function CommentCard({ comment }) {
       );
       const data = await response.json();
       console.log(data);
-      window.location.reload();
+      navigate(0);
     } catch (error) {
       alert(error);
     }
@@ -71,7 +72,7 @@ export default function CommentCard({ comment }) {
 
   return (
     <div className="w-100">
-      <Card className="py-2 px-4 my-3 col-12  rounded-5 bg-light">
+      <Card className="py-2 px-3 my-3 col-12  rounded-5 bg-light">
         <div className="d-flex align-items-center">
           <img
             src={author.profilPicture ? author.profilPicture : profilePic}
@@ -79,7 +80,7 @@ export default function CommentCard({ comment }) {
             style={{ width: "40px", height: "40px" }}
             className="img-fluid rounded-circle border"
           />
-          <CardText className="ms-2 fw-semibold lh-1">
+          <CardText className="ms-3 fw-semibold lh-1">
             <small>{author.username}</small>
             <br />
             <small className="text-muted">

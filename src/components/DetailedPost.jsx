@@ -36,7 +36,7 @@ export default function DetailedPost({ post, children }) {
             console.log(data);
             setContent("");
             setIsLoading(false);
-            window.location.reload();
+            navigate(0);
           })
           .catch((error) => console.log(error))
       : navigate("/login");

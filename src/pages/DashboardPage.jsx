@@ -57,7 +57,9 @@ export default function DashBoard() {
     (post) => post.authorId == id
   );
 
-  const commentLength = sumComment(filteredPost);
+  const commentLength = sumComment(
+    userPosts.filter((post) => post.authorId == id)
+  );
 
   return (
     <div className="container">
@@ -69,7 +71,9 @@ export default function DashBoard() {
           {userPosts.length == 0 ? (
             <CustomSpinner />
           ) : (
-            <CardText tag={"h4"}>{filteredPost.length}</CardText>
+            <CardText tag={"h4"}>
+              {userPosts.filter((post) => post.authorId == id).length}
+            </CardText>
           )}
         </Card>
         <Card className="col-3 d-none d-md-block p-3">

@@ -19,6 +19,9 @@ export default function RegistrationPage() {
     email: "",
     password: "",
     confirmPassword: "",
+    profilPicture: "",
+    gender: "",
+    bio: "",
   });
 
   const [isShowed, setIsShowed] = useState({
@@ -47,6 +50,9 @@ export default function RegistrationPage() {
           username: user.userName,
           email: user.email,
           password: user.password,
+          profilPicture: user.profilPicture,
+          gender: user.gender,
+          bio: user.bio,
         }),
       });
 
@@ -59,7 +65,15 @@ export default function RegistrationPage() {
     } catch (errors) {
       alert(errors);
     }
-    setUser({ userName: "", email: "", password: "", confirmPassword: "" });
+    setUser({
+      userName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      profilPicture: "",
+      gender: "",
+      bio: "",
+    });
     setIsLoading(false);
   };
 
@@ -160,6 +174,50 @@ export default function RegistrationPage() {
             </InputGroupText>
           </InputGroup>
         </FormGroup>
+        <FormGroup>
+          <Input
+            id="gender"
+            name="gender"
+            type="select"
+            value={user.gender}
+            onChange={(e) => setUser({ ...user, gender: e.target.value })}
+          >
+            <option>Male</option>
+            <option>Female</option>
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Input
+            className="mt-4"
+            id="profilPicture"
+            name="profilPicture"
+            type="file"
+            value={user.profilPicture}
+            onChange={(e) =>
+              setUser({
+                ...user,
+                profilPicture: e.target.value,
+              })
+            }
+          />
+        </FormGroup>
+        <FormGroup>
+          <Input
+            className="mt-4"
+            placeholder="Add bio"
+            id="bio"
+            name="bio"
+            type="textarea"
+            value={user.bio}
+            onChange={(e) =>
+              setUser({
+                ...user,
+                bio: e.target.value,
+              })
+            }
+          />
+        </FormGroup>
+
         <Button
           color="primary"
           className="buttonRegister w-100 py-2 fw-bold mt-2"
