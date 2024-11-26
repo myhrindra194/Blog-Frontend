@@ -3,19 +3,19 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
+import DetailedPost from "./components/DetailedPost";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Root from "./components/Root";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
+import AddPostPage from "./pages/AddPostPage";
+import BlogPage from "./pages/BlogPage";
+import DashBoard from "./pages/DashboardPage";
+import EditPostPage from "./pages/EditPostPage";
+import EditProfilePage from "./pages/EditProfilPage";
+import ErrorPage from "./pages/ErrorPage";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
-import ErrorPage from "./pages/ErrorPage";
-import PostPage from "./pages/PostPage";
-import Root from "./components/Root";
-import BlogPage from "./pages/BlogPage";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { AuthProvider, useAuth } from "./hooks/useAuth";
-import DashBoard from "./pages/DashboardPage";
-import EditProfilePage from "./pages/EditProfilPage";
 import UserPage from "./pages/UserPage";
-import AddPostPage from "./pages/AddPostPage";
-import EditPostPage from "./pages/EditPostPage";
 
 const AppWrapper = () => {
   const { user } = useAuth();
@@ -33,7 +33,11 @@ const AppWrapper = () => {
         },
         {
           path: "/login",
-          element: token ? <Navigate replace to={"/dashboard"} /> : <LoginPage />,
+          element: token ? (
+            <Navigate replace to={"/dashboard"} />
+          ) : (
+            <LoginPage />
+          ),
         },
         {
           path: "/register",
@@ -45,7 +49,7 @@ const AppWrapper = () => {
         },
         {
           path: "/blogs/:idPost",
-          element: <PostPage />,
+          element: <DetailedPost />,
         },
         {
           path: "/users/:idUser",
@@ -93,7 +97,6 @@ const AppWrapper = () => {
         },
       ],
     },
-    
   ]);
 
   return <RouterProvider router={router} />;
