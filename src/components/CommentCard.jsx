@@ -61,6 +61,7 @@ export default function CommentCard({ comment }) {
       );
       const data = await response.json();
       console.log(data);
+      window.location.reload();
     } catch (error) {
       alert(error);
     }
