@@ -3,7 +3,6 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import DetailedPost from "./components/DetailedPost";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Root from "./components/Root";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
@@ -14,6 +13,7 @@ import EditPostPage from "./pages/EditPostPage";
 import EditProfilePage from "./pages/EditProfilPage";
 import ErrorPage from "./pages/ErrorPage";
 import LoginPage from "./pages/LoginPage";
+import PostPage from "./pages/PostPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import UserPage from "./pages/UserPage";
 
@@ -49,7 +49,7 @@ const AppWrapper = () => {
         },
         {
           path: "/blogs/:idPost",
-          element: <DetailedPost />,
+          element: <PostPage />,
         },
         {
           path: "/users/:idUser",
