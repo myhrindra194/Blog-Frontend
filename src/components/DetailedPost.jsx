@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, Input, Label } from "reactstrap";
 import profilePic from "../assets/profilePic.jpeg";
 import { useAuth } from "../hooks/useAuth";
@@ -16,6 +16,7 @@ export default function DetailedPost({ post, children }) {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const dateStr = new Date(post.createdAt).toISOString();
 
@@ -36,7 +37,7 @@ export default function DetailedPost({ post, children }) {
             console.log(data);
             setContent("");
             setIsLoading(false);
-            navigate(0);
+            navigate(`${location.pathname}`, { replace: true });
           })
           .catch((error) => console.log(error))
       : navigate("/login");
