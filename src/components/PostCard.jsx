@@ -70,15 +70,18 @@ export default function PostCard({ post, children }) {
             />
           </Link>
         )}
-        <div className="text-end">
-          <hr />
+        <hr />
+        <div className="d-flex justify-content-between align-items-center">
+          <CustomLink to={`/blogs/${post.id}`}>
+            {post.comment.length} comment{post.comment.length > 1 && "s"}{" "}
+          </CustomLink>
           <Button color="light" outline>
             <CustomLink to={`/blogs/${post.id}`}>
-              <FontAwesomeIcon icon={faComment} /> Comment
+              <FontAwesomeIcon icon={faComment} />
             </CustomLink>
           </Button>
-          <hr />
         </div>
+        <hr />
       </div>
     </div>
   );

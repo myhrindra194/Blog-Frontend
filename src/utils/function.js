@@ -25,4 +25,11 @@ export function dateDiff(dateStr) {
     }
   }
 
+  
+
+export function sumComment(post){
+  return  post.map((item) => item.comment.length)
+  .reduce((acc, current) => acc + current, 0)
+  
+}
  

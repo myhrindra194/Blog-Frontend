@@ -116,7 +116,7 @@ export default function CommentCard({ comment }) {
         )}
       </Card>
 
-      {comment.authorId == id && (
+      {comment.authorId === id && (
         <div className="text-muted d-flex justify-content-end me-3 mt-2">
           {" "}
           <small

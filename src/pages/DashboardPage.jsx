@@ -13,7 +13,7 @@ import CustomSpinner from "../components/CustomSpinner";
 import PostCard from "../components/PostCard";
 import SearchBar from "../components/SearchBar";
 import { useAuth } from "../hooks/useAuth";
-import { filterPost } from "../utils/function";
+import { filterPost, sumComment } from "../utils/function";
 import { URL_API } from "../utils/url";
 
 export default function DashBoard() {
@@ -57,6 +57,8 @@ export default function DashBoard() {
     (post) => post.authorId == id
   );
 
+  const commentLength = sumComment(filteredPost);
+
   return (
     <div className="container">
       <h3 className="mt-4 mb-md-4 mb-0">Dashboard</h3>
@@ -83,7 +85,7 @@ export default function DashBoard() {
           {userPosts.length == 0 ? (
             <CustomSpinner />
           ) : (
-            <CardText tag={"h4"}>{filteredPost.length}</CardText>
+            <CardText tag={"h4"}>{commentLength}</CardText>
           )}
         </Card>
       </div>
