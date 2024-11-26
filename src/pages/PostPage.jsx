@@ -16,12 +16,8 @@ export default function PostPage() {
   }, [idPost]);
 
   return (
-    <div className="container mt-5 col-8">
-      {post.length == 0 ? (
-        <CustomSpinner />
-      ) : (
-        <DetailedPost post={post}/ >
-      )}
+    <div className="container mt-5 col-12 col-md-8">
+      {post.length == 0 ? <CustomSpinner /> : <DetailedPost post={post} />}
     </div>
   );
 }

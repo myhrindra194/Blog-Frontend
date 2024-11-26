@@ -95,8 +95,8 @@ export default function DetailedPost({ post, children }) {
           <p className="mt-3">No comments</p>
         ) : (
           <div>
-            <p>
-              {post.comment.length} comment {post.comment.length > 1 && "s"}
+            <p className="mt-3">
+              {post.comment.length} comment{post.comment.length > 1 && "s"}
             </p>
             {post.comment.map((item) => (
               <CommentCard key={item.id} comment={item} />
@@ -104,11 +104,7 @@ export default function DetailedPost({ post, children }) {
           </div>
         )}
 
-        <form
-          action=""
-          className="mt-3 col-10"
-          onSubmit={(e) => handleSubmit(e)}
-        >
+        <form action="" className="mt-3" onSubmit={(e) => handleSubmit(e)}>
           <Label for="content">Add comments</Label>
           <Input
             id="content"

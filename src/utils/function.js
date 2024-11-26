@@ -21,7 +21,7 @@ export function dateDiff(dateStr) {
     } else if (heures > 0) {
       return `${heures} hour${heures > 1 ? 's' : ''}`;
     } else{
-      return `${minutes} minute${minutes > 1 ? 's' : ''}`;
+        return (minutes < 1) ?  "1 minute" :`${minutes} minute${minutes > 1 ? 's' : ''}`;
     }
   }
 
