@@ -32,6 +32,10 @@ const AppWrapper = () => {
           element: <BlogPage />,
         },
         {
+          path: "/blogs",
+          element: <BlogPage />,
+        },
+        {
           path: "/login",
           element: token ? (
             <Navigate replace to={"/dashboard"} />
