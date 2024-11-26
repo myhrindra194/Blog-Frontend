@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Label } from "reactstrap";
 import profilePic from "../assets/profilePic.jpeg";
@@ -13,17 +13,9 @@ import CustomSpinner from "./CustomSpinner";
 
 export default function DetailedPost({ post, children }) {
   const { token } = useAuth().user;
-  const [user, setUser] = useState([]);
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch(`${URL_API}/users/${post.authorId}`)
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .catch((error) => console.error(error));
-  }, [post.authorId]);
 
   const dateStr = new Date(post.createdAt).toISOString();
 
@@ -55,14 +47,20 @@ export default function DetailedPost({ post, children }) {
       <div className="card-body">
         <div className="d-flex align-items-center">
           <img
-            src={user.profilPicture == null ? profilePic : user.profilPicture}
+            src={
+              post.author.profilPicture == null
+                ? profilePic
+                : post.author.profilPicture
+            }
             alt="Profile picture"
             className="img-thumbnail-fluid rounded-circle border-dark me-2"
             style={{ width: "50px", height: "50px" }}
           />
           <div>
             <small>
-              <CustomLink to={`/users/${user.id}`}>{user.username}</CustomLink>
+              <CustomLink to={`/users/${post.author.id}`}>
+                {post.author.username}
+              </CustomLink>
             </small>
             <small className="text-muted">
               <br />
