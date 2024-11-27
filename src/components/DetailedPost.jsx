@@ -64,7 +64,7 @@ export default function DetailedPost({ post, children }) {
             </small>
             <small className="text-muted">
               <br />
-              Posted since {dateDiff(dateStr)}
+              {dateDiff(dateStr)}
             </small>
           </div>
 

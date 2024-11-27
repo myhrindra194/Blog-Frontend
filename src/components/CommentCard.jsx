@@ -10,9 +10,9 @@ import CustomSpinner from "./CustomSpinner";
 
 export default function CommentCard({ comment }) {
   const { id, token } = useAuth().user;
-  const [author, setAuthor] = useState([]);
-  const [isEditing, setIsEditing] = useState(false);
+  const [author, setAuthor] = useState(null);
   const [content, setContent] = useState(comment.content);
+  const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -75,13 +75,13 @@ export default function CommentCard({ comment }) {
       <Card className="py-2 px-3 my-3 col-12  rounded-5 bg-light">
         <div className="d-flex align-items-center">
           <img
-            src={author.profilPicture ? author.profilPicture : profilePic}
+            src={author?.profilPicture ? author?.profilPicture : profilePic}
             alt="author"
             style={{ width: "40px", height: "40px" }}
             className="img-fluid rounded-circle border"
           />
           <CardText className="ms-3 fw-semibold lh-1">
-            <small>{author.username}</small>
+            <small>{author?.username}</small>
             <br />
             <small className="text-muted">
               {dateDiff(new Date(comment.createdAt).toISOString())}
@@ -100,7 +100,6 @@ export default function CommentCard({ comment }) {
               <CustomSpinner />
             ) : (
               <ButtonGroup className="mt-2">
-                {" "}
                 <Button color="danger" onClick={() => setIsEditing(false)}>
                   Cancel
                 </Button>
@@ -119,7 +118,6 @@ export default function CommentCard({ comment }) {
 
       {comment.authorId === id && (
         <div className="text-muted d-flex justify-content-end me-3 mt-2">
-          {" "}
           <small
             onClick={() => setIsEditing(true)}
             style={{ cursor: "pointer" }}

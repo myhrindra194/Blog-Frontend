@@ -9,8 +9,8 @@ import {
   Input,
   InputGroup,
   InputGroupText,
-  Spinner,
 } from "reactstrap";
+import CustomSpinner from "../components/CustomSpinner";
 import { URL_API } from "../utils/url";
 
 export default function RegistrationPage() {
@@ -79,10 +79,10 @@ export default function RegistrationPage() {
 
   return (
     <div
-      className="registerPage container py-4 px-5 my-5 col-xl-3 col-lg-4 col-md-8 col-sm-12 border shadow rounded"
+      className="registerPage container py-4 px-5 my-5 col-lg-4 col-md-8 col-sm-12 border shadow rounded"
       style={{ backgroundColor: "white" }}
     >
-      <h4 className="my-3 text-center">Registration</h4>{" "}
+      <h4 className="my-3 text-center">Registration</h4>
       <Form action="" onSubmit={(e) => handleSubmit(e)}>
         <FormGroup>
           <Input
@@ -219,25 +219,17 @@ export default function RegistrationPage() {
         </FormGroup>
 
         <Button
+          type="submit"
           color="primary"
           className="buttonRegister w-100 py-2 fw-bold mt-2"
           disabled={!isFormValid() || isLoading}
         >
-          {isLoading ? (
-            <div className="d-flex justify-content-center">
-              <Spinner />
-            </div>
-          ) : (
-            "Register"
-          )}
+          {isLoading ? <CustomSpinner /> : "Register"}
         </Button>
       </Form>
       <p className="text-center my-3">
         Already have an account?
-        <NavLink to="/login" style={{ textDecoration: "none" }}>
-          <br />
-          Sign in
-        </NavLink>
+        <NavLink to="/login">Sign in</NavLink>
       </p>
     </div>
   );

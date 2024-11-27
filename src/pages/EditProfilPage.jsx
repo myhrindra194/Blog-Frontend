@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
-import { Button, FormGroup, Input, Spinner } from "reactstrap";
+import { Button, FormGroup, Input } from "reactstrap";
+import CustomSpinner from "../components/CustomSpinner";
 import { useAuth } from "../hooks/useAuth";
 import { URL_API } from "../utils/url";
 
@@ -74,17 +75,12 @@ export default function EditProfilePage() {
           />
         </FormGroup>
         <Button
+          type="submit"
           color="primary"
           className="my-3 w-100 fw-bold"
           disabled={isLoading}
         >
-          {isLoading ? (
-            <div className="d-flex justify-content-center">
-              <Spinner />
-            </div>
-          ) : (
-            "Save changes"
-          )}
+          {isLoading ? <CustomSpinner /> : "Save changes"}
         </Button>
       </Form>
     </div>

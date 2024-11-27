@@ -7,10 +7,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, CardBody, CardText, CardTitle } from "reactstrap";
-import CustomLink from "../components/CustomLink";
+import { Button, Card, CardText, CardTitle } from "reactstrap";
 import CustomSpinner from "../components/CustomSpinner";
 import PostCard from "../components/PostCard";
+import ProfilCard from "../components/ProfilCard";
 import SearchBar from "../components/SearchBar";
 import { useAuth } from "../hooks/useAuth";
 import { filterPost, sumComment } from "../utils/function";
@@ -28,6 +28,7 @@ export default function DashBoard() {
       .then((data) => setUserPosts(data))
       .catch((error) => console.error(error));
   }, []);
+
   useEffect(() => {
     fetch(`${URL_API}/users`)
       .then((response) => response.json())
@@ -64,7 +65,6 @@ export default function DashBoard() {
   return (
     <div className="container">
       <h3 className="mt-4 mb-md-4 mb-0">Dashboard</h3>
-
       <div className="row justify-content-between">
         <Card className="col-3 d-none d-md-block p-3">
           <CardTitle>Total Post</CardTitle>
@@ -164,23 +164,7 @@ export default function DashBoard() {
             {users
               .filter((user) => user.profilPicture != null)
               .map((user) => (
-                <Card key={user.id} className="mb-3">
-                  <CardBody className="d-flex">
-                    <div>
-                      <img
-                        src={user.profilPicture}
-                        alt="Profile picture"
-                        className="img-thumbnail-fluid rounded-circle border-dark me-2"
-                        style={{ width: "30px", height: "30px" }}
-                      />
-                    </div>
-                    <CardText>
-                      <CustomLink to={`/users/${user.id}`}>
-                        {user.username}
-                      </CustomLink>
-                    </CardText>
-                  </CardBody>
-                </Card>
+                <ProfilCard key={user.id} user={user} />
               ))}
           </div>
         </div>

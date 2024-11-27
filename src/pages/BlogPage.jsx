@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardBody, CardText } from "reactstrap";
-import CustomLink from "../components/CustomLink";
 import CustomSpinner from "../components/CustomSpinner";
 import PostCard from "../components/PostCard";
+import ProfilCard from "../components/ProfilCard";
 import SearchBar from "../components/SearchBar";
 import { filterPost } from "../utils/function";
 import { URL_API } from "../utils/url";
@@ -63,23 +62,7 @@ export default function BlogPage() {
             {users
               .filter((user) => user.profilPicture != null)
               .map((user) => (
-                <Card key={user.id} className="mb-3">
-                  <CardBody className="d-flex">
-                    <div>
-                      <img
-                        src={user.profilPicture}
-                        alt="Profile picture"
-                        className="img-thumbnail-fluid rounded-circle border-dark me-2"
-                        style={{ width: "30px", height: "30px" }}
-                      />
-                    </div>
-                    <CardText>
-                      <CustomLink to={`/users/${user.id}`}>
-                        {user.username}
-                      </CustomLink>
-                    </CardText>
-                  </CardBody>
-                </Card>
+                <ProfilCard key={user.id} user={user} />
               ))}
           </div>
         </div>

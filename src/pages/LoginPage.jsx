@@ -9,18 +9,17 @@ import {
   Input,
   InputGroup,
   InputGroupText,
-  Spinner,
 } from "reactstrap";
+import CustomSpinner from "../components/CustomSpinner";
 import { useAuth } from "../hooks/useAuth";
 import { URL_API } from "../utils/url";
 
 export default function LoginPage() {
+  const { login } = useAuth();
   const [user, setUser] = useState({ email: "", password: "" });
   const [isShowed, setIsShowed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const navigate = useNavigate();
-  const { login } = useAuth();
 
   const isFormValid = () => user.email.trim() && user.password.trim();
 
@@ -61,7 +60,7 @@ export default function LoginPage() {
 
   return (
     <div
-      className="container py-4 px-5 mt-5 col-xl-3 col-lg-4 col-md-8 col-sm-10 border shadow rounded"
+      className="container py-4 px-5 mt-5 col-lg-4 col-md-8 col-sm-10 border shadow rounded"
       style={{ backgroundColor: "white" }}
     >
       <h4 className="my-3 text-center">Login page</h4>
@@ -107,24 +106,17 @@ export default function LoginPage() {
           </InputGroup>
         </FormGroup>
         <Button
+          type="submit"
           color="primary"
           className="my-3 py-2 w-100 fw-bold buttonLogin"
           disabled={!isFormValid() || isLoading}
         >
-          {isLoading ? (
-            <div className="d-flex justify-content-center">
-              <Spinner />
-            </div>
-          ) : (
-            "Sign in"
-          )}
+          {isLoading ? <CustomSpinner /> : "Sign in"}
         </Button>
       </Form>
       <p className="text-center mt-2">
         Don&apos;t have an account?
-        <NavLink to="/register" style={{ textDecoration: "none" }}>
-          <br /> Sign up
-        </NavLink>
+        <NavLink to="/register">Sign up</NavLink>
       </p>
     </div>
   );

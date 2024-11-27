@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  Button,
-  ButtonGroup,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Spinner,
-} from "reactstrap";
+import { Button, ButtonGroup, Form, FormGroup, Input, Label } from "reactstrap";
+import CustomSpinner from "../components/CustomSpinner";
 import { useAuth } from "../hooks/useAuth";
 import { URL_API } from "../utils/url";
 
@@ -44,8 +37,8 @@ export default function EditPostPage() {
         },
         body: JSON.stringify({
           ...post,
-          title: post.title,
-          content: post.content,
+          title: title,
+          content: content,
         }),
       });
       const data = await response.json();
@@ -95,11 +88,10 @@ export default function EditPostPage() {
           >
             Cancel
           </Button>
-          <Button color="success" disabled={isLoading}>
-            Validate
+          <Button color="success" disabled={isLoading} type="submit">
+            {isLoading ? <CustomSpinner /> : "Validate"}
           </Button>
         </ButtonGroup>
-        {isLoading && <Spinner />}
       </Form>
     </div>
   );

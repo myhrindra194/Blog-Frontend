@@ -18,8 +18,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import UserPage from "./pages/UserPage";
 
 const AppWrapper = () => {
-  const { user } = useAuth();
-  const { token } = user;
+  const { token } = useAuth().user;
 
   const router = createBrowserRouter([
     {
@@ -72,14 +71,6 @@ const AppWrapper = () => {
           element: (
             <ProtectedRoute>
               <EditProfilePage />
-            </ProtectedRoute>
-          ),
-        },
-        {
-          path: "/dashboard",
-          element: (
-            <ProtectedRoute>
-              <DashBoard />
             </ProtectedRoute>
           ),
         },

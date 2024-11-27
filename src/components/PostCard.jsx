@@ -11,7 +11,7 @@ import { URL_API } from "../utils/url";
 import CustomLink from "./CustomLink";
 
 export default function PostCard({ post, children }) {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
   let splitContent = post.content.substring(0, 125);
 
   useEffect(() => {
@@ -28,14 +28,16 @@ export default function PostCard({ post, children }) {
       <div className="card-body">
         <div className="d-flex align-items-center">
           <img
-            src={user.profilPicture == null ? profilePic : user.profilPicture}
+            src={user?.profilPicture == null ? profilePic : user?.profilPicture}
             alt="Profile picture"
             className="img-thumbnail-fluid rounded-circle border-dark me-2"
             style={{ width: "50px", height: "50px" }}
           />
           <div>
             <small>
-              <CustomLink to={`/users/${user.id}`}>{user.username}</CustomLink>
+              <CustomLink to={`/users/${user?.id}`}>
+                {user?.username}
+              </CustomLink>
             </small>
             <small className="text-muted">
               <br />
