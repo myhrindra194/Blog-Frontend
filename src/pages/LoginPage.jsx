@@ -116,6 +116,7 @@ export default function LoginPage() {
       </Form>
       <p className="text-center mt-2">
         Don&apos;t have an account?
+        <br />
         <NavLink to="/register">Sign up</NavLink>
       </p>
     </div>
