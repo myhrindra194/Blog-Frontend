@@ -21,7 +21,7 @@ export default function RegistrationPage() {
     password: "",
     confirmPassword: "",
     profilPicture: "",
-    gender: "Male",
+    gender: "M",
     bio: "",
   });
 
@@ -76,20 +76,22 @@ export default function RegistrationPage() {
       if (!response.ok) {
         throw new Error("Email already taken");
       }
-      console.log(response.json());
+      const data = await response.json();
+      console.log(data);
 
       alert("Registration in success");
       navigate("/login");
     } catch (errors) {
       alert(errors);
     }
+    setStep(1);
     setUser({
       userName: "",
       email: "",
       password: "",
       confirmPassword: "",
       profilPicture: "",
-      gender: "",
+      gender: "M",
       bio: "",
     });
     setIsLoading(false);
@@ -150,8 +152,9 @@ export default function RegistrationPage() {
                 value={user.gender}
                 onChange={(e) => setUser({ ...user, gender: e.target.value })}
               >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Other</option>
               </Input>
             </FormGroup>
             <Button

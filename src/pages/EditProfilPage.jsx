@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
-import { Button, FormGroup, Input } from "reactstrap";
+import { Button, FormGroup, Input, Label } from "reactstrap";
 import CustomSpinner from "../components/CustomSpinner";
 import { useAuth } from "../hooks/useAuth";
 import { URL_API } from "../utils/url";
@@ -72,6 +72,29 @@ export default function EditProfilePage() {
             onChange={() =>
               setImage(URL.createObjectURL(myRef.current.files[0]))
             }
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label for="userName">Select your gender</Label>
+          <Input
+            id="gender"
+            name="gender"
+            type="select"
+            defaultValue={user.gender}
+          >
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="O">Other</option>
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="bio">Biography</Label>
+          <Input
+            placeholder="Add a bio"
+            id="bio"
+            name="bio"
+            type="textarea"
+            defaultValue={user.bio}
           />
         </FormGroup>
         <Button
