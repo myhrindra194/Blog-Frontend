@@ -87,7 +87,7 @@ export default function NavBar() {
               </li>
               <li>
                 <p className="dropdown-item" type="button">
-                  <CustomLink to={`/editProfile`}>
+                  <CustomLink to={`/users/${id}/editProfile`}>
                     <FontAwesomeIcon icon={faUserEdit} /> Edit profile
                   </CustomLink>
                 </p>

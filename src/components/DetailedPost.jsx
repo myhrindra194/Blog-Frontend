@@ -97,7 +97,11 @@ export default function DetailedPost({ post, children }) {
               {post.comment.length} comment{post.comment.length > 1 && "s"}
             </p>
             {post.comment.map((item) => (
-              <CommentCard key={item.id} comment={item} />
+              <CommentCard
+                key={item.id}
+                comment={item}
+                postAuthorId={post.authorId}
+              />
             ))}
           </div>
         )}

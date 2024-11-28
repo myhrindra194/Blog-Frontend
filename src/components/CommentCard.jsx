@@ -8,7 +8,7 @@ import { dateDiff } from "../utils/function";
 import { URL_API } from "../utils/url";
 import CustomSpinner from "./CustomSpinner";
 
-export default function CommentCard({ comment }) {
+export default function CommentCard({ comment, postAuthorId }) {
   const { id, token } = useAuth().user;
   const [author, setAuthor] = useState(null);
   const [content, setContent] = useState(comment.content);
@@ -126,6 +126,16 @@ export default function CommentCard({ comment }) {
           </small>{" "}
           {"| "}
           <small onClick={handleDelete} style={{ cursor: "pointer" }}>
+            Delete
+          </small>
+        </div>
+      )}
+      {comment.authorId !== id && postAuthorId === id && (
+        <div className="text-muted d-flex justify-content-end me-3 mt-2">
+          <small
+            style={{ cursor: "pointer", color: "gray" }}
+            onClick={handleDelete}
+          >
             Delete
           </small>
         </div>

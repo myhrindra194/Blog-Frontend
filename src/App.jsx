@@ -67,7 +67,7 @@ const AppWrapper = () => {
           ),
         },
         {
-          path: "/editProfile",
+          path: "/users/:idUser/editProfile",
           element: (
             <ProtectedRoute>
               <EditProfilePage />

@@ -56,7 +56,9 @@ export default function UserPage() {
 
         {idUser == id && (
           <Button color="light" className="ms-auto d-block mt-2 mt-md-0">
-            <CustomLink to={`/editProfile`}>Edit profile</CustomLink>
+            <CustomLink to={`/users/${id}/editProfile`}>
+              Edit profile
+            </CustomLink>
           </Button>
         )}
       </div>

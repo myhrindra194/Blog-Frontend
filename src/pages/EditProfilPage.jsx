@@ -10,7 +10,6 @@ export default function EditProfilePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(user.profilPicture);
   const myRef = useRef(null);
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
