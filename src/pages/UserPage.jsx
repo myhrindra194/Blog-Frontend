@@ -46,7 +46,6 @@ export default function UserPage() {
             <h4 className="mt-3">{user?.username}</h4>
             <small className="text-muted">{user?.email}</small>
             <p>{user?.gender}</p>
-            <p>{user?.bio}</p>
           </div>
         </div>
 
@@ -58,6 +57,11 @@ export default function UserPage() {
       </div>
       <div className="row my-5">
         <div className="col-12 col-md-7">
+          <Card className="py-3 ps-3 mb-4">
+            <h4>Biography</h4>
+            <p className="mt-3">{user?.bio ? user?.bio : "No description"}</p>
+          </Card>
+
           <Card className="py-3 ps-3 mb-4">
             <h4>All posts ({userPosts.length})</h4>
           </Card>
