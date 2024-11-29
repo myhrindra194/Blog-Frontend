@@ -32,7 +32,7 @@ export default function BlogPage() {
   return (
     <div className="container">
       <div className="row my-4">
-        <div className="col-md-3 col-sm-10 col-xs-12">
+        <div className="col-12 col-md-3 left">
           <SearchBar
             value={searchWord}
             onChange={(e) => setSearchWord(e.target.value)}
@@ -56,7 +56,7 @@ export default function BlogPage() {
             </>
           )}
         </div>
-        <div className="col-3 d-none d-md-block">
+        <div className="col-3 d-none d-md-block right">
           <h4 className="mb-4">Top users</h4>
           <div>
             {users

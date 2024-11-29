@@ -48,8 +48,7 @@ export default function UserPage() {
             <p>
               {user?.gender === "M" && "Male"}
               {user?.gender === "F" && "Female"}
-              {user?.gender === "O" ||
-                (user?.gender === null && "Gender not defined")}
+              {user?.gender === "O" && "Gender not defined"}
             </p>
           </div>
         </div>

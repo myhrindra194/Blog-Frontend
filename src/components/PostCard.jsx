@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
-import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeartCircleCheck } from "@fortawesome/free-solid-svg-icons/faHeartCircleCheck";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,6 +14,7 @@ import CustomLink from "./CustomLink";
 export default function PostCard({ post, children }) {
   const [user, setUser] = useState(null);
   let splitContent = post.content.substring(0, 125);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     fetch(`${URL_API}/users/${post.authorId}`)
@@ -22,6 +24,10 @@ export default function PostCard({ post, children }) {
   }, [post.authorId]);
 
   const dateStr = new Date(post.createdAt).toISOString();
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+  };
 
   return (
     <div className="card mb-3">
@@ -74,12 +80,17 @@ export default function PostCard({ post, children }) {
         )}
         <hr />
         <div className="d-flex justify-content-between align-items-center">
-          <CustomLink to={`/blogs/${post.id}`}>
-            {post.comment.length} comment{post.comment.length > 1 && "s"}{" "}
-          </CustomLink>
+          <FontAwesomeIcon
+            icon={isLiked ? faHeartCircleCheck : faHeart}
+            style={{ color: isLiked ? "red" : "black" }}
+            onClick={handleLike}
+            size="lg"
+          />
           <Button color="light" outline>
             <CustomLink to={`/blogs/${post.id}`}>
-              <FontAwesomeIcon icon={faComment} />
+              <FontAwesomeIcon icon={faComment} size="lg" />{" "}
+              {post.comment.length} comment
+              {post.comment.length > 1 && "s"}{" "}
             </CustomLink>
           </Button>
         </div>

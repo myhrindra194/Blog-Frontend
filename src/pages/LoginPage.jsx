@@ -47,7 +47,9 @@ export default function LoginPage() {
         data.user.id,
         data.user.username,
         data.user.profilPicture,
-        data.token
+        data.token,
+        data.user.gender,
+        data.user.bio
       );
 
       navigate("/dashboard");

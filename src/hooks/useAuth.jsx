@@ -11,18 +11,33 @@ export const AuthProvider = ({ children }) => {
     username: "",
     profilPicture: "",
     token: null,
+    gender: "",
+    bio: "",
   });
 
-  const login = (id, username, profilPicture, token) => {
-    setUser({ id, username, profilPicture, token });
+  const login = (id, username, profilPicture, token, gender, bio) => {
+    setUser({ id, username, profilPicture, token, gender, bio });
   };
 
-  const editProfile = (username, profilPicture) => {
-    setUser({ ...user, username: username, profilPicture: profilPicture });
+  const editProfile = (username, profilPicture, gender, bio) => {
+    setUser({
+      ...user,
+      username: username,
+      profilPicture: profilPicture,
+      gender: gender,
+      bio: bio,
+    });
   };
 
   const logout = () => {
-    setUser({ id: 0, username: "", profilPicture: "", token: null });
+    setUser({
+      id: 0,
+      username: "",
+      profilPicture: "",
+      token: null,
+      gender: "",
+      bio: "",
+    });
   };
 
   return (

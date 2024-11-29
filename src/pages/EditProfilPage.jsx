@@ -31,7 +31,7 @@ export default function EditProfilePage() {
       alert(error);
     }
 
-    editProfile(res.username, res.profilPicture);
+    editProfile(res.username, res.profilPicture, res.gender, res.bio);
     setIsLoading(false);
     navigate(`/users/${user.id}`);
   };
@@ -74,7 +74,7 @@ export default function EditProfilePage() {
           />
         </FormGroup>
         <FormGroup>
-          <Label for="userName">Select your gender</Label>
+          <Label for="gender">Select your gender</Label>
           <Input
             id="gender"
             name="gender"
