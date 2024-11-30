@@ -1,23 +1,47 @@
 /* eslint-disable react/prop-types */
 
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeartCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Label } from "reactstrap";
 import profilePic from "../assets/profilePic.jpeg";
 import { useAuth } from "../hooks/useAuth";
-import { dateDiff } from "../utils/function";
+import { checkIfLiked, dateDiff } from "../utils/function";
 import { URL_API } from "../utils/url";
 import CommentCard from "./CommentCard";
 import CustomLink from "./CustomLink";
 import CustomSpinner from "./CustomSpinner";
 
 export default function DetailedPost({ post, children }) {
-  const { token } = useAuth().user;
+  const { token, id } = useAuth().user;
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLiked, setIsLiked] = useState(checkIfLiked(post, id));
+  const [numberOfLikes, setNumberOfLikes] = useState(post.likes.length);
   const navigate = useNavigate();
 
   const dateStr = new Date(post.createdAt).toISOString();
+
+  const handleLike = async (id) => {
+    setIsLiked(!isLiked);
+    isLiked
+      ? setNumberOfLikes(numberOfLikes - 1)
+      : setNumberOfLikes(numberOfLikes + 1);
+    try {
+      const res = await fetch(`${URL_API}/blogs/${id}/reaction`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,14 +112,29 @@ export default function DetailedPost({ post, children }) {
             />
           </Link>
         )}
-
-        {post.comment.length == 0 ? (
-          <p className="mt-3">No comments</p>
-        ) : (
+        <div className="d-flex justify-content-between align-items-center">
           <div>
-            <p className="mt-3">
-              {post.comment.length} comment{post.comment.length > 1 && "s"}
-            </p>
+            <FontAwesomeIcon
+              icon={isLiked ? faHeartCircleCheck : faHeart}
+              style={{ color: isLiked ? "red" : "black" }}
+              onClick={() => (token ? handleLike(post.id) : navigate("/login"))}
+              size="lg"
+            />{" "}
+            {numberOfLikes} like{numberOfLikes > 1 && "s"}
+          </div>
+          <div>
+            {post.comment.length == 0 ? (
+              <p className="mt-3">No comments</p>
+            ) : (
+              <p className="mt-3">
+                {post.comment.length} comment{post.comment.length > 1 && "s"}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {post.comment.length != 0 && (
+          <div>
             {post.comment.map((item) => (
               <CommentCard
                 key={item.id}

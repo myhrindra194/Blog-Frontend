@@ -43,3 +43,8 @@ export function sumComment(posts){
   .reduce((acc, current) => acc + current, 0)
 }
  
+
+export function checkIfLiked(posts, idLiker){
+  const { likes } = posts;
+  return likes.map(likes => likes.likerId).includes(idLiker);
+}

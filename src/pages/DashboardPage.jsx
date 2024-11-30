@@ -99,7 +99,13 @@ export default function DashBoard() {
           {userPosts.length == 0 ? (
             <CustomSpinner />
           ) : (
-            <CardText tag={"h4"}>{filteredPost.length}</CardText>
+            <CardText tag={"h4"}>
+              {
+                userPosts
+                  .filter((post) => post.authorId == id)
+                  .map((item) => item.likes).length
+              }
+            </CardText>
           )}
         </Card>
         <Card className="col-3 d-none d-md-block p-3">

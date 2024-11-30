@@ -4,17 +4,21 @@ import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeartCircleCheck } from "@fortawesome/free-solid-svg-icons/faHeartCircleCheck";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
 import profilePic from "../assets/profilePic.jpeg";
-import { dateDiff } from "../utils/function";
+import { useAuth } from "../hooks/useAuth";
+import { checkIfLiked, dateDiff } from "../utils/function";
 import { URL_API } from "../utils/url";
 import CustomLink from "./CustomLink";
 
 export default function PostCard({ post, children }) {
+  const { id, token } = useAuth().user;
   const [user, setUser] = useState(null);
+  const [isLiked, setIsLiked] = useState(checkIfLiked(post, id));
+  const [numberOfLikes, setNumberOfLikes] = useState(post.likes.length);
+  const navigate = useNavigate();
   let splitContent = post.content.substring(0, 125);
-  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     fetch(`${URL_API}/users/${post.authorId}`)
@@ -27,18 +31,21 @@ export default function PostCard({ post, children }) {
 
   const handleLike = async (id) => {
     setIsLiked(!isLiked);
-    console.log(id);
-
-    // try {
-    //   const res = await fetch(`${URL_API}/blogs/${id}/like`, {
-    //     method: "POST",
-    //     body: "",
-    //   });
-    //   const data = await res.json();
-    //   console.log(data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    isLiked
+      ? setNumberOfLikes(numberOfLikes - 1)
+      : setNumberOfLikes(numberOfLikes + 1);
+    try {
+      const res = await fetch(`${URL_API}/blogs/${id}/reaction`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -92,12 +99,15 @@ export default function PostCard({ post, children }) {
         )}
         <hr />
         <div className="d-flex justify-content-between align-items-center">
-          <FontAwesomeIcon
-            icon={isLiked ? faHeartCircleCheck : faHeart}
-            style={{ color: isLiked ? "red" : "black" }}
-            onClick={() => handleLike(post.id)}
-            size="lg"
-          />
+          <div>
+            <FontAwesomeIcon
+              icon={isLiked ? faHeartCircleCheck : faHeart}
+              style={{ color: isLiked ? "red" : "black" }}
+              onClick={() => (token ? handleLike(post.id) : navigate("/login"))}
+              size="lg"
+            />{" "}
+            {numberOfLikes} like{numberOfLikes > 1 && "s"}
+          </div>
           <Button color="light" outline>
             <CustomLink to={`/blogs/${post.id}`}>
               <FontAwesomeIcon icon={faComment} size="lg" />{" "}
