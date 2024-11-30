@@ -6,6 +6,12 @@ export function filterPost(posts, filterKey, searchWord = ""){
     case "old":
       posts.sort((a, b) => a.createdAt > b.createdAt ? 1: -1)
     break;
+    case "liked":
+      posts = posts.sort((a, b) => b.likes.length - a.likes.length);
+      break;
+    case "commented":
+      posts.sort((a, b) => b.comment.length - a.comment.length);
+    break;
     default:
       posts = posts.sort((a, b) => a.createdAt < b.createdAt ? 1: -1);
       break;
@@ -43,6 +49,10 @@ export function sumComment(posts){
   .reduce((acc, current) => acc + current, 0)
 }
  
+export function sumReaction(posts){
+  return  posts.map((post) => post.likes.length)
+  .reduce((acc, current) => acc + current, 0)
+}
 
 export function checkIfLiked(posts, idLiker){
   const { likes } = posts;

@@ -20,12 +20,12 @@ import PostCard from "../components/PostCard";
 import ProfilCard from "../components/ProfilCard";
 import SearchBar from "../components/SearchBar";
 import { useAuth } from "../hooks/useAuth";
-import { filterPost, sumComment } from "../utils/function";
+import { filterPost, sumComment, sumReaction } from "../utils/function";
 import { URL_API } from "../utils/url";
 
 export default function DashBoard() {
   const { id, token } = useAuth().user;
-  const [userPosts, setUserPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const [users, setUsers] = useState([]);
   const [filterKey, setFilterKey] = useState("recent");
@@ -33,7 +33,7 @@ export default function DashBoard() {
   useEffect(() => {
     fetch(`${URL_API}/blogs`)
       .then((response) => response.json())
-      .then((data) => setUserPosts(data))
+      .then((data) => setPosts(data))
       .catch((error) => console.error(error));
   }, []);
 
@@ -62,13 +62,8 @@ export default function DashBoard() {
     }
   };
 
-  const filteredPost = filterPost(userPosts, filterKey, searchWord).filter(
-    (post) => post.authorId == id
-  );
-
-  const commentLength = sumComment(
-    userPosts.filter((post) => post.authorId == id)
-  );
+  const userPosts = posts.filter((post) => post.authorId == id);
+  const filteredPost = filterPost(userPosts, filterKey, searchWord);
 
   return (
     <div className="container">
@@ -86,34 +81,28 @@ export default function DashBoard() {
       <div className="row justify-content-between">
         <Card className="col-3 d-none d-md-block p-3">
           <CardTitle>Total Post</CardTitle>
-          {userPosts.length == 0 ? (
+          {posts.length == 0 ? (
             <CustomSpinner />
           ) : (
             <CardText tag={"h4"}>
-              {userPosts.filter((post) => post.authorId == id).length}
+              {posts.filter((post) => post.authorId == id).length}
             </CardText>
           )}
         </Card>
         <Card className="col-3 d-none d-md-block p-3">
           <CardTitle>Total Reactions</CardTitle>
-          {userPosts.length == 0 ? (
+          {posts.length == 0 ? (
             <CustomSpinner />
           ) : (
-            <CardText tag={"h4"}>
-              {
-                userPosts
-                  .filter((post) => post.authorId == id)
-                  .map((item) => item.likes).length
-              }
-            </CardText>
+            <CardText tag={"h4"}>{sumReaction(userPosts)}</CardText>
           )}
         </Card>
         <Card className="col-3 d-none d-md-block p-3">
           <CardTitle>Total Comments</CardTitle>
-          {userPosts.length == 0 ? (
+          {posts.length == 0 ? (
             <CustomSpinner />
           ) : (
-            <CardText tag={"h4"}>{commentLength}</CardText>
+            <CardText tag={"h4"}>{sumComment(userPosts)}</CardText>
           )}
         </Card>
       </div>
@@ -142,7 +131,7 @@ export default function DashBoard() {
             </Form>
           </div>
 
-          {userPosts.length == 0 ? (
+          {posts.length == 0 ? (
             <CustomSpinner />
           ) : filteredPost.length == 0 ? (
             <p className="mt-5">No post </p>

@@ -50,6 +50,8 @@ export default function BlogPage() {
             >
               <option value="recent">Recent date</option>
               <option value="old">Old date</option>
+              <option value="liked">Most liked</option>
+              <option value="commented">Most commented</option>
             </Input>
           </Form>
         </div>
