@@ -25,8 +25,18 @@ export default function PostCard({ post, children }) {
 
   const dateStr = new Date(post.createdAt).toISOString();
 
-  const handleLike = () => {
+  const handleLike = async (id) => {
     setIsLiked(!isLiked);
+    try {
+      const res = await fetch(`${URL_API}/blogs/${id}/like`, {
+        method: "POST",
+        body: "",
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -83,7 +93,7 @@ export default function PostCard({ post, children }) {
           <FontAwesomeIcon
             icon={isLiked ? faHeartCircleCheck : faHeart}
             style={{ color: isLiked ? "red" : "black" }}
-            onClick={handleLike}
+            onClick={() => handleLike(post.id)}
             size="lg"
           />
           <Button color="light" outline>

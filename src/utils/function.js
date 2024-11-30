@@ -1,6 +1,16 @@
-export function filterPost(posts, searchWord = ""){
-    return posts.sort((a, b) => a.createdAt < b.createdAt ? 1: -1)
-                .filter(post => post.title.toLowerCase().includes(searchWord.toLowerCase()) 
+export function filterPost(posts, filterKey, searchWord = ""){
+  switch (filterKey) {
+    case "recent":
+      posts = posts.sort((a, b) => a.createdAt < b.createdAt ? 1: -1);
+      break;
+    case "old":
+      posts.sort((a, b) => a.createdAt > b.createdAt ? 1: -1)
+    break;
+    default:
+      posts = posts.sort((a, b) => a.createdAt < b.createdAt ? 1: -1);
+      break;
+  }
+    return posts.filter(post => post.title.toLowerCase().includes(searchWord.toLowerCase()) 
                         || post.content.toLowerCase().includes(searchWord.toLowerCase()));
 }
 
