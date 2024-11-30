@@ -39,7 +39,7 @@ export default function BlogPage() {
             value={searchWord}
             onChange={(e) => setSearchWord(e.target.value)}
           />
-          <Form className="mt-5">
+          <Form className="mt-4">
             <Label for="filterPost">Filter by:</Label>
             <Input
               id="filterPost"

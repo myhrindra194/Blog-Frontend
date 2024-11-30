@@ -3,7 +3,7 @@ import { Input } from "reactstrap";
 
 export default function SearchBar({ value, onChange }) {
   return (
-    <div className="col-md-9 col-12 ">
+    <div className="col-12 ">
       <Input
         name="search"
         value={value}

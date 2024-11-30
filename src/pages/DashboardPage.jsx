@@ -6,8 +6,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Card, CardText, CardTitle } from "reactstrap";
+import { Form, Link } from "react-router-dom";
+import {
+  Button,
+  Card,
+  CardText,
+  CardTitle,
+  FormGroup,
+  Input,
+} from "reactstrap";
 import CustomSpinner from "../components/CustomSpinner";
 import PostCard from "../components/PostCard";
 import ProfilCard from "../components/ProfilCard";
@@ -21,6 +28,7 @@ export default function DashBoard() {
   const [userPosts, setUserPosts] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const [users, setUsers] = useState([]);
+  const [filterKey, setFilterKey] = useState("recent");
 
   useEffect(() => {
     fetch(`${URL_API}/blogs`)
@@ -54,7 +62,7 @@ export default function DashBoard() {
     }
   };
 
-  const filteredPost = filterPost(userPosts, searchWord).filter(
+  const filteredPost = filterPost(userPosts, filterKey, searchWord).filter(
     (post) => post.authorId == id
   );
 
@@ -64,7 +72,17 @@ export default function DashBoard() {
 
   return (
     <div className="container">
-      <h3 className="mt-4 mb-md-4 mb-0">Dashboard</h3>
+      <div className="d-flex justify-content-between mt-4 mb-md-4 mb-0 align-items-center">
+        <h3>Dashboard</h3>
+        <Button color="primary">
+          <Link
+            to="/addPost"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            <FontAwesomeIcon icon={faAdd} /> Add post
+          </Link>
+        </Button>
+      </div>
       <div className="row justify-content-between">
         <Card className="col-3 d-none d-md-block p-3">
           <CardTitle>Total Post</CardTitle>
@@ -95,19 +113,27 @@ export default function DashBoard() {
       </div>
       <div className="row justify-content-between py-5">
         <div className="col-12 col-md-9">
-          <div className="d-md-flex justify-content-between me-md-5 me-0">
-            <SearchBar
-              value={searchWord}
-              onChange={(e) => setSearchWord(e.target.value)}
-            />
-            <Button color="primary" className="mt-4 mt-md-0">
-              <Link
-                to="/addPost"
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                <FontAwesomeIcon icon={faAdd} /> Add post
-              </Link>
-            </Button>
+          <div className="row d-flex justify-content-between">
+            <div className="col-md-8 col-12">
+              <SearchBar
+                value={searchWord}
+                onChange={(e) => setSearchWord(e.target.value)}
+              />
+            </div>
+            <Form className="col-md-3 col-5 mt-3 mt-md-0">
+              <FormGroup>
+                <Input
+                  id="filterPost"
+                  name="filterPost"
+                  type="select"
+                  value={filterKey}
+                  onChange={(e) => setFilterKey(e.target.value)}
+                >
+                  <option value="recent">Recent date</option>
+                  <option value="old">Old date</option>
+                </Input>
+              </FormGroup>
+            </Form>
           </div>
 
           {userPosts.length == 0 ? (

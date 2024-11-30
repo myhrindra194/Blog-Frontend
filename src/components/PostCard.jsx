@@ -27,16 +27,18 @@ export default function PostCard({ post, children }) {
 
   const handleLike = async (id) => {
     setIsLiked(!isLiked);
-    try {
-      const res = await fetch(`${URL_API}/blogs/${id}/like`, {
-        method: "POST",
-        body: "",
-      });
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    console.log(id);
+
+    // try {
+    //   const res = await fetch(`${URL_API}/blogs/${id}/like`, {
+    //     method: "POST",
+    //     body: "",
+    //   });
+    //   const data = await res.json();
+    //   console.log(data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
