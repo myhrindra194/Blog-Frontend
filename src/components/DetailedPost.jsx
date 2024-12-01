@@ -3,7 +3,7 @@
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeartCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Label } from "reactstrap";
 import profilePic from "../assets/profilePic.jpeg";
@@ -16,6 +16,7 @@ import CustomSpinner from "./CustomSpinner";
 
 export default function DetailedPost({ post, children }) {
   const { token, id } = useAuth().user;
+  const [users, setUsers] = useState([]);
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLiked, setIsLiked] = useState(checkIfLiked(post, id));
@@ -23,6 +24,14 @@ export default function DetailedPost({ post, children }) {
   const navigate = useNavigate();
 
   const dateStr = new Date(post.createdAt).toISOString();
+  const usersLiking = post.likes.map((item) => item.likerId);
+
+  useEffect(() => {
+    fetch(`${URL_API}/users`)
+      .then((response) => response.json())
+      .then((data) => setUsers(data))
+      .catch((error) => console.error(error));
+  }, [post.id]);
 
   const handleLike = async (id) => {
     setIsLiked(!isLiked);
@@ -112,15 +121,48 @@ export default function DetailedPost({ post, children }) {
             />
           </Link>
         )}
-        <div className="d-flex justify-content-between align-items-center">
-          <div>
+        <div className="d-flex justify-content-between align-items-center mt-3">
+          <div className="d-flex align-items-start">
             <FontAwesomeIcon
               icon={isLiked ? faHeartCircleCheck : faHeart}
               style={{ color: isLiked ? "red" : "black" }}
               onClick={() => (token ? handleLike(post.id) : navigate("/login"))}
               size="lg"
-            />{" "}
-            {numberOfLikes} like{numberOfLikes > 1 && "s"}
+            />
+            <div className="dropdown">
+              <p
+                className="dropdown ms-2"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style={{ cursor: "pointer" }}
+              >
+                {numberOfLikes} like{numberOfLikes > 1 && "s"}
+              </p>
+              <ul
+                className="dropdown-menu px-2 "
+                style={{ maxHeight: "30vh", overflowY: "scroll" }}
+              >
+                {users
+                  .filter((user) => usersLiking.includes(user.id))
+                  .map((user) => (
+                    <li
+                      key={user.id}
+                      className="d-flex border-bottom py-2"
+                      style={{ width: "15vw" }}
+                    >
+                      <img
+                        className="rounded-circle border img-fluid me-3"
+                        src={user.profilPicture}
+                        alt="profile"
+                        style={{ width: "30px", height: "30px" }}
+                      />
+                      <CustomLink to={`/users/${user.id}`}>
+                        {user.username}
+                      </CustomLink>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           </div>
           <div>
             {post.comment.length == 0 ? (

@@ -106,7 +106,9 @@ export default function PostCard({ post, children }) {
               onClick={() => (token ? handleLike(post.id) : navigate("/login"))}
               size="lg"
             />{" "}
-            {numberOfLikes} like{numberOfLikes > 1 && "s"}
+            <CustomLink to={`/blogs/${post.id}`}>
+              {numberOfLikes} like{numberOfLikes > 1 && "s"}
+            </CustomLink>
           </div>
           <Button color="light" outline>
             <CustomLink to={`/blogs/${post.id}`}>
