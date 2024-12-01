@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
-
 import { faComment, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeartCircleCheck } from "@fortawesome/free-solid-svg-icons/faHeartCircleCheck";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "reactstrap";
 import profilePic from "../assets/profilePic.jpeg";
 import { useAuth } from "../hooks/useAuth";
 import { checkIfLiked, dateDiff } from "../utils/function";
@@ -15,10 +13,12 @@ import CustomLink from "./CustomLink";
 export default function PostCard({ post, children }) {
   const { id, token } = useAuth().user;
   const [user, setUser] = useState(null);
+  const [userList, setUserList] = useState([]);
   const [isLiked, setIsLiked] = useState(checkIfLiked(post, id));
   const [numberOfLikes, setNumberOfLikes] = useState(post.likes.length);
   const navigate = useNavigate();
-  let splitContent = post.content.substring(0, 125);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const splitContent = post.content.substring(0, 100);
 
   useEffect(() => {
     fetch(`${URL_API}/users/${post.authorId}`)
@@ -27,7 +27,15 @@ export default function PostCard({ post, children }) {
       .catch((error) => console.error(error));
   }, [post.authorId]);
 
+  useEffect(() => {
+    fetch(`${URL_API}/users`)
+      .then((response) => response.json())
+      .then((data) => setUserList(data))
+      .catch((error) => console.error(error));
+  }, [post.authorId]);
+
   const dateStr = new Date(post.createdAt).toISOString();
+  const usersLiking = post.likes.map((item) => item.likerId);
 
   const handleLike = async (id) => {
     setIsLiked(!isLiked);
@@ -75,14 +83,17 @@ export default function PostCard({ post, children }) {
         <h5 className="card-title d-flex justify-content-between mt-4">
           {post.title}
         </h5>
-        {post.content.length > 100 ? (
-          <p className="card-text">
-            {splitContent}...
-            <Link to={`/blogs/${post.id}`}>read more</Link>
-          </p>
-        ) : (
-          <p>{post.content}</p>
-        )}
+        <p className="card-text" onClick={() => setIsExpanded(!isExpanded)}>
+          {isExpanded ? splitContent : post.content}{" "}
+          {post.content.length > 100 && (
+            <span
+              className="text-primary"
+              style={{ textDecoration: "underline", cursor: "pointer" }}
+            >
+              {isExpanded ? "read more" : "read less"}
+            </span>
+          )}
+        </p>
 
         {post.image != undefined && (
           <Link to={`/blogs/${post.id}`}>
@@ -97,28 +108,61 @@ export default function PostCard({ post, children }) {
             />
           </Link>
         )}
-        <hr />
-        <div className="d-flex justify-content-between align-items-center">
-          <div>
+      </div>
+      <div className="card-footer" style={{ backgroundColor: "white" }}>
+        <div className="d-flex justify-content-between">
+          <div className="d-flex">
             <FontAwesomeIcon
               icon={isLiked ? faHeartCircleCheck : faHeart}
               style={{ color: isLiked ? "red" : "black" }}
               onClick={() => (token ? handleLike(post.id) : navigate("/login"))}
               size="lg"
             />{" "}
-            <CustomLink to={`/blogs/${post.id}`}>
-              {numberOfLikes} like{numberOfLikes > 1 && "s"}
-            </CustomLink>
+            <div className="dropdown ">
+              <p
+                className="dropdown ms-2"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style={{ cursor: "pointer" }}
+              >
+                {numberOfLikes} like{numberOfLikes > 1 && "s"}
+              </p>
+              {numberOfLikes > 0 && (
+                <ul
+                  className="dropdown-menu px-2 "
+                  style={{ maxHeight: "30vh", overflowY: "scroll" }}
+                >
+                  {userList
+                    .filter((user) => usersLiking.includes(user.id))
+                    .map((user) => (
+                      <li
+                        key={user.id}
+                        className="d-flex border-bottom py-2"
+                        style={{ width: "15vw" }}
+                      >
+                        <img
+                          className="rounded-circle border img-fluid me-3"
+                          src={user.profilPicture}
+                          alt="profile"
+                          style={{ width: "30px", height: "30px" }}
+                        />
+                        <CustomLink to={`/users/${user.id}`}>
+                          {user.username}
+                        </CustomLink>
+                      </li>
+                    ))}
+                </ul>
+              )}
+            </div>
           </div>
-          <Button color="light" outline>
+          <div>
             <CustomLink to={`/blogs/${post.id}`}>
               <FontAwesomeIcon icon={faComment} size="lg" />{" "}
               {post.comment.length} comment
               {post.comment.length > 1 && "s"}{" "}
             </CustomLink>
-          </Button>
+          </div>
         </div>
-        <hr />
       </div>
     </div>
   );

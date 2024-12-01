@@ -121,7 +121,7 @@ export default function DetailedPost({ post, children }) {
             />
           </Link>
         )}
-        <div className="d-flex justify-content-between align-items-center mt-3">
+        <div className="d-flex justify-content-between mt-3">
           <div className="d-flex align-items-start">
             <FontAwesomeIcon
               icon={isLiked ? faHeartCircleCheck : faHeart}
@@ -165,13 +165,9 @@ export default function DetailedPost({ post, children }) {
             </div>
           </div>
           <div>
-            {post.comment.length == 0 ? (
-              <p className="mt-3">No comments</p>
-            ) : (
-              <p className="mt-3">
-                {post.comment.length} comment{post.comment.length > 1 && "s"}
-              </p>
-            )}
+            <p>
+              {post.comment.length} comment{post.comment.length > 1 && "s"}
+            </p>
           </div>
         </div>
 

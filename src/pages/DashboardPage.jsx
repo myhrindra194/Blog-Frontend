@@ -17,8 +17,8 @@ import {
 } from "reactstrap";
 import CustomSpinner from "../components/CustomSpinner";
 import PostCard from "../components/PostCard";
-import ProfilCard from "../components/ProfilCard";
 import SearchBar from "../components/SearchBar";
+import TopUsersCard from "../components/TopUsersCard";
 import { useAuth } from "../hooks/useAuth";
 import { filterPost, sumComment, sumReaction } from "../utils/function";
 import { URL_API } from "../utils/url";
@@ -27,20 +27,12 @@ export default function DashBoard() {
   const { id, token } = useAuth().user;
   const [posts, setPosts] = useState([]);
   const [searchWord, setSearchWord] = useState("");
-  const [users, setUsers] = useState([]);
   const [filterKey, setFilterKey] = useState("recent");
 
   useEffect(() => {
     fetch(`${URL_API}/blogs`)
       .then((response) => response.json())
       .then((data) => setPosts(data))
-      .catch((error) => console.error(error));
-  }, []);
-
-  useEffect(() => {
-    fetch(`${URL_API}/users`)
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
       .catch((error) => console.error(error));
   }, []);
 
@@ -136,7 +128,7 @@ export default function DashBoard() {
           ) : filteredPost.length == 0 ? (
             <p className="mt-5">No post </p>
           ) : (
-            <div className="mt-5">
+            <div className="row container mt-5">
               {filteredPost.map((post) => (
                 <PostCard key={post.id} post={post}>
                   {
@@ -179,16 +171,7 @@ export default function DashBoard() {
             </div>
           )}
         </div>
-        <div className="col-3 col-md-0 d-none d-md-block">
-          <h3 className="mb-4">Friends</h3>
-          <div>
-            {users
-              .filter((user) => user.profilPicture != null)
-              .map((user) => (
-                <ProfilCard key={user.id} user={user} />
-              ))}
-          </div>
-        </div>
+        <TopUsersCard />
       </div>
     </div>
   );

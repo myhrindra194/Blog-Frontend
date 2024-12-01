@@ -42,7 +42,6 @@ export function dateDiff(dateStr) {
     }
   }
 
-  
 
 export function sumComment(posts){
   return  posts.map((post) => post.comment.length)
