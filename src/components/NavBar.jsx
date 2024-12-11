@@ -8,15 +8,17 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Navbar, NavbarBrand } from "reactstrap";
-import profilePic from "../assets/profilePic.jpeg";
+import female from "../assets/female.png";
+import male from "../assets/male.png";
 import { useAuth } from "../hooks/useAuth";
 import CustomLink from "./CustomLink";
 import vite from "/vite.svg";
 
 export default function NavBar() {
-  const { id, username, profilPicture, token } = useAuth().user;
+  const { id, username, profilPicture, token, gender } = useAuth().user;
   const { logout } = useAuth();
   const navigate = useNavigate();
+  const defaultProfilPicture = gender === "F" ? female : male;
 
   const handleLogout = () => {
     logout();
@@ -75,7 +77,7 @@ export default function NavBar() {
               className="img-fluid dropdown-toggle rounded-circle border"
               data-bs-toggle="dropdown"
               aria-expanded="false"
-              src={profilPicture ? profilPicture : profilePic}
+              src={profilPicture ? profilPicture : defaultProfilPicture}
               alt="profile"
               style={{ width: "40px", height: "40px" }}
             />

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardText } from "reactstrap";
-import profilePic from "../assets/profilePic.jpeg";
+import female from "../assets/female.png";
+import male from "../assets/male.png";
 import CustomLink from "../components/CustomLink";
 import PostCard from "../components/PostCard";
 import { useAuth } from "../hooks/useAuth";
@@ -13,6 +14,7 @@ export default function UserPage() {
   const { id } = useAuth().user;
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState(null);
+  const defaultProfilPicture = user?.gender == "F" ? female : male;
 
   useEffect(() => {
     fetch(`${URL_API}/blogs`)
@@ -36,7 +38,9 @@ export default function UserPage() {
         <div className="d-md-flex align-items-center">
           <div>
             <img
-              src={user?.profilPicture ? user?.profilPicture : profilePic}
+              src={
+                user?.profilPicture ? user?.profilPicture : defaultProfilPicture
+              }
               alt="profile"
               className="img-thumbnail-fluid rounded-circle border shadow"
               style={{ width: "200px", height: "200px" }}

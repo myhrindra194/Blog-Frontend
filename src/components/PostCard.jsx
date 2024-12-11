@@ -4,7 +4,8 @@ import { faHeartCircleCheck } from "@fortawesome/free-solid-svg-icons/faHeartCir
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import profilePic from "../assets/profilePic.jpeg";
+import female from "../assets/female.png";
+import male from "../assets/male.png";
 import { useAuth } from "../hooks/useAuth";
 import { checkIfLiked, dateDiff } from "../utils/function";
 import { URL_API } from "../utils/url";
@@ -19,6 +20,7 @@ export default function PostCard({ post, children }) {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(false);
   const splitContent = post.content.substring(0, 100);
+  const defaultProfilPicture = user?.gender === "F" ? female : male;
 
   useEffect(() => {
     fetch(`${URL_API}/users/${post.authorId}`)
@@ -61,7 +63,11 @@ export default function PostCard({ post, children }) {
       <div className="card-body">
         <div className="d-flex align-items-center">
           <img
-            src={user?.profilPicture == null ? profilePic : user?.profilPicture}
+            src={
+              user?.profilPicture == null
+                ? defaultProfilPicture
+                : user?.profilPicture
+            }
             alt="Profile picture"
             className="img-thumbnail-fluid rounded-circle border-dark me-2"
             style={{ width: "50px", height: "50px" }}

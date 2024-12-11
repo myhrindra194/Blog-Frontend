@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Label } from "reactstrap";
-import profilePic from "../assets/profilePic.jpeg";
+import female from "../assets/female.png";
+import male from "../assets/male.png";
 import { useAuth } from "../hooks/useAuth";
 import { checkIfLiked, dateDiff } from "../utils/function";
 import { URL_API } from "../utils/url";
@@ -22,6 +23,7 @@ export default function DetailedPost({ post, children }) {
   const [isLiked, setIsLiked] = useState(checkIfLiked(post, id));
   const [numberOfLikes, setNumberOfLikes] = useState(post.likes.length);
   const navigate = useNavigate();
+  const defaultProfilPicture = post.author?.gender == "F" ? female : male;
 
   const dateStr = new Date(post.createdAt).toISOString();
   const usersLiking = post.likes.map((item) => item.likerId);
@@ -82,7 +84,7 @@ export default function DetailedPost({ post, children }) {
           <img
             src={
               post.author.profilPicture == null
-                ? profilePic
+                ? defaultProfilPicture
                 : post.author.profilPicture
             }
             alt="Profile picture"

@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, ButtonGroup, Card, CardText, Input } from "reactstrap";
-import profilePic from "../assets/profilePic.jpeg";
+import female from "../assets/female.png";
+import male from "../assets/male.png";
 import { useAuth } from "../hooks/useAuth";
 import { dateDiff } from "../utils/function";
 import { URL_API } from "../utils/url";
@@ -16,6 +17,7 @@ export default function CommentCard({ comment, postAuthorId }) {
   const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const defaultProfilPicture = author.gender === "F" ? female : male;
 
   useEffect(() => {
     fetch(`${URL_API}/users/${comment.authorId}`)
@@ -75,7 +77,11 @@ export default function CommentCard({ comment, postAuthorId }) {
       <Card className="py-2 px-3 my-3 col-12  rounded-5 bg-light">
         <div className="d-flex align-items-center">
           <img
-            src={author?.profilPicture ? author?.profilPicture : profilePic}
+            src={
+              author?.profilPicture
+                ? author?.profilPicture
+                : defaultProfilPicture
+            }
             alt="author"
             style={{ width: "40px", height: "40px" }}
             className="img-fluid rounded-circle border"
